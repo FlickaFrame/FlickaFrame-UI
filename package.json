@@ -9,11 +9,9 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
-  "dependencies": {
-
-  },
   "devDependencies": {
     "@nuxt/devtools": "latest",
+    "@nuxt/image": "^1.0.0",
     "@nuxtjs/eslint-module": "^4.1.0",
     "@pinia/nuxt": "^0.5.1",
     "@shadowsight9/eslint-config": "^0.0.9",
