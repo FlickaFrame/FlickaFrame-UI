@@ -1,0 +1,6 @@
+{
+  "extends": ["@shadowsight9"],
+  "rules": {
+    "no-undef": "off"
+  }
+}
