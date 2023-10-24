@@ -5,7 +5,7 @@ import Logo from '~/assets/logo.png'
 
 <template>
 
-  <nav class="border-b border-slate flex gap-2 fixed h-20 w-full justify-between items-center top-0">
+  <nav class="px-4 border-b border-slate flex gap-2 sticky h-20 w-full justify-between items-center left-0 top-0">
     <img :src="Logo" alt="logo" class="w-80">
     <input
       type="text" class="border border-blue rounded shadow flex-1 h-10 max-w-1/2"

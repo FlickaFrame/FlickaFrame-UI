@@ -1,12 +1,39 @@
 <script setup lang="ts">
+import { useCardColRatio } from '~/composables/useFeedLayout'
 const route = useRoute()
+
+const { cardColRatio, listElement } = useCardColRatio()
+
+const feeds = ref(Array.from({ length: 100 }, (_, i) => i))
+
+const loadingElement = ref<HTMLElement | null>(null)
+useIntersectionObserver(loadingElement, (vals) => {
+  for (const change of vals) {
+    if (change.isIntersecting) {
+      feeds.value.push(...Array.from({ length: 100 }, (_, i) => i))
+    }
+  }
+})
+
 </script>
 
 <template>
-  <div class="h-screen w-screen">
-    <h1>Nuxt Routing set up successfully!</h1>
-    <p>Current route: {{ route.path }}</p>
-    <!-- <NuxtLink /> -->
-    <a href="https://nuxt.com/docs/getting-started/routing" target="_blank">Learn more about Nuxt Routing</a>
+  <div ref="listElement" class="feed-list">
+    <FeedCard v-for="item in feeds" :key="item" />
   </div>
+  <div ref="loadingElement">loading</div>
 </template>
+
+<style scoped>
+
+.feed-list {
+  --feed-row-unit: 5px;
+  --feed-col-unit: 15px;
+  display: grid;
+  grid-auto-rows: var(--feed-row-unit);
+  grid-template-columns: repeat(auto-fill, calc(v-bind(cardColRatio) - var(--feed-col-unit)));
+  align-items: start;
+  justify-content: space-between;
+}
+
+</style>
