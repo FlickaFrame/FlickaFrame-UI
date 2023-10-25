@@ -25,7 +25,8 @@ watch(escape, (v) => {
       class="flex fixed h-screen w-screen justify-center items-center left-0 top-0 z-100 backdrop-grayscale"
       @click="show = !show"
     >
-      <div class="bg-blue h-100 w-100" />
+      <Video class="bg-blue flex flex-row h-192 w-108 justify-center" />
+      <div class="bg-white flex flex-row h-screen w-100 justify-center">评论区</div>
     </div>
 
   </Teleport>
