@@ -9,8 +9,15 @@ const { rootElement } = useCardHeight()
 </script>
 
 <template>
+  <!-- v-motion-pop-bottom -->
   <div
     ref="rootElement"
+    v-motion="{
+      initial: { scale: 1 },
+      enter: { scale: 1 },
+      hovered: { scale: 1.03 },
+
+    }"
     class="card bg-gray-100 rounded-5 shadow flex flex-col w-full"
   >
     <div class="bg-slate-200 rounded-5" :style="{ height: `${height}px` }">

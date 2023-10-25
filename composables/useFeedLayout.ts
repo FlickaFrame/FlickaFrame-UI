@@ -11,14 +11,14 @@ export function useCardHeight(rowUnit = 5, rowGap = 3) {
   return { rootElement }
 }
 
-export function useCardColRatio() {
+export function useCardColumnNum() {
   const listElement = ref<HTMLElement | null>(null)
   const { width } = useElementSize(listElement)
-  const cardColRatio = computed(() => {
-    let remainNum = Math.floor(width.value / 300)
-    if (remainNum < 1) remainNum = 1
-    return `${(1 / remainNum) * 100}%`
+  const cardColumnNum = computed(() => {
+    let n = Math.floor(width.value / 300)
+    if (n < 1) n = 1
+    return n
   })
 
-  return { cardColRatio, listElement }
+  return { cardColumnNum, listElement }
 }

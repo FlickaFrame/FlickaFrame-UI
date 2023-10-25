@@ -17,6 +17,7 @@
     "@shadowsight9/eslint-config": "^0.0.9",
     "@unocss/nuxt": "^0.57.1",
     "@unocss/reset": "^0.57.1",
+    "@vueuse/motion": "^2.0.0",
     "@vueuse/nuxt": "^10.5.0",
     "eslint": "^8.52.0",
     "nuxt": "^3.8.0",

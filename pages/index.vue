@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { useCardColRatio } from '~/composables/useFeedLayout'
+import { useCardColumnNum } from '~/composables/useFeedLayout'
 const route = useRoute()
 
-const { cardColRatio, listElement } = useCardColRatio()
+const isOpen = ref(false)
+
+const { cardColumnNum, listElement } = useCardColumnNum()
 
 const feeds = ref(Array.from({ length: 100 }, (_, i) => i))
 
@@ -18,10 +20,23 @@ useIntersectionObserver(loadingElement, (vals) => {
 </script>
 
 <template>
-  <div ref="listElement" class="feed-list">
-    <FeedCard v-for="item in feeds" :key="item" />
+  <div
+    ref="listElement" v-motion="{
+      initial: {
+        y: 180,
+        opacity: 0,
+      },
+      enter: {
+        y: 0,
+        opacity: 1,
+      },
+    }"
+    class="feed-list"
+  >
+    <FeedCard v-for="item in feeds" :key="item" class="transition-all" @click="isOpen = !isOpen" />
   </div>
   <div ref="loadingElement">loading</div>
+  <FeedModal v-model:show="isOpen" />
 </template>
 
 <style scoped>
@@ -31,9 +46,13 @@ useIntersectionObserver(loadingElement, (vals) => {
   --feed-col-unit: 15px;
   display: grid;
   grid-auto-rows: var(--feed-row-unit);
-  grid-template-columns: repeat(auto-fill, calc(v-bind(cardColRatio) - var(--feed-col-unit)));
+  grid-template-columns: repeat(v-bind(cardColumnNum), 1fr);
+  column-gap: var(--feed-col-unit);
   align-items: start;
   justify-content: space-between;
 }
 
+.feed-list.transitioning {
+  transition: all ease-in-out 1s;
+}
 </style>

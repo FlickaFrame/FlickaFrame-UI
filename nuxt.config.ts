@@ -8,9 +8,15 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@unocss/nuxt',
     '@nuxt/image',
+    '@vueuse/motion/nuxt',
+
   ],
   vite: {
-
+    vue: {
+      script: {
+        defineModel: true,
+      },
+    },
   },
   css: [
     '@unocss/reset/tailwind.css',
