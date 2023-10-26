@@ -7,7 +7,7 @@ function useVideo() {
   const videoElement = ref<HTMLVideoElement | null>(null)
   let player = null as any
   const videoOptions = {
-    autoplay: true,
+    autoplay: false,
     controls: true,
     language: 'zh-CN',
     fluid: true,
@@ -21,14 +21,12 @@ function useVideo() {
   onMounted(() => {
     if (!videoElement.value) return
     player = videojs(videoElement.value, videoOptions, () => {
-      // player.log('onPlayerReady', this)
+
     })
   })
 
-  onBeforeUnmount(() => {
-    if (player) {
-      player.dispose()
-    }
+  onUnmounted(() => {
+    player && player.dispose()
   })
 
   return { videoElement }
@@ -40,6 +38,6 @@ const { videoElement } = useVideo()
 
 <template>
   <div id="warp" class="player-wrap">
-    <video id="videoJS_1" ref="videoElement" class="video-js vjs-big-play-centered" />
+    <video ref="videoElement" class="video-js vjs-big-play-centered" />
   </div>
 </template>

@@ -9,26 +9,27 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
-  "devDependencies": {
+  "dependencies": {
+    "@formkit/auto-animate": "^0.8.0",
     "@iconify-json/mdi": "^1.1.55",
-    "@nuxt/devtools": "latest",
     "@nuxt/image": "^1.0.0",
-    "@nuxtjs/eslint-module": "^4.1.0",
     "@pinia/nuxt": "^0.5.1",
-    "@shadowsight9/eslint-config": "^0.0.9",
     "@types/video.js": "^7.3.55",
     "@unocss/nuxt": "^0.57.1",
     "@unocss/preset-icons": "^0.57.1",
     "@unocss/reset": "^0.57.1",
     "@vueuse/motion": "^2.0.0",
     "@vueuse/nuxt": "^10.5.0",
-    "eslint": "^8.52.0",
     "nuxt": "^3.8.0",
+    "unocss-preset-scrollbar-hide": "^1.0.1",
+    "video.js": "^8.6.0",
     "vue": "^3.3.6",
     "vue-router": "^4.2.5"
   },
-  "dependencies": {
-    "@formkit/auto-animate": "^0.8.0",
-    "video.js": "^8.6.0"
+  "devDependencies": {
+    "@nuxt/devtools": "latest",
+    "@nuxtjs/eslint-module": "^4.1.0",
+    "@shadowsight9/eslint-config": "^0.0.9",
+    "eslint": "^8.52.0"
   }
 }

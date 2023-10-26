@@ -9,7 +9,6 @@ export default defineNuxtConfig({
     '@unocss/nuxt',
     '@nuxt/image',
     '@vueuse/motion/nuxt',
-
   ],
   vite: {
     vue: {
