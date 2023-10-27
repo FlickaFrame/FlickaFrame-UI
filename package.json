@@ -7,10 +7,12 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "shadcn": "shadcn-vue"
   },
   "dependencies": {
     "@formkit/auto-animate": "^0.8.0",
+    "@iconify-json/iconamoon": "^1.1.1",
     "@iconify-json/mdi": "^1.1.55",
     "@nuxt/image": "^1.0.0",
     "@pinia/nuxt": "^0.5.1",
@@ -20,7 +22,13 @@
     "@unocss/reset": "^0.57.1",
     "@vueuse/motion": "^2.0.0",
     "@vueuse/nuxt": "^10.5.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
+    "lucide-vue-next": "^0.289.0",
     "nuxt": "^3.8.0",
+    "radix-vue": "^1.0.1",
+    "shadcn-vue": "^0.7.0",
+    "tailwind-merge": "^1.14.0",
     "unocss-preset-scrollbar-hide": "^1.0.1",
     "video.js": "^8.6.0",
     "vue": "^3.3.6",
@@ -30,6 +38,7 @@
     "@nuxt/devtools": "latest",
     "@nuxtjs/eslint-module": "^4.1.0",
     "@shadowsight9/eslint-config": "^0.0.9",
+    "@unocss/transformer-directives": "^0.57.1",
     "eslint": "^8.52.0"
   }
 }

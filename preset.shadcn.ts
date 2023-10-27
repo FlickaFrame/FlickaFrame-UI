@@ -95,5 +95,3 @@ export function presetShadcn(options: PresetShadcnOptions = {}): Preset<Theme> {
     ],
   }
 }
-
-export default presetShadcn

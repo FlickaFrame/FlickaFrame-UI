@@ -111,7 +111,7 @@ const { activeCardList, cardOrder, pending } = useCardScroll()
               <Video />
             </div>
 
-            <FeedModalInteraction class="bg-gray flex-1 h-full" />
+            <FeedModalInteraction class="bg-background flex-1 h-full max-w-300" />
 
           </div>
         </template>
