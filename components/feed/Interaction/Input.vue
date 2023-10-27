@@ -3,10 +3,13 @@ const text = ref('')
 const atElement = ref<HTMLElement | null>(null)
 const { width: atElementWidth } = useElementSize(atElement)
 
+const inputFoucsed = ref(false)
+
 const showAtBadge = ref(true)
 
 onKeyStroke('Backspace', () => {
   if (text.value) return
+  if (!inputFoucsed.value) return
 
   showAtBadge.value = false
 })
@@ -18,6 +21,7 @@ onKeyStroke('Backspace', () => {
 
     <div class="relative flex-1">
       <UiInput
+        v-model:is-focus="inputFoucsed"
         v-model="text"
         :style="{
           paddingLeft: showAtBadge ? `calc(${atElementWidth}px + 2.5rem)` : '0.75rem',
