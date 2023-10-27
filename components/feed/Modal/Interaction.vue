@@ -28,22 +28,26 @@ const text = `
         <UiButton v-for="item in 10" :key="item" variant="link" size="lg" class="h-7 px-1"> #小红书实习</UiButton>
       </div>
       <div class="text-foreground/50"> 2023-10-31 东北 </div>
-      <UiSeparator class="my-6" />
+      <UiSeparator class="mt-6" />
     </div>
     <!-- post评论 -->
-    <div class="flex-1 px-6">
+    <div class="flex-1 overflow-y-scroll px-6 pt-6">
       <div class="mb-4 text-gray/90">
         共 13 条评论
       </div>
       <FeedInteractionCommentItem />
 
       <FeedInteractionCommentItem class="ml-14" />
+      <FeedInteractionCommentItem class="ml-14" />
 
     </div>
+    <UiSeparator />
     <!-- post 互动区域 -->
     <div>
+      <FeedInteractionLine class="my-4 px-8 text-2xl" />
 
-      interaction
+      <FeedInteractionInput class="my-6 px-8" />
+
     </div>
 
   </div>

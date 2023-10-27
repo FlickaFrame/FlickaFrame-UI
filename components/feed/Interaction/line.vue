@@ -1,12 +1,18 @@
 <template>
   <div class="flex items-center">
-    <div class="wrapper like text-xl">
+    <div class="wrapper">
       <div class="icon i-iconamoon-like" />
       <div class="text">赞</div>
     </div>
 
-    <div class="wrapper text-xl">
+    <div class="wrapper">
       <div class="icon i-iconamoon-comment" />
+      <div class="text">3</div>
+    </div>
+    <div class="flex-1" />
+
+    <div class="wrapper">
+      <div class="icon i-mdi-share" />
       <div class="text">3</div>
     </div>
 

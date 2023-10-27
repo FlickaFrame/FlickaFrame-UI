@@ -1,7 +1,30 @@
 <script setup lang="ts">
 import { AvatarRoot } from 'radix-vue'
-import { avatarVariant } from '.'
+
 import { cn } from '~/lib/utils'
+import { cva } from 'class-variance-authority'
+
+const props = withDefaults(defineProps<Props>(), {
+  size: 'sm',
+  shape: 'circle',
+})
+
+const avatarVariant = cva(
+  'inline-flex items-center justify-center font-normal text-foreground select-none shrink-0 bg-secondary overflow-hidden',
+  {
+    variants: {
+      size: {
+        sm: 'h-10 w-10 text-xs',
+        base: 'h-16 w-16 text-2xl',
+        lg: 'h-32 w-32 text-5xl',
+      },
+      shape: {
+        circle: 'rounded-full',
+        square: 'rounded-md',
+      },
+    },
+  },
+)
 
 interface Props {
   size?: NonNullable<Parameters<typeof avatarVariant>[0]>['size']
@@ -9,10 +32,6 @@ interface Props {
   class?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  size: 'sm',
-  shape: 'circle',
-})
 </script>
 
 <template>
