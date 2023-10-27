@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useCardColumnNum } from '~/composables/useFeedLayout'
-const route = useRoute()
+// const route = useRoute()
+
+// const router = useRouter()
 
 const isOpen = ref(false)
 

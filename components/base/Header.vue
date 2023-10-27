@@ -5,15 +5,19 @@ import Logo from '~/assets/logo.png'
 
 <template>
 
-  <nav class="px-4 border-b border-slate flex gap-2 sticky h-20 w-full justify-between items-center left-0 top-0 z-10">
+  <nav class="flex items-center justify-between gap-2 border-b border-slate px-4">
     <img :src="Logo" alt="logo" class="w-80">
-    <input
-      type="text" class="border border-blue rounded shadow flex-1 h-10 max-w-1/2"
-      placeholder="这是搜索框"
-    >
-    <div>
-      这是头像 个人信息
-    </div>
+
+    <UiInput class="h-12 max-w-240 text-lg" placeholder="这是搜索框" />
+
+    <UiButton variant="secondary" class="mr-4 flex-center gap-2 py-8 text-lg">
+      <UiAvatar>
+        <UiAvatarImage src="https://github.com/radix-vue.png" alt="@radix-vue" />
+        <UiAvatarFallback>CN</UiAvatarFallback>
+      </UiAvatar>
+
+      测试用户
+    </UiButton>
   </nav>
 
 </template>

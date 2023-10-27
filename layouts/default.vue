@@ -1,10 +1,20 @@
 <template>
-  <div class="flex flex-col items-center">
-
-    <BaseHeader />
-    <div class="mt-5 flex-1 w-8/9">
+  <div class="default-layout h-screen w-screen">
+    <BaseHeader class="col-span-2" />
+    <BaseSidebar class="row-start-2 row-end-3" />
+    <div class="col-span-1 row-span-1 overflow-y-scroll px-16 py-8">
       <slot />
     </div>
 
   </div>
+
 </template>
+
+<style scoped>
+.default-layout {
+  display: grid;
+  grid-template-columns: 18rem minmax(0, 1fr);
+  grid-template-rows: 6rem minmax(0, 1fr);
+}
+
+</style>
