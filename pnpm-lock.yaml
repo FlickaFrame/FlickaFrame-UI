@@ -17,6 +17,12 @@ dependencies:
   '@nuxt/image':
     specifier: ^1.0.0
     version: 1.0.0
+  '@oplayer/core':
+    specifier: ^1.2.31
+    version: 1.2.31
+  '@oplayer/ui':
+    specifier: 1.2.34-beta.3
+    version: 1.2.34-beta.3(@oplayer/core@1.2.31)
   '@pinia/nuxt':
     specifier: ^0.5.1
     version: 0.5.1(typescript@5.2.2)(vue@3.3.6)
@@ -1402,6 +1408,18 @@ packages:
       - webpack
     dev: true
 
+  /@oplayer/core@1.2.31:
+    resolution: {integrity: sha512-KBoTdwaqcCVxO3xi7C+Z/2fRtSKc5FT/6PzUb/x6+vVUfNzU6hlbMqNDUrOqyERZHC+GHkFKhl0LJ255hIAYHQ==}
+    dev: false
+
+  /@oplayer/ui@1.2.34-beta.3(@oplayer/core@1.2.31):
+    resolution: {integrity: sha512-lxTRGlN+GjK01YpBdfK7BfK7mT+v2QeI+u9ubio3d0ZKqLFHzgA+sfhQWPFKA3ouj8skSTiAysRftGZ6RAfEng==}
+    peerDependencies:
+      '@oplayer/core': '>=1.0.0'
+    dependencies:
+      '@oplayer/core': 1.2.31
+    dev: false
+
   /@parcel/watcher-android-arm64@2.3.0:
     resolution: {integrity: sha512-f4o9eA3dgk0XRT3XhB0UWpWpLnKgrh1IwNJKJ7UJek7eTYccQ8LR7XUWFKqw6aEq5KUNlCcGvSzKqSX/vtWVVA==}
     engines: {node: '>= 10.0.0'}
@@ -1439,6 +1457,7 @@ packages:
     engines: {node: '>= 10.0.0'}
     cpu: [arm]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     optional: true
 
@@ -1447,6 +1466,7 @@ packages:
     engines: {node: '>= 10.0.0'}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     optional: true
 
@@ -1455,6 +1475,7 @@ packages:
     engines: {node: '>= 10.0.0'}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     optional: true
 
@@ -1463,6 +1484,7 @@ packages:
     engines: {node: '>= 10.0.0'}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     optional: true
 
@@ -1471,6 +1493,7 @@ packages:
     engines: {node: '>= 10.0.0'}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     optional: true
 

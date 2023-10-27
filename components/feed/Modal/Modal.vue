@@ -20,7 +20,7 @@ const cardWrapperElement = ref<HTMLDivElement | null>(null)
 
 function useCardScroll() {
   const scrollWindow = 2
-  const cardList = ref([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+  const cardList = ref([1, 2, 3, 4, 5])
   const cardIndex = ref(0)
 
   const startIndex = ref(cardIndex.value - scrollWindow)
@@ -88,10 +88,10 @@ const { activeCardList, cardOrder, pending } = useCardScroll()
     <div
       v-if="show"
       v-motion-fade
-      class="bg-black bg-opacity-10 flex fixed h-screen w-screen justify-center items-start left-0 top-0 z-100 transition-all"
+      class="fixed left-0 top-0 z-100 h-screen w-screen flex items-start justify-center bg-black bg-opacity-10 transition-all"
       @click="show = !show"
     >
-      <div class="bg-white border-2 rounded-full shadow flex fixed h-10 w-10 justify-center items-center left-10 top-10 transition-all hover:border-slate-300 hover:shadow-lg">
+      <div class="fixed left-10 top-10 h-10 w-10 flex items-center justify-center border-2 rounded-full bg-white shadow transition-all hover:border-slate-300 hover:shadow-lg">
         <div class="i-mdi-close-thick text-6 text-slate-600" />
       </div>
 
@@ -105,13 +105,13 @@ const { activeCardList, cardOrder, pending } = useCardScroll()
         <template v-for="item in activeCardList" :key="item">
           <div
             m="y-5vh first:t-10vh last:b-10vh"
-            class="rounded-8 shadow-lg flex h-[80vh] overflow-hidden" @click.stop
+            class="h-[80vh] flex overflow-hidden rounded-8 shadow-lg" @click.stop
           >
             <div class="h-full w-6/10">
-              <Video />
+              <UiPlayer />
             </div>
 
-            <FeedModalInteraction class="bg-background flex-1 h-full max-w-300" />
+            <FeedModalInteraction class="h-full max-w-300 flex-1 bg-background" />
 
           </div>
         </template>

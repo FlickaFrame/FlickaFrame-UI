@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const props = defineProps<{
-  type: 'top' | 'sub'
+  type?: 'top' | 'sub'
 }>()
 
 const comment = '家人们，我去店里问，线只有一年的保修，所以我又买了一根，不过我买的c口的线，店员跟我说c口充电不影响，只要你正常使用官网的充电器就行'
