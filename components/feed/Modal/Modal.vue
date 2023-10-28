@@ -2,25 +2,24 @@
 import { ref } from 'vue'
 
 const show = defineModel('show', { default: false })
-// console.log('show', show)
-
-watch(() => show.value, (val) => {
-  if (val) {
-    document.body.style.overflow = 'hidden'
-  } else {
-    document.body.style.overflow = 'auto'
-  }
-})
 
 onKeyStroke('esc', () => {
   show.value = false
 })
 
-const cardWrapperElement = ref<HTMLDivElement | null>(null)
-
 function useCardScroll() {
   const scrollWindow = 2
-  const cardList = ref([1, 2, 3, 4, 5])
+  const cardList = ref([
+    { id: 1 },
+    { id: 2 },
+    { id: 3 },
+    { id: 4 },
+    { id: 5 },
+    { id: 6 },
+    { id: 7 },
+    { id: 8 },
+    { id: 9 },
+  ])
   const cardIndex = ref(0)
 
   const startIndex = ref(cardIndex.value - scrollWindow)
@@ -49,15 +48,15 @@ function useCardScroll() {
 
       setTimeout(() => {
         pending.value = true
-        nextTick(() => {
+        setTimeout(() => {
           startIndex.value += offset
           setTimeout(() => {
             pending.value = false
             stopping.value = false
             resolve(undefined)
-          }, 0)
-        })
-      }, 800)
+          }, 100)
+        }, 200)
+      }, 500)
     })
   }
 
@@ -65,30 +64,35 @@ function useCardScroll() {
     return activeCardList.value.indexOf(cardList.value[cardIndex.value])
   })
 
+  const activeId = computed(() => {
+    return activeCardList.value[cardOrder.value].id
+  })
+
   onKeyStroke('ArrowDown', async () => {
     await navgate(1)
-
-    cardList.value.push(cardList.value[cardList.value.length - 1] + 1)
   })
 
   onKeyStroke('ArrowUp', async () => {
     await navgate(-1)
   })
 
-  return { activeCardList, cardOrder, pending }
+  return { activeCardList, cardOrder, pending, activeId, navgate }
 }
 
-const { activeCardList, cardOrder, pending } = useCardScroll()
+const { activeCardList, cardOrder, pending, activeId, navgate } = useCardScroll()
+
+function handleClick(id: number) {
+  // navgate()
+}
 
 </script>
 
 <template>
   <Teleport to="body">
-
     <div
       v-if="show"
       v-motion-fade
-      class="fixed left-0 top-0 z-100 h-screen w-screen flex items-start justify-center bg-black bg-opacity-10 transition-all"
+      class="fixed left-0 top-0 z-100 h-screen w-screen flex items-start justify-center bg-background/60"
       @click="show = !show"
     >
       <div class="fixed left-10 top-10 h-10 w-10 flex items-center justify-center border-2 rounded-full bg-white shadow transition-all hover:border-slate-300 hover:shadow-lg">
@@ -96,29 +100,21 @@ const { activeCardList, cardOrder, pending } = useCardScroll()
       </div>
 
       <div
-        ref="cardWrapperElement"
         class="w-7/10 overflow-y-hidden"
-
         :class="{ 'transition-all': !pending }"
         :style="{ transform: `translateY(-${85 * cardOrder}vh)` }"
+        @click.stop
       >
         <template v-for="item in activeCardList" :key="item">
-          <div
+          <FeedContent
+            :active="activeId === item.id"
             m="y-5vh first:t-10vh last:b-10vh"
-            class="h-[80vh] flex overflow-hidden rounded-8 shadow-lg" @click.stop
-          >
-            <div class="h-full w-6/10">
-              <UiPlayer />
-            </div>
-
-            <FeedModalInteraction class="h-full max-w-300 flex-1 bg-background" />
-
-          </div>
+            class="h-[80vh]"
+            @click="handleClick(item.id)"
+          />
         </template>
       </div>
-
     </div>
-
   </Teleport>
 
 </template>

@@ -2,9 +2,11 @@
 import Player from '@oplayer/core'
 import ui from '@oplayer/ui'
 
-const props = defineProps<{
-  active: boolean
-}>()
+const props = withDefaults(defineProps<{
+  active?: boolean
+}>(), {
+  active: true,
+})
 
 const emits = defineEmits<{
   (e: 'update:active', value: boolean): void
@@ -32,18 +34,18 @@ function useVideo(active: Ref<boolean>) {
       },
     })
       .use([ui()])
+
+    watch(active, (newVal) => {
+      if (newVal) {
+        player.value?.create()
+      } else {
+        player.value?.destroy()
+      }
+    }, { immediate: true })
   })
 
   onUnmounted(() => {
     player.value?.destroy()
-  })
-
-  watch(active, (newVal) => {
-    if (newVal) {
-      player.value?.create()
-    } else {
-      player.value?.destroy()
-    }
   })
 
   return { videoElement }

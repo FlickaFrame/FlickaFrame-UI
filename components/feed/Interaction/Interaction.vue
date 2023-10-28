@@ -31,7 +31,7 @@ const text = `
       <UiSeparator class="mt-6" />
     </div>
     <!-- post评论 -->
-    <div class="flex-1 overflow-y-scroll px-6 pt-6">
+    <div class="flex-1 overflow-y-auto px-6 pt-6">
       <div class="mb-4 text-gray/90">
         共 13 条评论
       </div>
