@@ -8,20 +8,7 @@ const props = withDefaults(defineProps<{
   active: true,
 })
 
-const emits = defineEmits<{
-  (e: 'update:active', value: boolean): void
-}>()
-
-const active = computed({
-  get() {
-    return props.active
-  },
-  set(value) {
-    emits('update:active', value)
-  },
-})
-
-function useVideo(active: Ref<boolean>) {
+function useVideo() {
   const player = shallowRef<null | Player>(null)
   const videoElement = ref<HTMLVideoElement | null>(null)
 
@@ -33,15 +20,21 @@ function useVideo(active: Ref<boolean>) {
         poster: 'https://oplayer.vercel.app/poster.png',
       },
     })
-      .use([ui()])
+      .use([ui({
+        keyboard: {
+          focused: false,
+          global: false,
+        },
+      })])
+      .create()
 
-    watch(active, (newVal) => {
-      if (newVal) {
-        player.value?.create()
-      } else {
-        player.value?.destroy()
-      }
-    }, { immediate: true })
+    // watch(() => props.active, (newVal) => {
+    //   if (newVal) {
+    //     player.value?
+    //   } else {
+    //     player.value?.destroy()
+    //   }
+    // }, { immediate: true })
   })
 
   onUnmounted(() => {
@@ -51,16 +44,14 @@ function useVideo(active: Ref<boolean>) {
   return { videoElement }
 }
 
-const { videoElement } = useVideo(active)
+const { videoElement } = useVideo()
 
 </script>
 
 <template>
   <div class="h-full w-full bg-black">
-
-    <NuxtImg class="h-full w-full object-contain" src="https://oplayer.vercel.app/poster.png" />
-
-    <div v-show="active" ref="videoElement" class="h-full w-full" />
+    <NuxtImg v-show="!props.active" class="h-full w-full object-contain" src="https://oplayer.vercel.app/poster.png" />
+    <div v-show="props.active" ref="videoElement" class="h-full w-full" />
   </div>
 
 </template>

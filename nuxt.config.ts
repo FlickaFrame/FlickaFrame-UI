@@ -2,12 +2,12 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
-    '@nuxtjs/eslint-module',
     '@pinia/nuxt',
-    '@formkit/auto-animate',
     '@vueuse/nuxt',
     '@unocss/nuxt',
     '@nuxt/image',
+    '@nuxtjs/eslint-module',
+    '@formkit/auto-animate',
     '@vueuse/motion/nuxt',
   ],
   vite: {

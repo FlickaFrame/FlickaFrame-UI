@@ -9,29 +9,34 @@ onKeyStroke('esc', () => {
 
 function useCardScroll() {
   const scrollWindow = 2
-  const cardList = ref([
-    { id: 1 },
-    { id: 2 },
-    { id: 3 },
-    { id: 4 },
-    { id: 5 },
-    { id: 6 },
-    { id: 7 },
-    { id: 8 },
-    { id: 9 },
-  ])
+  const cardList = ref([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
   const cardIndex = ref(0)
 
-  const startIndex = ref(cardIndex.value - scrollWindow)
-  const endIndex = ref(cardIndex.value + scrollWindow + 1)
+  const slideWindow = reactive({
+    start: cardIndex.value - scrollWindow,
+    end: cardIndex.value + scrollWindow + 1,
+  })
 
   const activeCardList = computed(() => {
     const length = cardList.value.length - 1
 
     return cardList.value.slice(
-      startIndex.value < 0 ? 0 : startIndex.value,
-      endIndex.value > length ? length : endIndex.value,
+      slideWindow.start < 0 ? 0 : slideWindow.start,
+      slideWindow.end > length ? length : slideWindow.end,
     )
+  })
+
+  const cardNeighbours = computed(() => {
+    const idx = cardIndex.value
+    return {
+      prev: cardList.value[idx - 1],
+      current: cardList.value[idx],
+      next: cardList.value[cardIndex.value + 1],
+    }
+  })
+
+  const activeCardOrder = computed(() => {
+    return activeCardList.value.indexOf(cardNeighbours.value.current)
   })
 
   const pending = ref(false)
@@ -44,29 +49,21 @@ function useCardScroll() {
     return new Promise<void>((resolve) => {
       stopping.value = true
       cardIndex.value += offset
-      endIndex.value += offset
+      slideWindow.end += offset
 
       setTimeout(() => {
         pending.value = true
-        setTimeout(() => {
-          startIndex.value += offset
+        nextTick(() => {
+          slideWindow.start += offset
           setTimeout(() => {
             pending.value = false
             stopping.value = false
             resolve(undefined)
-          }, 100)
-        }, 200)
-      }, 500)
+          }, 0)
+        })
+      }, 1000)
     })
   }
-
-  const cardOrder = computed(() => {
-    return activeCardList.value.indexOf(cardList.value[cardIndex.value])
-  })
-
-  const activeId = computed(() => {
-    return activeCardList.value[cardOrder.value].id
-  })
 
   onKeyStroke('ArrowDown', async () => {
     await navgate(1)
@@ -76,23 +73,27 @@ function useCardScroll() {
     await navgate(-1)
   })
 
-  return { activeCardList, cardOrder, pending, activeId, navgate }
+  return { activeCardList, activeCardOrder, pending, cardNeighbours, navgate }
 }
 
-const { activeCardList, cardOrder, pending, activeId, navgate } = useCardScroll()
+const { activeCardList, activeCardOrder, pending, cardNeighbours, navgate } = useCardScroll()
 
-function handleClick(id: number) {
-  // navgate()
+function handleClickCard(cardItem: number) {
+  if (cardItem === cardNeighbours.value.current) return
+
+  if (cardItem === cardNeighbours.value.prev) navgate(-1)
+
+  if (cardItem === cardNeighbours.value.next) navgate(1)
 }
 
 </script>
 
 <template>
   <Teleport to="body">
+
     <div
       v-if="show"
-      v-motion-fade
-      class="fixed left-0 top-0 z-100 h-screen w-screen flex items-start justify-center bg-background/60"
+      class="fixed left-0 top-0 z-100 h-screen w-screen flex items-start justify-center bg-black bg-opacity-10"
       @click="show = !show"
     >
       <div class="fixed left-10 top-10 h-10 w-10 flex items-center justify-center border-2 rounded-full bg-white shadow transition-all hover:border-slate-300 hover:shadow-lg">
@@ -101,16 +102,15 @@ function handleClick(id: number) {
 
       <div
         class="w-7/10 overflow-y-hidden"
-        :class="{ 'transition-all': !pending }"
-        :style="{ transform: `translateY(-${85 * cardOrder}vh)` }"
-        @click.stop
+        :class="{ 'transition-transform': !pending }"
+        :style="{ transform: `translateY(-${85 * activeCardOrder}vh)` }"
       >
-        <template v-for="item in activeCardList" :key="item">
+        <template v-for="cardItem in activeCardList" :key="cardItem">
           <FeedContent
-            :active="activeId === item.id"
             m="y-5vh first:t-10vh last:b-10vh"
             class="h-[80vh]"
-            @click="handleClick(item.id)"
+            :active="cardNeighbours.current === cardItem"
+            @click.stop="handleClickCard(cardItem)"
           />
         </template>
       </div>
