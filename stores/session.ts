@@ -34,8 +34,10 @@ export const useSessionStore = defineStore('session', () => {
 
     if (success) {
       session.value = data
+      return true
     } else {
       console.log('error', data)
+      return false
     }
   }
 
@@ -47,8 +49,10 @@ export const useSessionStore = defineStore('session', () => {
 
     if (success) {
       session.value = data
+      return true
     } else {
       console.log('error', data)
+      return false
     }
   }
 
