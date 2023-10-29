@@ -26,6 +26,9 @@ dependencies:
   '@pinia/nuxt':
     specifier: ^0.5.1
     version: 0.5.1(typescript@5.2.2)(vue@3.3.6)
+  '@types/spark-md5':
+    specifier: ^3.0.3
+    version: 3.0.3
   '@unocss/nuxt':
     specifier: ^0.57.1
     version: 0.57.1(postcss@8.4.31)(vite@4.5.0)(webpack@5.89.0)
@@ -62,6 +65,9 @@ dependencies:
   shadcn-vue:
     specifier: ^0.7.0
     version: 0.7.0(typescript@5.2.2)(vite@4.5.0)(vue@3.3.6)
+  spark-md5:
+    specifier: ^3.0.2
+    version: 3.0.2
   tailwind-merge:
     specifier: ^1.14.0
     version: 1.14.0
@@ -1936,6 +1942,10 @@ packages:
   /@types/semver@7.5.4:
     resolution: {integrity: sha512-MMzuxN3GdFwskAnb6fz0orFvhfqi752yjaXylr0Rp4oDg5H0Zn1IuyRhDVvYOwAXoJirx2xuS16I3WjxnAIHiQ==}
     dev: true
+
+  /@types/spark-md5@3.0.3:
+    resolution: {integrity: sha512-Uocq0wrVjF//W7IQGDvGm7K14MvzWNl95xjiQHZkmX+BX0deJyN7UKTaBUGUIINqzKwhi41ysk5aD4Q5d+ZDvw==}
+    dev: false
 
   /@types/unist@2.0.9:
     resolution: {integrity: sha512-zC0iXxAv1C1ERURduJueYzkzZ2zaGyc+P2c95hgkikHPr3z8EdUZOlgEQ5X0DRmwDZn+hekycQnoeiiRVrmilQ==}
@@ -8043,6 +8053,10 @@ packages:
   /source-map@0.7.4:
     resolution: {integrity: sha512-l3BikUxvPOcn5E74dZiq5BGsTb5yEwhaTSzccU6t4sDOH8NWJCstKO5QT2CvtFoK6F0saL7p9xHAqHOlCPJygA==}
     engines: {node: '>= 8'}
+
+  /spark-md5@3.0.2:
+    resolution: {integrity: sha512-wcFzz9cDfbuqe0FZzfi2or1sgyIrsDwmPwfZC4hiNidPdPINjeUwNfv5kldczoEAcjl9Y1L3SM7Uz2PUEQzxQw==}
+    dev: false
 
   /spdx-correct@3.2.0:
     resolution: {integrity: sha512-kN9dJbvnySHULIluDHy32WHRUu3Og7B9sbY7tsFLctQkIqnMh3hErYgdMjTYuqmcXX+lK5T1lnUt3G7zNswmZA==}
