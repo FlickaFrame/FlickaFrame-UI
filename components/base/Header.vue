@@ -14,10 +14,12 @@ const store = useSessionStore()
     <UserSessionDialog>
       <UiButton variant="secondary" class="mr-4 flex-center gap-2 py-8 text-base">
         <UiAvatar>
-          <UiAvatarImage src="https://github.com/radix-vue.png" alt="@radix-vue" />
-          <UiAvatarFallback>CN</UiAvatarFallback>
+          <UiAvatarImage :src="store.info.avatarUrl" alt="user avatar" />
+          <UiAvatarFallback>{{ store.info.nickName }}</UiAvatarFallback>
         </UiAvatar>
-        {{ store.info.nickName || '未登录' }}
+        <span class="whitespace-nowrap">
+          {{ store.info.nickName || '未登录' }}
+        </span>
       </UiButton>
     </UserSessionDialog>
   </nav>

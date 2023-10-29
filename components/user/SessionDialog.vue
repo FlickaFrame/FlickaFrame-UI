@@ -56,8 +56,6 @@ const form = useForm({
 
 const handleSubmit = form.handleSubmit(async (values) => {
   if (currentMode.value === SessionMode.Register) {
-    // const registerRes = await store.register(values as any)
-
     const res = await register(values)
 
     if (res.success) {
