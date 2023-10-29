@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     '@nuxtjs/eslint-module',
     '@formkit/auto-animate',
     '@vueuse/motion/nuxt',
+    'dayjs-nuxt',
   ],
   vite: {
     vue: {
@@ -30,6 +31,11 @@ export default defineNuxtConfig({
     '@unocss/reset/tailwind.css',
     '~/assets/common.css',
   ],
+  runtimeConfig: {
+    public: {
+      baseURL: process.env.NUXT_PUBLIC_API_BASE || '/',
+    },
+  },
   experimental: {
     viewTransition: true,
   },

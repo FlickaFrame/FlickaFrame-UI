@@ -2,17 +2,17 @@
 import { toTypedSchema } from '@vee-validate/zod'
 import { Field as FormField, useForm } from 'vee-validate'
 import * as z from 'zod'
-import { useSessionStore } from '~/stores/session'
 import { DialogClose, DialogRoot } from 'radix-vue'
 import type Toast from '~/components/ui/toast/Toast.vue'
-
-const store = useSessionStore()
+import { getUserInfo, login, register } from '~/apis'
 
 enum SessionMode {
   Login, Register,
 }
 
-const currentMode = ref<SessionMode>(SessionMode.Register)
+const currentMode = ref<SessionMode>(SessionMode.Login)
+
+const isOpen = ref(false)
 
 const sessionText = {
   [SessionMode.Login]: {
@@ -56,24 +56,31 @@ const form = useForm({
 
 const handleSubmit = form.handleSubmit(async (values) => {
   if (currentMode.value === SessionMode.Register) {
-    const registerRes = await store.register(values as any)
-    if (registerRes) {
-      toastRef.value?.publish({ desc: '注册成功, 请登录' })
-      changeState()
+    // const registerRes = await store.register(values as any)
+
+    const res = await register(values)
+
+    if (res.success) {
+      toastRef.value?.publish({ desc: '注册成功' })
     } else {
       toastRef.value?.publish({
-        type: 'warning',
-        desc: '注册失败～ 请检查网络连接状态',
+        title: '注册失败～',
+        desc: res.msg,
       })
     }
+    changeState()
   } else {
-    const loginRes = await store.login(values)
-    if (loginRes) {
-      toastRef.value?.publish({ desc: '登录成功' })
+    const { success: loginSucess, msg } = await login(values)
+    if (loginSucess) {
+      const { success: infoSucess, data } = await getUserInfo()
+      if (infoSucess) {
+        toastRef.value?.publish({ title: '登录成功', desc: `欢迎回来${data.userInfo.nickName}` })
+        isOpen.value = false
+      }
     } else {
       toastRef.value?.publish({
         type: 'warning',
-        desc: '登录失败～ 请检查网络连接状态',
+        desc: `登录失败～ ${msg}`,
       })
     }
   }
@@ -88,22 +95,12 @@ function changeState() {
   if (currentMode.value === SessionMode.Register) {
     currentMode.value = SessionMode.Login
   }
-
-  console.log(form)
-
-  form.validate()
 }
-
-const isOpen = ref(false)
-
-onMounted(() => {
-  isOpen.value = true
-})
 
 </script>
 
 <template>
-  <DialogRoot>
+  <DialogRoot v-model:open="isOpen">
     <UiDialogTrigger as-child>
       <slot />
     </UiDialogTrigger>
@@ -111,10 +108,10 @@ onMounted(() => {
       <UiDialogHeader>
         <UiDialogTitle class="text-lg">{{ currentText.title }}</UiDialogTitle>
         <UiDialogDescription>
-          {{ currentText.description }} {{ form }}
+          {{ currentText.description }}
         </UiDialogDescription>
       </UiDialogHeader>
-      <form class="space-y-4" @submit="handleSubmit">
+      <form class="space-y-4" @submit.prevent>
         <FormField v-slot="{ componentField }" name="phone">
 
           <UiFormItem>

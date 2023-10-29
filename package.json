@@ -42,6 +42,7 @@
     "@nuxtjs/eslint-module": "^4.1.0",
     "@shadowsight9/eslint-config": "^0.0.9",
     "@unocss/transformer-directives": "^0.57.1",
+    "dayjs-nuxt": "^2.1.9",
     "eslint": "^8.52.0"
   }
 }

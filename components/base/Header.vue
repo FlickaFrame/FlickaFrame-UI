@@ -1,5 +1,7 @@
 <script setup>
 import Logo from '~/assets/logo.png'
+
+const store = useSessionStore()
 </script>
 
 <template>
@@ -15,7 +17,7 @@ import Logo from '~/assets/logo.png'
           <UiAvatarImage src="https://github.com/radix-vue.png" alt="@radix-vue" />
           <UiAvatarFallback>CN</UiAvatarFallback>
         </UiAvatar>
-        测试账号
+        {{ store.info.nickName || '未登录' }}
       </UiButton>
     </UserSessionDialog>
   </nav>
