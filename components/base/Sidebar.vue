@@ -36,7 +36,7 @@ const fixedMenu = [
       :key="menuItem.text"
       class="px-3 py-2"
     >
-      <h2 class="mb-2 px-4 text-2xl font-semibold tracking-tight text-primary">
+      <h2 class="mb-2 px-4 text-xl font-semibold tracking-tight text-primary">
         {{ menuItem.text }}
       </h2>
       <div class="space-y-2">
@@ -47,7 +47,7 @@ const fixedMenu = [
           size="lg"
           class="w-full justify-start"
         >
-          <div class="mr-2 text-2xl" :class="item.icon" />
+          <div class="mr-2 text-xl" :class="item.icon" />
           {{ item.text }}
         </UiButton>
 
@@ -66,7 +66,7 @@ const fixedMenu = [
         size="lg"
         class="w-full justify-start"
       >
-        <div class="mr-2 text-2xl" :class="item.icon" />
+        <div class="mr-2 text-xl" :class="item.icon" />
         {{ item.text }}
       </UiButton>
 

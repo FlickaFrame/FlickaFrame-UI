@@ -17,6 +17,15 @@ export default defineNuxtConfig({
       },
     },
   },
+  nitro: {
+    devProxy: {
+      '/api': {
+        target: 'http://localhost:8080/api/v1',
+        changeOrigin: true,
+        prependPath: true,
+      },
+    },
+  },
   css: [
     '@unocss/reset/tailwind.css',
     '~/assets/common.css',

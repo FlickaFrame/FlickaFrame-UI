@@ -19,14 +19,14 @@ const comment = '家人们，我去店里问，线只有一年的保修，所以
     </UiAvatar>
     <div class="flex-1">
       <div class="flex-1">
-        <div class="mb-2 flex items-center gap-2 text-xl text-foreground/50"> 花无缺
+        <div class="mb-2 flex items-center gap-2 text-lg text-foreground/50"> 花无缺
 
           <UiBadge variant="outline">作者</UiBadge>
         </div>
-        <div class="mb-2 whitespace-pre-wrap text-lg"> {{ comment }}</div>
+        <div class="mb-2 whitespace-pre-wrap text-base"> {{ comment }}</div>
         <div class="mb-1 text-foreground/50"> 2023-10-31 东北 </div>
 
-        <FeedInteractionLine class="text-xl" />
+        <FeedInteractionLine class="text-lg" />
 
       </div>
 

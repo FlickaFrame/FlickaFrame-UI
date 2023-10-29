@@ -3,6 +3,13 @@ import { ref } from 'vue'
 
 const show = defineModel('show', { default: false })
 
+const modalElement = ref<HTMLDivElement | null>(null)
+
+onMounted(() => {
+  if (!modalElement.value) return
+  modalElement.value.focus()
+})
+
 onKeyStroke('esc', () => {
   show.value = false
 })
@@ -31,7 +38,7 @@ function useCardScroll() {
     return {
       prev: cardList.value[idx - 1],
       current: cardList.value[idx],
-      next: cardList.value[cardIndex.value + 1],
+      next: cardList.value[idx + 1],
     }
   })
 
@@ -65,12 +72,12 @@ function useCardScroll() {
     })
   }
 
-  onKeyStroke('ArrowDown', async () => {
-    await navgate(1)
+  onKeyStroke('ArrowDown', (e) => {
+    navgate(1)
   })
 
-  onKeyStroke('ArrowUp', async () => {
-    await navgate(-1)
+  onKeyStroke('ArrowUp', (e) => {
+    navgate(-1)
   })
 
   return { activeCardList, activeCardOrder, pending, cardNeighbours, navgate }
@@ -101,6 +108,7 @@ function handleClickCard(cardItem: number) {
       </div>
 
       <div
+        ref="modalElement"
         class="w-7/10 overflow-y-hidden"
         :class="{ 'transition-transform': !pending }"
         :style="{ transform: `translateY(-${85 * activeCardOrder}vh)` }"

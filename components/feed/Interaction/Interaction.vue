@@ -12,7 +12,7 @@ const text = `
         <UiAvatarImage src="https://github.com/radix-vue.png" alt="@radix-vue" />
         <UiAvatarFallback>CN</UiAvatarFallback>
       </UiAvatar>
-      <div class="flex-1 text-lg">
+      <div class="flex-1 text-base">
         用户名
       </div>
       <UiButton size="lg">关注</UiButton>
@@ -20,9 +20,9 @@ const text = `
     </div>
     <!-- post简介 -->
     <div class="px-6">
-      <h1 class="pb-2 text-2xl font-semibold tracking-tight"> 这是标题这是标题</h1>
+      <h1 class="pb-2 text-xl font-semibold tracking-tight"> 这是标题这是标题</h1>
 
-      <div class="whitespace-pre-wrap text-lg"> {{ text }} </div>
+      <div class="whitespace-pre-wrap text-base"> {{ text }} </div>
 
       <div class="pb-2">
         <UiButton v-for="item in 10" :key="item" variant="link" size="lg" class="h-7 px-1"> #小红书实习</UiButton>
@@ -44,7 +44,7 @@ const text = `
     <UiSeparator />
     <!-- post 互动区域 -->
     <div>
-      <FeedInteractionLine class="my-4 px-8 text-2xl" />
+      <FeedInteractionLine class="my-4 px-8 text-xl" />
 
       <FeedInteractionInput class="my-6 px-8" />
 

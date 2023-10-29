@@ -28,13 +28,13 @@ function useVideo() {
       })])
       .create()
 
-    // watch(() => props.active, (newVal) => {
-    //   if (newVal) {
-    //     player.value?
-    //   } else {
-    //     player.value?.destroy()
-    //   }
-    // }, { immediate: true })
+    watch(() => props.active, (newVal) => {
+      if (newVal) {
+        player.value?.play()
+      } else {
+        player.value?.pause()
+      }
+    })
   })
 
   onUnmounted(() => {

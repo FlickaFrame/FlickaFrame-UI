@@ -26,7 +26,7 @@ onKeyStroke('Backspace', () => {
         :style="{
           paddingLeft: showAtBadge ? `calc(${atElementWidth}px + 2.5rem)` : '0.75rem',
         }"
-        class="input h-12 text-lg"
+        class="input h-12 text-base"
         required
         aria-placeholder="说点什么吧..."
       />
@@ -47,7 +47,7 @@ onKeyStroke('Backspace', () => {
 
     <UiButton
       v-if="text"
-      type="submit" class="h-12 rounded-sm text-lg transition-all"
+      type="submit" class="h-12 rounded-sm text-base transition-all"
     >
       发送
     </UiButton>
