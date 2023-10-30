@@ -14,7 +14,7 @@ import { ToastProvider } from 'radix-vue'
       </div>
 
     </div>
-    <UiToast />
+    <UiToast root />
   </ToastProvider>
 
 </template>

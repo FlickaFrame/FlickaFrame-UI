@@ -32,7 +32,7 @@ defineExpose({
 
   <ToastRoot
     v-for="index in count" :key="index"
-    class="[grid-template-areas:_'title_action'_'description_action'] grid grid-cols-[auto_max-content] items-center gap-x-[15px] rounded-md bg-background p-[15px] shadow-lg transition-all"
+    class="toast [grid-template-areas:_'title_action'_'description_action'] grid grid-cols-[auto_max-content] items-center gap-x-[15px] rounded-md bg-background p-[15px] shadow-lg"
   >
     <ToastTitle class="[grid-area:_title] mb-[5px] text-[15px] text-lg text-foreground">
       <slot name="title">
@@ -55,7 +55,7 @@ defineExpose({
         {{ toastText[index].desc }}
       </slot>
     </ToastDescription>
-    <ToastAction class="[grid-area:_action]" as-child alt-text="null">
+    <ToastAction class="[grid-area:_action]" as-child alt-text="toast-action">
       <slot name="action">
         <UiButton variant="outline" size="icon">
           <div class="i-mdi-close inline-block" />
@@ -69,3 +69,28 @@ defineExpose({
   />
 
 </template>
+
+<style>
+.toast {
+  &[data-state=open] {
+    @apply animate-slide-in-right animate-duration-200 animate-ease-in-out;
+  }
+
+  &[data-state=closed] {
+    @apply animate-slide-out-right animate-duration-200 animate-ease-in-out;
+  }
+
+  &[data-state=cancel] {
+    @apply animate-slide-out-right animate-duration-200 animate-ease-in-out;
+  }
+
+  &[data-state=end] {
+    @apply animate-slide-out-right animate-duration-200 animate-ease-in-out;
+  }
+
+  &[data-state=move] {
+    @apply translate-x-[var(--radix-toast-swipe-move-x)];
+  }
+
+}
+</style>
