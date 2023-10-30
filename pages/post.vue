@@ -70,27 +70,17 @@ async function onVideoSelect() {
 <template>
   <div class="flex flex-col justify-center">
     <h1 class="text-5xl">创作服务平台</h1>
-    <UiCard class="p-10 mt-5">
+    <UiCard class="mt-5 p-10">
       <div
         id="selectFileBox"
-        class="bg-[#f7f7f7] border-2 rounded-md border-dotted h-80 w-full hover-border-indigo-600"
+        class="relative h-80 w-full border-2 rounded-md border-dotted bg-foreground/5 hover-border-indigo-600"
       >
-        <input ref="selectFileElement" class="flex-center flex-col h-full" type="file" @change="onVideoSelect">
-        <div class="flex-center flex-col h-full z-0">
+        <input ref="selectFileElement" class="h-full w-full cursor-pointer opacity-0" type="file" @change="onVideoSelect">
+        <div class="absolute left-1/2 top-1/2 flex-col-center -translate-x-1/2 -translate-y-1/2">
           <div>拖拽视频到此或点击上传</div>
-          <UiButton class="mt-2 rounded-sm w-30">上传视频</UiButton>
+          <UiButton class="mt-2 w-30 rounded-sm" @click="selectFileElement?.click()">上传视频</UiButton>
         </div>
       </div>
     </UiCard>
   </div>
 </template>
-
-<style scoped>
-#selectFileBox input {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  cursor: pointer;
-}
-</style>
