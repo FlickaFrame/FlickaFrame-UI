@@ -8,13 +8,17 @@ const props = defineProps<{
 
 const count = ref(0)
 
-const toastText = ref<Record<string, ToastContent>>({})
+const toastRecord = ref<Record<string, ToastContent>>({})
 
-function publish(text?: ToastContent) {
+function publish(text: ToastContent | string) {
+  if (typeof text === 'string') {
+    text = { desc: text }
+  }
+
   count.value++
   if (text) {
     text.type ??= 'notify'
-    toastText.value[count.value] = text
+    toastRecord.value[count.value] = text
   }
 }
 
@@ -22,16 +26,16 @@ if (props.root) {
   toast.publish = publish
 }
 
-defineExpose({
-  publish,
-})
+defineExpose({ publish })
 
 </script>
 
 <template>
 
   <ToastRoot
-    v-for="index in count" :key="index"
+    v-for="index in count"
+    :key="index"
+    :duration="toastRecord[index].duration"
     class="toast [grid-template-areas:_'title_action'_'description_action'] grid grid-cols-[auto_max-content] items-center gap-x-[15px] rounded-md bg-background p-[15px] shadow-lg"
   >
     <ToastTitle class="[grid-area:_title] mb-[5px] text-[15px] text-lg text-foreground">
@@ -40,19 +44,19 @@ defineExpose({
           <div
             class="text-primary"
             :class="{
-              'i-mdi-message': toastText[index].type === 'notify',
-              'i-mdi-alert text-red': toastText[index].type === 'warning',
+              'i-mdi-message': toastRecord[index].type === 'notify',
+              'i-mdi-alert text-red': toastRecord[index].type === 'warning',
             }"
           />
           <div class="font-bold text-primary/80">
-            {{ toastText[index].title }}
+            {{ toastRecord[index].title }}
           </div>
         </div>
       </slot>
     </ToastTitle>
     <ToastDescription as-child>
       <slot name="desc">
-        {{ toastText[index].desc }}
+        {{ toastRecord[index].desc }}
       </slot>
     </ToastDescription>
     <ToastAction class="[grid-area:_action]" as-child alt-text="toast-action">
