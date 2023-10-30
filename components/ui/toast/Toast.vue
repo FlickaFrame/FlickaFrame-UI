@@ -69,7 +69,8 @@ defineExpose({ publish })
   </ToastRoot>
 
   <ToastViewport
-    class="[--viewport-padding:_25px] fixed right-0 top-0 z-[2147483647] m-0 max-w-[100vw] w-[390px] flex flex-col list-none gap-[10px] p-[var(--viewport-padding)] outline-none"
+    as="div"
+    class="fixed right-6 top-6 z-[2147483647] m-0 w-390px flex flex-col list-none gap-10px outline-none"
   />
 
 </template>

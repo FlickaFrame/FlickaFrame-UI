@@ -4,18 +4,18 @@ import { ToastProvider } from 'radix-vue'
 </script>
 
 <template>
-  <ToastProvider>
-    <div class="default-layout h-screen w-screen">
+
+  <div class="default-layout h-screen w-screen">
+    <ToastProvider>
 
       <BaseHeader class="col-span-2" />
       <BaseSidebar class="row-start-2 row-end-3" />
       <div class="col-span-1 row-span-1 overflow-y-scroll px-16 py-8">
         <slot />
       </div>
-
-    </div>
-    <UiToast root />
-  </ToastProvider>
+      <UiToast root />
+    </ToastProvider>
+  </div>
 
 </template>
 
