@@ -1,24 +1,25 @@
 <script setup lang="ts">
 import { ToastAction, ToastDescription, ToastRoot, ToastTitle, ToastViewport } from 'radix-vue'
+import type { ToastContent } from './'
 
-type ToastType = 'notify' | 'warning'
-
-interface ToastText {
-  type?: ToastType
-  title?: string
-  desc: string
-}
+const props = defineProps<{
+  root?: boolean
+}>()
 
 const count = ref(0)
 
-const toastText = ref<Record<string, ToastText>>({})
+const toastText = ref<Record<string, ToastContent>>({})
 
-function publish(text?: ToastText) {
+function publish(text?: ToastContent) {
   count.value++
   if (text) {
     text.type ??= 'notify'
     toastText.value[count.value] = text
   }
+}
+
+if (props.root) {
+  toast.publish = publish
 }
 
 defineExpose({
@@ -40,7 +41,7 @@ defineExpose({
             class="text-primary"
             :class="{
               'i-mdi-message': toastText[index].type === 'notify',
-              'i-mdi-alert': toastText[index].type === 'warning',
+              'i-mdi-alert text-red': toastText[index].type === 'warning',
             }"
           />
           <div class="font-bold text-primary/80">

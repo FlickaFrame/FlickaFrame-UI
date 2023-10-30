@@ -29,8 +29,6 @@ const sessionText = {
   },
 }
 
-const toastRef = ref<InstanceType<typeof Toast>>()
-
 const currentText = computed(() => sessionText[currentMode.value])
 
 const formSchema = computed(() => {
@@ -59,9 +57,9 @@ const handleSubmit = form.handleSubmit(async (values) => {
     const res = await register(values)
 
     if (res.success) {
-      toastRef.value?.publish({ desc: '注册成功' })
+      toast.publish({ desc: '注册成功' })
     } else {
-      toastRef.value?.publish({
+      toast.publish({
         title: '注册失败～',
         desc: res.msg,
       })
@@ -72,11 +70,11 @@ const handleSubmit = form.handleSubmit(async (values) => {
     if (loginSucess) {
       const { success: infoSucess, data } = await getUserInfo()
       if (infoSucess) {
-        toastRef.value?.publish({ title: '登录成功', desc: `欢迎回来${data.userInfo.nickName}` })
+        toast.publish({ title: '登录成功', desc: `欢迎回来${data.userInfo.nickName}` })
         isOpen.value = false
       }
     } else {
-      toastRef.value?.publish({
+      toast.publish({
         type: 'warning',
         desc: `登录失败～ ${msg}`,
       })
@@ -167,7 +165,6 @@ function changeState() {
         </div>
       </Form>
     </UiDialogContent>
-    <UiToast ref="toastRef" />
 
   </DialogRoot>
 </template>

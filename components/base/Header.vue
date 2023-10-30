@@ -1,7 +1,12 @@
 <script setup>
 import Logo from '~/assets/logo.png'
 
+toast.publish({
+  desc: 'dsadsadasdsa',
+})
+
 const store = useSessionStore()
+
 </script>
 
 <template>
@@ -10,6 +15,12 @@ const store = useSessionStore()
     <img :src="Logo" alt="logo" class="w-80">
 
     <UiInput class="h-12 max-w-240 text-base" placeholder="这是搜索框" />
+
+    <UiButton
+      @click="toast.publish({
+        desc: 'dsadsadasdsa',
+      })"
+    > toast</UiButton>
 
     <UserSessionDialog>
       <UiButton variant="secondary" class="mr-4 flex-center gap-2 py-8 text-base">

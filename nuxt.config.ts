@@ -36,6 +36,12 @@ export default defineNuxtConfig({
       baseURL: process.env.NUXT_PUBLIC_API_BASE || '/',
     },
   },
+  components: [
+    {
+      path: '~/components',
+      extensions: ['.vue'],
+    },
+  ],
   experimental: {
     viewTransition: true,
   },
