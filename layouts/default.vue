@@ -10,7 +10,7 @@ import { ToastProvider } from 'radix-vue'
 
       <BaseHeader class="col-span-2" />
       <BaseSidebar class="row-start-2 row-end-3" />
-      <div class="col-span-1 row-span-1 overflow-y-scroll px-16 py-8">
+      <div class="col-span-1 row-span-1 overflow-y-scroll">
         <slot />
       </div>
       <UiToast root />

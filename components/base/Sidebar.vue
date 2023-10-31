@@ -32,7 +32,7 @@ const fixedMenus = [
 </script>
 
 <template>
-  <nav class="flex flex-col gap-4 p-4">
+  <nav class="flex flex-col gap-4 border-r p-4">
     <div
       v-for="menuItem in menu"
       :key="menuItem.text"

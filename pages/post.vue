@@ -50,6 +50,10 @@ function generateMD5(file: File): Promise<string> {
 async function onVideoSelect() {
   const file = selectFileElement.value?.files?.[0]
   if (!file) return
+  await upload(file)
+}
+
+async function upload(file: File) {
   const token = await createUpToken()
   if (!token) return
 
@@ -65,6 +69,32 @@ async function onVideoSelect() {
   })
 }
 
+function useDragFile(callback: (file: File) => void) {
+  const isDragging = ref(false)
+  function handleDrag(event: DragEvent) {
+  // 阻止事件的默认行为
+    event.preventDefault()
+
+    if (event.type === 'drop') {
+      const file = event.dataTransfer?.files?.[0]
+      if (file) {
+        callback(file)
+      }
+    } else if (event.type === 'dragleave') {
+      isDragging.value = false
+    } else {
+      isDragging.value = true
+    }
+  }
+
+  return {
+    isDragging,
+    handleDrag,
+  }
+}
+
+const { isDragging, handleDrag } = useDragFile(upload)
+
 </script>
 
 <template>
@@ -72,8 +102,9 @@ async function onVideoSelect() {
     <h1 class="text-5xl">创作服务平台</h1>
     <UiCard class="mt-5 p-10">
       <div
-        id="selectFileBox"
+
         class="relative h-80 w-full border-2 rounded-md border-dotted bg-foreground/5 hover-border-indigo-600"
+        @dragenter="(e) => handleDragEnter(e)"
       >
         <input ref="selectFileElement" class="h-full w-full cursor-pointer opacity-0" type="file" @change="onVideoSelect">
         <div class="absolute left-1/2 top-1/2 flex-col-center -translate-x-1/2 -translate-y-1/2">

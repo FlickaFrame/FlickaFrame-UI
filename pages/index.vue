@@ -22,23 +22,26 @@ useIntersectionObserver(loadingElement, (vals) => {
 </script>
 
 <template>
-  <div
-    ref="listElement" v-motion="{
-      initial: {
-        y: 180,
-        opacity: 0,
-      },
-      enter: {
-        y: 0,
-        opacity: 1,
-      },
-    }"
-    class="feed-list"
-  >
-    <FeedCard v-for="item in feeds" :key="item" class="transition-all" @click="isOpen = !isOpen" />
+  <div>
+    <div
+      ref="listElement" v-motion="{
+        initial: {
+          y: 180,
+          opacity: 0,
+        },
+        enter: {
+          y: 0,
+          opacity: 1,
+        },
+      }"
+      class="feed-list"
+    >
+      <FeedCard v-for="item in feeds" :key="item" class="transition-all" @click="isOpen = !isOpen" />
+    </div>
+    <div ref="loadingElement">loading</div>
+    <FeedModal v-model:show="isOpen" />
   </div>
-  <div ref="loadingElement">loading</div>
-  <FeedModal v-model:show="isOpen" />
+
 </template>
 
 <style scoped>

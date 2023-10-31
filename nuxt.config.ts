@@ -13,9 +13,7 @@ export default defineNuxtConfig({
   ],
   vite: {
     vue: {
-      script: {
-        defineModel: true,
-      },
+      script: { defineModel: true },
     },
   },
   nitro: {
@@ -42,7 +40,13 @@ export default defineNuxtConfig({
       extensions: ['.vue'],
     },
   ],
-  experimental: {
-    viewTransition: true,
+  app: {
+    pageTransition: { name: 'slide-right', mode: 'out-in' },
+  },
+  // experimental: {
+  //   viewTransition: true,
+  // },
+  eslint: {
+    emitWarning: false,
   },
 })
