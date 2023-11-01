@@ -6,15 +6,18 @@ import { ToastProvider } from 'radix-vue'
 <template>
 
   <div class="default-layout h-screen w-screen">
-    <ToastProvider>
+    <AStyleProvider hash-priority="high">
+      <ToastProvider>
 
-      <BaseHeader class="col-span-2" />
-      <BaseSidebar class="row-start-2 row-end-3" />
-      <div class="col-span-1 row-span-1 overflow-y-scroll">
-        <slot />
-      </div>
-      <UiToast root />
-    </ToastProvider>
+        <BaseHeader class="col-span-2" />
+        <BaseSidebar class="row-start-2 row-end-3" />
+        <div class="col-span-1 row-span-1 overflow-y-scroll">
+          <slot />
+        </div>
+        <UiToast root />
+      </ToastProvider>
+    </AStyleProvider>
+
   </div>
 
 </template>

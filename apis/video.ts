@@ -9,7 +9,7 @@ export async function uploadVideoFile(file: File, token: string, key: string) {
   formData.append('file', file)
   formData.append('token', token)
   formData.append('key', `video/${key}`)
-  return $fetch<ApiResult<VideoInfo>>('http://up-z2.qiniup.com', {
+  return $fetch<VideoInfo>('http://up-z2.qiniup.com', {
     method: 'POST',
     body: formData,
   })

@@ -40,8 +40,10 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@ant-design-vue/nuxt": "^1.1.2",
     "@nuxt/devtools": "latest",
     "@nuxtjs/eslint-module": "^4.1.0",
+    "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
     "@shadowsight9/eslint-config": "^0.0.9",
     "@unocss/transformer-directives": "^0.57.1",
     "dayjs-nuxt": "^2.1.9",

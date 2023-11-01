@@ -10,6 +10,8 @@ export default defineNuxtConfig({
     '@formkit/auto-animate',
     '@vueuse/motion/nuxt',
     'dayjs-nuxt',
+    '@pinia-plugin-persistedstate/nuxt',
+    '@ant-design-vue/nuxt',
   ],
   vite: {
     vue: {

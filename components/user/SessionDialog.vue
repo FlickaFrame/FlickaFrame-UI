@@ -3,7 +3,6 @@ import { toTypedSchema } from '@vee-validate/zod'
 import { Field as FormField, useForm } from 'vee-validate'
 import * as z from 'zod'
 import { DialogClose, DialogRoot } from 'radix-vue'
-import type Toast from '~/components/ui/toast/Toast.vue'
 import { getUserInfo, login, register } from '~/apis'
 
 enum SessionMode {
