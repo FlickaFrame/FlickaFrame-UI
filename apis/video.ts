@@ -1,16 +1,36 @@
-import type { UpTokenInfo, VideoInfo } from '~/models'
+import type { VideoCategory, VideoUploadInfo } from '~/models'
 
-export async function createVideoToken() {
-  return $fetch<ApiResult<UpTokenInfo>>('/api/video/uptoken')
+export async function postVideo(payload: VideoUploadInfo) {
+  return $fetch<ApiResult<null>>('/api/video/create', {
+    method: 'POST',
+    body: payload,
+  })
 }
 
-export async function uploadVideoFile(file: File, token: string, key: string) {
-  const formData = new FormData()
-  formData.append('file', file)
-  formData.append('token', token)
-  formData.append('key', `video/${key}`)
-  return $fetch<VideoInfo>('http://up-z2.qiniup.com', {
-    method: 'POST',
-    body: formData,
+export async function putVideo(payload: VideoUploadInfo) {
+  return $fetch<ApiResult<null>>('/api/video/create', {
+    method: 'PUT',
+    body: payload,
+  })
+}
+
+export async function getCagegory() {
+  return $fetch<ApiResult<VideoCategory[]>>('/api/video/category', {
+    onRequest({ options, request }) {
+      const { public: { baseURL } } = useRuntimeConfig()
+      // options.baseURL = process.browser ? '/' : baseURL
+
+      console.log('onRequest', options, request)
+
+      const sessionStore = useSessionStore()
+
+      if (!sessionStore.isLogin) return
+
+      options.headers = new Headers(options.headers)
+      options.headers.set('Authorization', `Bearer ${sessionStore.session.accessToken}`)
+    },
+    onRequestError(context) {
+      console.error('onRequestError', context)
+    },
   })
 }

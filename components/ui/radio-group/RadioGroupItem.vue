@@ -23,7 +23,7 @@ const props = defineProps<RadioGroupItemProps & { class?: string }>()
     <RadioGroupIndicator
       :class="cn('flex items-center justify-center', props.class)"
     >
-      <Circle class="w-2.5 h-2.5 text-foreground" />
+      <Circle class="h-2.5 w-2.5 text-foreground" />
     </RadioGroupIndicator>
   </RadioGroupItem>
 </template>

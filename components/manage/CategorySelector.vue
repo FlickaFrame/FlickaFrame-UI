@@ -1,26 +1,23 @@
 <script setup lang='ts'>
+const selectedValue = defineModel<number>({ default: 1 })
 
-const selectedValue = defineModel<string>({ default: '' })
+const { data, pending } = useFetch('/api/video/category')
+
 </script>
 
 <template>
   <UiSelect v-model="selectedValue">
 
     <UiSelectTrigger>
-      <UiSelectValue placeholder="为你的视频选择合适分类吧" default="动漫" />
+      <UiSelectValue :placeholder="pending ? '加载中' : '选择分类' " :default="1" />
     </UiSelectTrigger>
 
     <UiSelectContent>
-      <UiSelectGroup>
-        <UiSelectItem value="动漫">
-          动漫
+      <UiSelectGroup v-for="item in data?.data.categoryList" :key="item.id">
+        <UiSelectItem :value="item.id">
+          {{ item.name }}
         </UiSelectItem>
-        <UiSelectItem value="游戏">
-          游戏
-        </UiSelectItem>
-        <UiSelectItem value="美食">
-          美食
-        </UiSelectItem>
+
       </UiSelectGroup>
     </UiSelectContent>
   </UiSelect>

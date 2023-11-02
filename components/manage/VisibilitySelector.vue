@@ -1,17 +1,14 @@
 <script setup lang='ts'>
 const selectedValue = defineModel<number>({ default: 1 })
-
+const radioOptions = [
+  { label: '公开', value: 1 },
+  { label: '私有', value: 2 },
+]
 </script>
 
 <template>
-  <UiRadioGroup v-model="selectedValue" default-value="option-one" class="gap-8 border rounded-lg p-4">
-    <div class="flex items-center space-x-2">
-      <UiRadioGroupItem id="option-one" :value="1" />
-      <UiLabel for="option-one">公开</UiLabel>
-    </div>
-    <div class="flex items-center space-x-2">
-      <UiRadioGroupItem id="option-two" :value="2" />
-      <UiLabel for="option-two">私有</UiLabel>
-    </div>
-  </UiRadioGroup>
+
+  <ARadioGroup v-model:value="selectedValue">
+    <ARadio v-for="item in radioOptions" :key="item.value" :value="item.value">{{ item.label }}</ARadio>
+  </ARadioGroup>
 </template>

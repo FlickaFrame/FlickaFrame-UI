@@ -4,7 +4,7 @@ export default defineNuxtPlugin(() => {
   globalThis.$fetch = ofetch.create({
     onRequest({ options }) {
       const { public: { baseURL } } = useRuntimeConfig()
-      options.baseURL = baseURL
+      options.baseURL = process.browser ? '/' : baseURL
 
       const sessionStore = useSessionStore()
 

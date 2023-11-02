@@ -2,21 +2,21 @@
 import type { Dayjs } from 'dayjs'
 
 const props = defineProps<{
-  modelValue?: Dayjs
+  modelValue: number | undefined
 }>()
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', val?: Dayjs): void
+  (e: 'update:modelValue', val: number | undefined): void
 }>()
 const dayjs = useDayjs()
 const checked = ref(false)
 
 const date = computed<Dayjs | undefined>({
   get() {
-    return props.modelValue || undefined
+    return props.modelValue ? dayjs(props.modelValue) : undefined
   },
   set(val) {
-    emit('update:modelValue', val)
+    emit('update:modelValue', val ? dayjs(val).valueOf() : undefined)
   },
 })
 
@@ -26,16 +26,15 @@ watch(checked, (val) => {
   } else {
     date.value = undefined
   }
-})
+}, { immediate: true })
 
 </script>
 
 <template>
   <div class="h-10 flex items-center gap-2 border rounded-lg px-4 py-8 text-sm">
-    延时上传：{{ checked ? '开' : '关' }}
+    定时发布：{{ checked ? '开' : '关' }}
     <UiSwitch v-model:checked="checked" />
     <ADatePicker v-show="checked" v-model:value="date" show-time />
-    {{ date }}
 
   </div>
 

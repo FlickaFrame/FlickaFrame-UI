@@ -9,7 +9,7 @@ const { rootElement } = useCardHeight()
 </script>
 
 <template>
-  <!-- v-motion-pop-bottom -->
+
   <div
     ref="rootElement"
     class="card w-full flex flex-col overflow-hidden rounded-5 bg-gray-100 shadow"
@@ -31,10 +31,3 @@ const { rootElement } = useCardHeight()
   </div>
 
 </template>
-
-<style scoped>
-.card {
-  view-transition-name: var(--i);
-}
-
-</style>

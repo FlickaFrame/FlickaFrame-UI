@@ -5,7 +5,7 @@ import { ToastProvider } from 'radix-vue'
 
 <template>
 
-  <div class="default-layout h-screen w-screen">
+  <div class="default-layout h-screen w-full">
     <AStyleProvider hash-priority="high">
       <ToastProvider>
 

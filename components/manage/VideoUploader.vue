@@ -1,19 +1,12 @@
 <script setup lang='ts'>
-import SparkMD5 from 'spark-md5'
+import { createFileToken, getFileUrl, uploadFile } from '~/apis'
+import { UpTokenType } from '~/models'
+
 const selectFileElement = ref<HTMLInputElement | null>(null)
 
-function generateMD5(file: File): Promise<string> {
-  const spark = new SparkMD5.ArrayBuffer()
-  const fileReader = new FileReader()
-  return new Promise((resolve) => {
-    fileReader.onload = (e) => {
-      spark.append(e.target?.result as ArrayBuffer)
-      const md5 = spark.end()
-      resolve(md5)
-    }
-    fileReader.readAsArrayBuffer(file)
-  })
-}
+const playUrl = defineModel<string | undefined>()
+
+const uploadResult = ref({})
 
 const isUploading = ref(false)
 
@@ -31,22 +24,18 @@ async function onVideoSelect() {
       toast.publish({ type: 'warning', desc: '上传失败' })
     } else {
       toast.publish({ desc: '上传成功' })
-      navigateTo({
-        path: '/video-edit',
-        query: { hash: result.hash, key: result.key },
-      })
+      uploadResult.value = result
+      playUrl.value = getFileUrl(result.key)
     }
   }
 }
 
 async function upload(file: File) {
-  const { success: tokenSuccess, data: tokenData } = await createVideoToken()
+  const { success: tokenSuccess, data: tokenData } = await createFileToken({ uploadType: UpTokenType.Video })
 
   if (!tokenSuccess) return false
 
-  const key = await generateMD5(file)
-
-  return uploadVideoFile(file, tokenData!.upToken, key)
+  return uploadFile(file, tokenData!.upToken, UpTokenType.Video)
 }
 </script>
 
@@ -56,11 +45,17 @@ async function upload(file: File) {
     <div
       class="relative h-80 w-full border-2 rounded-md border-dotted bg-foreground/5 hover-border-indigo-600"
     >
-      <input ref="selectFileElement" class="h-full w-full cursor-pointer opacity-0" type="file" accept="video/*" @change="onVideoSelect">
+      <input
+        ref="selectFileElement"
+        class="h-full w-full cursor-pointer opacity-0"
+        type="file"
+        accept="video/*"
+        @change="onVideoSelect"
+      >
       <div
         class="pointer-events-none absolute left-1/2 top-1/2 flex-col-center -translate-x-1/2 -translate-y-1/2"
       >
-        <div>拖拽视频到此或点击上传</div>
+        <div>拖拽视频到此或点击上传 {{ uploadResult }}</div>
         <UiButton
           class="mt-2 w-30 rounded-sm"
           :disabled="isUploading"

@@ -12,7 +12,9 @@ export default defineNuxtConfig({
     'dayjs-nuxt',
     '@pinia-plugin-persistedstate/nuxt',
     '@ant-design-vue/nuxt',
+    'nuxt-swiper',
   ],
+  ssr: false,
   vite: {
     vue: {
       script: { defineModel: true },
@@ -21,9 +23,10 @@ export default defineNuxtConfig({
   nitro: {
     devProxy: {
       '/api': {
-        target: 'http://localhost:8080/api/v1',
+        target: process.env.NUXT_PUBLIC_API_BASE,
         changeOrigin: true,
         prependPath: true,
+        ws: true,
       },
     },
   },
@@ -45,9 +48,6 @@ export default defineNuxtConfig({
   app: {
     pageTransition: { name: 'slide-right', mode: 'out-in' },
   },
-  // experimental: {
-  //   viewTransition: true,
-  // },
   eslint: {
     emitWarning: false,
   },
