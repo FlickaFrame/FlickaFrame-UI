@@ -22,9 +22,17 @@ export interface UserResponse extends UserRegisterRequest {
 
 export interface User {
   avatarUrl: string
-  id: number
+  userId: number
   info: string
   nickName: string
   phone: string
-  sex: number
+  gender: number
+  slogan: string
+  collectionsVideoCount: number
+  followerCount: number
+  followingCount: number
+  isFollow: boolean
+  likeCount: number
+  likeVideoCount: number
+  publishVideoCount: number
 }
