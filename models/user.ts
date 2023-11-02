@@ -16,8 +16,8 @@ export interface SessionResponse {
 
 }
 
-export interface UserResponse {
-  userInfo: User
+export interface UserResponse extends UserRegisterRequest {
+
 }
 
 export interface User {

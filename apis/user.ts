@@ -26,7 +26,7 @@ export async function getUserInfo() {
   const response = await $fetch<ApiResult<UserResponse>>('/api/user/detail')
 
   if (response.success) {
-    store.info = response.data.userInfo
+    store.info = response.data
   }
 
   return response

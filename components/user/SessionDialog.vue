@@ -69,7 +69,7 @@ const handleSubmit = form.handleSubmit(async (values) => {
     if (loginSucess) {
       const { success: infoSucess, data } = await getUserInfo()
       if (infoSucess) {
-        toast.publish({ title: '登录成功', desc: `欢迎回来${data.userInfo.nickName}` })
+        toast.publish({ title: '登录成功', desc: `欢迎回来${data.nickName}` })
         isOpen.value = false
       }
     } else {
