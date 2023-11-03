@@ -1,4 +1,5 @@
 import type { SessionResponse, UserLoginRequest, UserResponse } from '~/models/user'
+import type { FollowListResponse, FollowPageOption } from '~/models/follow'
 import { useSessionStore } from '#imports'
 
 export async function login(data: UserLoginRequest) {
@@ -34,5 +35,19 @@ export async function getUserInfo() {
 
 export async function getUserInfoById(userid: number) {
   const response = await $fetch<ApiResult<UserResponse>>(`/api/user/detail/${userid}`)
+  return response
+}
+
+export async function getMyFollowingList(pageOption: FollowPageOption) {
+  const response = await $fetch<ApiResult<FollowListResponse>>('/api/user/me/following', {
+    query: pageOption,
+  })
+  return response
+}
+
+export async function getMyFollowerList(pageOption: FollowPageOption) {
+  const response = await $fetch<ApiResult<FollowListResponse>>('/api/user/me/followers', {
+    query: pageOption,
+  })
   return response
 }
