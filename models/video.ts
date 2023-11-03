@@ -23,16 +23,12 @@ export interface VideoItem {
   width: number
   thumbUrl: string
   playUrl: string
-  interaction: VideoInteractInfo
   author: VideoUserInfo
-}
 
-export interface VideoInteractInfo {
-  liked: boolean
-  likedCount: string
-  isFollow: boolean
-  shareNum: number
+  favoriteCount: number
   commentNum: number
+  shareNum: number
+  isFavorite: boolean
 }
 
 export interface VideoUserInfo {
