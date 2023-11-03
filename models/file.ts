@@ -4,6 +4,10 @@ export enum UpTokenType {
   Avatar = 'avatar',
 }
 
+export interface OssHostResponse {
+  endpoint: string
+}
+
 export interface UpTokenQuery {
   uploadType: UpTokenType
 }

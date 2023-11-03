@@ -3,7 +3,7 @@
 import { Field as FormField, useForm } from 'vee-validate'
 import * as z from 'zod'
 import { toTypedSchema } from '@vee-validate/zod'
-import { postVideo } from '~/apis'
+import { getUrlOssKey, postVideo } from '~/apis'
 
 const form = useForm({
   validationSchema: toTypedSchema(z.object({
@@ -19,6 +19,7 @@ const form = useForm({
 })
 
 const handleSubmit = form.handleSubmit(async (values) => {
+  values.thumbUrl = getUrlOssKey(values.thumbUrl)
   const { success } = await postVideo(values)
   if (!success) {
     message.error('投稿失败')
@@ -57,7 +58,7 @@ const handleSubmit = form.handleSubmit(async (values) => {
 
       <FormField v-slot="{ componentField }" name="title">
         <UiFormItem>
-          <UiFormLabel> {{ componentField }}</UiFormLabel>
+          <UiFormLabel>全部 {{ componentField }}</UiFormLabel>
           <UiFormControl>
             <UiInput v-bind="componentField" />
           </UiFormControl>

@@ -65,7 +65,9 @@ async function customRequest(option: UploadRequestOption) {
 
   try {
     const { key } = await uploadFile(option.file, tokenData.upToken, UpTokenType.Cover)
-    option.onSuccess({ thumbUrl: getFileUrl(key) })
+
+    const thumbUrl = await getFileUrl(key)
+    option.onSuccess({ thumbUrl })
   } catch (e) {
     message.error('上传文件失败')
     option.onError({ })

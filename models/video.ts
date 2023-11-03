@@ -6,8 +6,8 @@ export interface VideoFeedResponse {
 
 export interface VideoFeedQuery {
   authorID?: string
-  categoryId?: string
-  cursor?: number
+  categoryId?: number
+  cursor?: string
   limit?: number
   tag?: string
 }
@@ -19,8 +19,8 @@ export interface VideoItem {
   tags: string[]
   height: number
   width: number
-  coverUrl: string
-  videoUrl: string
+  thumbUrl: string
+  playUrl: string
   interaction: VideoInteractInfo
   user: VideoUserInfo
   publishTime: number // 毫秒时间戳

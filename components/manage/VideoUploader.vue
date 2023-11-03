@@ -1,5 +1,5 @@
 <script setup lang='ts'>
-import { createFileToken, getFileUrl, uploadFile } from '~/apis'
+import { createFileToken, uploadFile } from '~/apis'
 import { UpTokenType } from '~/models'
 
 const selectFileElement = ref<HTMLInputElement | null>(null)
@@ -25,7 +25,7 @@ async function onVideoSelect() {
     } else {
       toast.publish({ desc: '上传成功' })
       uploadResult.value = result
-      playUrl.value = getFileUrl(result.key)
+      playUrl.value = result.key
     }
   }
 }

@@ -14,9 +14,9 @@ const avatarVariant = cva(
   {
     variants: {
       size: {
-        sm: 'h-10 w-10 text-xs',
-        base: 'h-16 w-16 text-xl',
-        lg: 'h-32 w-32 text-5xl',
+        sm: 'h-5 w-5 text-xs',
+        base: 'h-10 w-10',
+        lg: 'h-14 w-14 text-lg',
       },
       shape: {
         circle: 'rounded-full',

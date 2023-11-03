@@ -1,5 +1,6 @@
-import type { FileResponse, UpTokenQuery, UpTokenResponse, UpTokenType } from '~/models'
+import type { FileResponse, OssHostResponse, UpTokenQuery, UpTokenResponse, UpTokenType } from '~/models'
 import SparkMD5 from 'spark-md5'
+import { joinURL, parseURL } from 'ufo'
 
 function generateMD5(file: File): Promise<string> {
   const spark = new SparkMD5.ArrayBuffer()
@@ -15,7 +16,7 @@ function generateMD5(file: File): Promise<string> {
 }
 
 export async function createFileToken(query: UpTokenQuery) {
-  return $fetch<ApiResult<UpTokenResponse>>('/api/video/uptoken', {
+  return $fetch<ApiResult<UpTokenResponse>>('/api/oss/uptoken', {
     query,
   })
 }
@@ -32,6 +33,13 @@ export async function uploadFile(file: File, token: string, fileType: UpTokenTyp
   })
 }
 
-export function getFileUrl(key: string) {
-  return `http://s2i8a2ssf.hn-bkt.clouddn.com/${key}`
+export async function getFileUrl(key: string) {
+  const { success, data } = await $fetch<ApiResult<OssHostResponse>>('/api/oss/endpoint')
+  const host = success ? data.endpoint : 'http://s2i8a2ssf.hn-bkt.clouddn.com'
+
+  return joinURL(host, key)
+}
+
+export function getUrlOssKey(url: string) {
+  return parseURL(url).pathname.substring(1)
 }
