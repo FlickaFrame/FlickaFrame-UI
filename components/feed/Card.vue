@@ -32,13 +32,17 @@ function useVideoCard() {
     }
   })
 
+  let playPromise: Promise<void> | undefined
+
   watch(isCardHovered, async (newVal) => {
     await nextTick()
     if (!newVal) {
-      videoElement.value?.pause()
+      if (playPromise) {
+        playPromise.then(() => videoElement.value?.pause())
+      }
     } else if (videoElement.value) {
       videoElement.value.volume = 0
-      videoElement.value.play()
+      playPromise = videoElement.value.play()
     }
   })
 
