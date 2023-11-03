@@ -21,7 +21,7 @@ function handleLogout() {
       <UiDropdownMenuTrigger>
         <UiButton variant="secondary" class="mr-4 flex-center gap-2 whitespace-nowrap py-6 text-base">
           <UiAvatar>
-            <UiAvatarImage :src="store.info.avatarUrl" alt="user avatar" />
+            <UiAvatarImage :src="store.info.avatarUrl" :alt="store.info.nickName" />
             <UiAvatarFallback>{{ store.info.nickName }}</UiAvatarFallback>
           </UiAvatar>
           {{ store.info.nickName }}
@@ -30,7 +30,7 @@ function handleLogout() {
       <UiDropdownMenuContent>
         <UiDropdownMenuLabel> {{ store.info.nickName }}</UiDropdownMenuLabel>
         <UiDropdownMenuSeparator />
-        <UiDropdownMenuItem>我的频道</UiDropdownMenuItem>
+        <UiDropdownMenuItem @click="navigateTo('/my')">我的频道</UiDropdownMenuItem>
         <UiDropdownMenuItem @click="handleLogout">退出登录</UiDropdownMenuItem>
       </UiDropdownMenuContent>
     </UiDropdownMenu>
