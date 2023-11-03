@@ -13,7 +13,7 @@ const { data } = useAsyncData(async () => {
 
 <template>
 
-  <div class="flex flex-wrap justify-start gap-6 overflow-hidden px-6 py-3">
+  <div class="z-10 flex flex-wrap justify-start gap-6 overflow-hidden px-6 py-3">
     <UiButton
       v-for="item in data"
       :key="item.id" variant="outline"
