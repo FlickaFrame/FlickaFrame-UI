@@ -1,7 +1,11 @@
 <script setup lang='ts'>
+import { getCagegory } from '~/apis'
 const selectedValue = defineModel<number>({ default: 1 })
 
-const { data, pending } = useFetch('/api/video/category')
+const { data } = useAsyncData(async () => {
+  const res = await getCagegory()
+  return res.data.categoryList
+})
 
 </script>
 
@@ -13,7 +17,7 @@ const { data, pending } = useFetch('/api/video/category')
     </UiSelectTrigger>
 
     <UiSelectContent>
-      <UiSelectGroup v-for="item in data?.data.categoryList" :key="item.id">
+      <UiSelectGroup v-for="item in data" :key="item.id">
         <UiSelectItem :value="item.id">
           {{ item.name }}
         </UiSelectItem>

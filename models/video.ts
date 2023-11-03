@@ -1,14 +1,15 @@
-// "categoryList": [
-//   {
-//     "id": {},
-//     "name": "string"
-//   }
-// ]
-
 export interface VideoFeedResponse {
   next: string
   list: VideoItem[]
   isEnd: boolean
+}
+
+export interface VideoFeedQuery {
+  authorID?: string
+  categoryId?: string
+  cursor?: number
+  limit?: number
+  tag?: string
 }
 
 export interface VideoItem {
@@ -52,7 +53,7 @@ export interface VideoUploadInfo {
 }
 
 export interface VideoCategory {
-  id: string
+  id: number
   name: string
 }
 

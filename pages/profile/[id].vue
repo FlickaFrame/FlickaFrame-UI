@@ -10,9 +10,9 @@ const { success, data } = await getUserInfoById(Number(route.params.id as string
 </script>
 
 <template>
-  <div>
-    <div v-if="success" class="flex-center flex-row p-10">
-      <img class="w-50 rounded-full" :src="`${data?.avatarUrl}`">
+  <div v-if="success">
+    <div class="flex-center flex-row p-10">
+      <img class="w-50 rounded-full" :src="data?.avatarUrl">
       <div class="ml-10 flex flex-col">
         <div class="flex-center flex-row justify-start">
           <div class="text-2xl font-semibold">{{ data?.nickName }}</div>
@@ -34,6 +34,9 @@ const { success, data } = await getUserInfoById(Number(route.params.id as string
     <div class="border-grey mx-10 border-t-1 border-solid" />
 
     <div />
+  </div>
+  <div v-else>
+    404
   </div>
 
 </template>

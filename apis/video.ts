@@ -1,19 +1,25 @@
-import type { VideoCategory, VideoUploadInfo } from '~/models'
+import type { VideoCategoryResponse, VideoFeedQuery, VideoFeedResponse, VideoUploadInfo } from '~/models'
 
-export async function postVideo(payload: VideoUploadInfo) {
+export function postVideo(payload: VideoUploadInfo) {
   return $fetch<ApiResult<null>>('/api/video/create', {
     method: 'POST',
     body: payload,
   })
 }
 
-export async function putVideo(payload: VideoUploadInfo) {
+export function putVideo(payload: VideoUploadInfo) {
   return $fetch<ApiResult<null>>('/api/video/create', {
     method: 'PUT',
     body: payload,
   })
 }
 
-export async function getCagegory() {
-  return $fetch<ApiResult<VideoCategory[]>>('/api/video/category')
+export function getCagegory() {
+  return $fetch<ApiResult<VideoCategoryResponse>>('/api/video/category')
+}
+
+export function getVideoFeed(query?: VideoFeedQuery) {
+  return $fetch<ApiResult<VideoFeedResponse>>('/api/video/feed', {
+    query,
+  })
 }

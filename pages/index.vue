@@ -8,13 +8,13 @@ const isOpen = ref(false)
 
 const { cardColumnNum, listElement } = useCardColumnNum()
 
-const feeds = ref(Array.from({ length: 100 }, (_, i) => i))
+const feeds = ref(Array.from({ length: 20 }, (_, i) => i))
 
 const loadingElement = ref<HTMLElement | null>(null)
 useIntersectionObserver(loadingElement, (vals) => {
   for (const change of vals) {
     if (change.isIntersecting) {
-      feeds.value.push(...Array.from({ length: 100 }, (_, i) => i))
+      feeds.value.push(...Array.from({ length: 20 }, (_, i) => i))
     }
   }
 })
@@ -23,6 +23,8 @@ useIntersectionObserver(loadingElement, (vals) => {
 
 <template>
   <div>
+    <FeedCategoryTab />
+
     <div ref="listElement" class="feed-list">
       <FeedCard v-for="item in feeds" :key="item" class="transition-all" @click="isOpen = !isOpen" />
     </div>
