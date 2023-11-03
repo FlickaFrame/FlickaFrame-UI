@@ -1,16 +1,11 @@
 <script setup lang="ts">
 
-import { getMyFollowerList, getMyFollowingList, getUserInfoById } from '~/apis'
-import type { FollowPageOption } from '~/models/follow'
+import { followUser, getMyFollowerList, getMyFollowingList, getUserInfoById, unfollowUser } from '~/apis'
+import type { Follow, FollowListResponse, FollowPageOption } from '~/models/follow'
 
 enum TabModel {
   Following = 'following',
   Follower = 'follower',
-}
-
-enum FollowStatus {
-  NotFollow = '关注',
-  IsFollow = '已关注',
 }
 
 const route = useRoute()
@@ -21,8 +16,42 @@ const pageOption: FollowPageOption = {
   pageSize: 10,
   listAll: false,
 }
-const followingData = await getMyFollowingList(pageOption)
-const followerData = await getMyFollowerList(pageOption)
+
+const { data: followingList } = useFollowList(getMyFollowingList)
+const { data: followerList } = useFollowList(getMyFollowerList)
+
+function useFollowList(requestFn: (pageOption: FollowPageOption) => Promise<ApiResult<FollowListResponse>>) {
+  return useAsyncData(async () => {
+    const res = await requestFn(pageOption)
+    if (!res.success) message.error('获取关注列表失败')
+    return res.success ? res.data.users : []
+  })
+}
+
+async function changeFollowStatus(type: TabModel, idx: number) {
+  let followList = null
+  if (type === TabModel.Follower) followList = followerList
+  else followList = followingList
+
+  if (!followList.value) return
+  if (followList.value[idx].isFollowing) {
+    const res = await unfollowUser(followList.value[idx].userId)
+    if (!res.success) {
+      message.error('取消关注失败')
+    } else {
+      followList.value[idx].isFollowing = false
+      message.info('取消关注成功')
+    }
+  } else {
+    const res = await followUser(followList.value[idx].userId)
+    if (!res.success) {
+      message.error('关注失败')
+    } else {
+      followList.value[idx].isFollowing = true
+      message.info('关注成功')
+    }
+  }
+}
 
 </script>
 
@@ -48,7 +77,7 @@ const followerData = await getMyFollowerList(pageOption)
             <UiDialogTrigger as-child @click="tabModelValue = TabModel.Follower">
               <div class="cursor-pointer">{{ data?.followerCount }} 粉丝</div>
             </UiDialogTrigger>
-            <UiDialogContent class="sm:max-w-[625px]">
+            <UiDialogContent class="p-10 sm:max-w-[625px]">
               <UiTabs v-model:model-value="tabModelValue" class="w-full">
                 <UiTabsList class="grid grid-cols-2 w-full">
                   <UiTabsTrigger value="following">
@@ -61,7 +90,7 @@ const followerData = await getMyFollowerList(pageOption)
                 <UiTabsContent class="h-full w-full" value="following">
                   <UiScrollArea class="border rounded-md">
                     <div class="p-4">
-                      <div v-for="following in followingData.data.users" :key="following.userId">
+                      <div v-for="following, idx in followingList" :key="following.userId">
                         <div class="flex-center justify-between">
                           <div class="flex-center flex-row justify-start">
                             <img :src="following.avatarUrl" class="w-60px rounded-full">
@@ -70,7 +99,8 @@ const followerData = await getMyFollowerList(pageOption)
                               <div class="text-[#33333399]">{{ following.slogan }}</div>
                             </div>
                           </div>
-                          <UiButton v-if="following" variant="secondary">已关注</UiButton>
+                          <UiButton v-if="following.isFollowing" variant="secondary" @click="changeFollowStatus(TabModel.Following, idx)">已关注</UiButton>
+                          <UiButton v-else variant="outline" @click="changeFollowStatus(TabModel.Following, idx)">关注</UiButton>
                         </div>
                         <UiSeparator class="my-2" />
                       </div>
@@ -80,7 +110,7 @@ const followerData = await getMyFollowerList(pageOption)
                 <UiTabsContent value="follower">
                   <UiScrollArea class="border rounded-md">
                     <div class="p-4">
-                      <div v-for="follower in followerData.data.users" :key="follower.userId">
+                      <div v-for="follower, idx in followerList" :key="follower.userId">
                         <div class="flex-center justify-between">
                           <div class="flex-center flex-row justify-start">
                             <img :src="follower.avatarUrl" class="w-60px rounded-full">
@@ -89,8 +119,8 @@ const followerData = await getMyFollowerList(pageOption)
                               <div class="text-[#33333399]">{{ follower.slogan }}</div>
                             </div>
                           </div>
-                          <UiButton v-if="follower.isFollowing" variant="secondary">已关注</UiButton>
-                          <UiButton v-else variant="outline">关注</UiButton>
+                          <UiButton v-if="follower.isFollowing" variant="secondary" @click="handleUnFollow(TabModel.Follower, idx)">已关注</UiButton>
+                          <UiButton v-else variant="outline" @click="handleFollow(TabModel.Follower, idx)">关注</UiButton>
                         </div>
                         <UiSeparator class="my-2" />
                       </div>

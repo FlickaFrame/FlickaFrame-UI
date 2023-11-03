@@ -51,3 +51,17 @@ export async function getMyFollowerList(pageOption: FollowPageOption) {
   })
   return response
 }
+
+export async function followUser(userid: number) {
+  const response = await $fetch<ApiResult<boolean>>(`/api/user/follow_action/${userid}`, {
+    method: 'PUT',
+  })
+  return response
+}
+
+export async function unfollowUser(userid: number) {
+  const response = await $fetch<ApiResult<boolean>>(`/api/user/follow_action/${userid}`, {
+    method: 'DELETE',
+  })
+  return response
+}
