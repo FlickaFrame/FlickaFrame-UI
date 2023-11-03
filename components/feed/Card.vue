@@ -1,5 +1,4 @@
 <script setup lang='ts'>
-// 340px ~ 250px random
 import { useCardHeight } from '~/composables/useFeedLayout'
 import type { VideoItem } from '~/models'
 
@@ -12,8 +11,7 @@ const emit = defineEmits<{
   (e: 'hover', info: VideoItem): void
 }>()
 
-const store = useSessionStore()
-
+// TODO 卡片高度
 const maxHeight = 500
 const minHeight = 340
 const height = `${Math.floor(Math.random() * (maxHeight - minHeight) + minHeight)}px`
@@ -87,11 +85,11 @@ const { cardElement, videoElement, isCardHovered } = useVideoCard()
     <div class="mb-4 flex cursor-pointer justify-between px-3 text-sm">
       <div class="flex items-center gap-1">
         <UiAvatar size="sm">
-          <UiAvatarImage src="https://github.com/radix-vue.png" :alt="store.info.nickName" />
-          <UiAvatarFallback>{{ store.info.nickName }}</UiAvatarFallback>
+          <UiAvatarImage :src="props.info.author.avatarUrl" :alt="props.info.author.nickName" />
+          <UiAvatarFallback>{{ props.info.author.nickName }}</UiAvatarFallback>
         </UiAvatar>
         <span class="text-sm text-foreground/70">
-          博主名称
+          {{ props.info.author.nickName }}
         </span>
       </div>
       <div class="flex items-center gap-1">

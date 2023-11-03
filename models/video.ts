@@ -16,14 +16,15 @@ export interface VideoItem {
   id: string
   title: string
   description: string
-  tags: string[]
+  createdAt: number // 毫秒时间戳
+  category: VideoCategory
+  tags: VideoTag[]
   height: number
   width: number
   thumbUrl: string
   playUrl: string
   interaction: VideoInteractInfo
-  user: VideoUserInfo
-  publishTime: number // 毫秒时间戳
+  author: VideoUserInfo
 }
 
 export interface VideoInteractInfo {
@@ -35,8 +36,11 @@ export interface VideoInteractInfo {
 }
 
 export interface VideoUserInfo {
-  avatar: string
+  avatarUrl: string
   nickName: string
+  isFollow: boolean
+  slogan: string
+  gender: number
   userId: string
 }
 
@@ -59,4 +63,9 @@ export interface VideoCategory {
 
 export interface VideoCategoryResponse {
   categoryList: VideoCategory[]
+}
+
+export interface VideoTag {
+  id: number
+  name: string
 }
