@@ -15,22 +15,5 @@ export async function putVideo(payload: VideoUploadInfo) {
 }
 
 export async function getCagegory() {
-  return $fetch<ApiResult<VideoCategory[]>>('/api/video/category', {
-    onRequest({ options, request }) {
-      const { public: { baseURL } } = useRuntimeConfig()
-      // options.baseURL = process.browser ? '/' : baseURL
-
-      console.log('onRequest', options, request)
-
-      const sessionStore = useSessionStore()
-
-      if (!sessionStore.isLogin) return
-
-      options.headers = new Headers(options.headers)
-      options.headers.set('Authorization', `Bearer ${sessionStore.session.accessToken}`)
-    },
-    onRequestError(context) {
-      console.error('onRequestError', context)
-    },
-  })
+  return $fetch<ApiResult<VideoCategory[]>>('/api/video/category')
 }

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { SessionResponse, UserResponse } from '~/models'
+import type { SessionResponse, User } from '~/models'
 
 export const useSessionStore = defineStore('session', () => {
   const session = ref<Partial<SessionResponse>>({
@@ -8,17 +8,11 @@ export const useSessionStore = defineStore('session', () => {
     refreshAfter: undefined,
   })
 
-  const info = ref<UserResponse['userInfo']>({
-    avatarUrl: '',
-    id: -1,
-    info: '',
-    nickName: '',
-    phone: '',
-    sex: -1,
-  })
+  const info = ref<Partial<User>>({ })
 
   const clearSession = () => {
     session.value = {}
+    info.value = {}
   }
 
   const isLogin = computed(() => {
@@ -27,4 +21,6 @@ export const useSessionStore = defineStore('session', () => {
   })
 
   return { clearSession, isLogin, session, info }
+}, {
+  persist: true,
 })
