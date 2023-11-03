@@ -31,3 +31,8 @@ export async function getUserInfo() {
 
   return response
 }
+
+export async function getUserInfoById(userid: number) {
+  const response = await $fetch<ApiResult<UserResponse>>(`/api/user/detail/${userid}`)
+  return response
+}

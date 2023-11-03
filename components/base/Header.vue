@@ -30,7 +30,7 @@ function handleLogout() {
       <UiDropdownMenuContent>
         <UiDropdownMenuLabel> {{ store.info.nickName }}</UiDropdownMenuLabel>
         <UiDropdownMenuSeparator />
-        <UiDropdownMenuItem @click="navigateTo('/my')">我的频道</UiDropdownMenuItem>
+        <UiDropdownMenuItem @click="navigateTo(`/profile/${store.info.userId}`)">我的频道</UiDropdownMenuItem>
         <UiDropdownMenuItem @click="handleLogout">退出登录</UiDropdownMenuItem>
       </UiDropdownMenuContent>
     </UiDropdownMenu>
