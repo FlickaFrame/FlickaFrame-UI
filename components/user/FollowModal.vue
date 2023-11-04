@@ -4,7 +4,7 @@ import { followUser, getMyFollowerList, getMyFollowingList, unfollowUser } from 
 import type { FollowListResponse, FollowPageOption } from '~/models'
 
 const open = defineModel({ default: false })
-const selectedTab = defineModel('tab', { default: FollowTab.Follower })
+const selectedTab = defineModel('tab', { default: FollowTab.Following })
 
 const pageOption: FollowPageOption = {
   page: 1,
@@ -16,9 +16,9 @@ const { data: followingList } = useFollowList(getMyFollowingList)
 const { data: followerList } = useFollowList(getMyFollowerList)
 
 function useFollowList(requestFn: (pageOption: FollowPageOption) => Promise<ApiResult<FollowListResponse>>) {
-  return useAsyncData(async () => {
+  return useAsyncData(requestFn.name, async () => {
     const res = await requestFn(pageOption)
-    if (!res.success) message.error('获取关注列表失败')
+    if (!res.success) message.error('获取关注/粉丝列表失败')
     return res.success ? res.data.users : []
   })
 }
@@ -44,10 +44,10 @@ async function changeFollowStatus(id: number, isFollowing: boolean) {
   const res = isFollowing ? (await unfollowUser(id)) : (await followUser(id))
 
   if (!res.success) {
-    message.error('取消关注失败')
+    message.error(`${isFollowing ? '取消' : ''}关注失败`)
   } else {
     changedSet.value[id] = !isFollowing
-    message.info('取消关注成功')
+    message.info(`${isFollowing ? '取消' : ''}关注成功`)
   }
 }
 

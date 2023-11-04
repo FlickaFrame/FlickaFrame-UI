@@ -52,15 +52,15 @@ export async function getMyFollowerList(pageOption: FollowPageOption) {
   return response
 }
 
-export async function followUser(userid: number) {
-  const response = await $fetch<ApiResult<boolean>>(`/api/user/follow_action/${userid}`, {
+export async function followUser(userId: number) {
+  const response = await $fetch<ApiResult<boolean>>(`/api/user/follow_action/${userId}`, {
     method: 'PUT',
   })
   return response
 }
 
-export async function unfollowUser(userid: number) {
-  const response = await $fetch<ApiResult<boolean>>(`/api/user/follow_action/${userid}`, {
+export async function unfollowUser(userId: number) {
+  const response = await $fetch<ApiResult<boolean>>(`/api/user/follow_action/${userId}`, {
     method: 'DELETE',
   })
   return response
