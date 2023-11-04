@@ -8,6 +8,8 @@ function handleLogout() {
   message.info('退出登录成功')
 }
 
+const sessionDialogOpen = ref(false)
+
 </script>
 
 <template>
@@ -35,10 +37,10 @@ function handleLogout() {
       </UiDropdownMenuContent>
     </UiDropdownMenu>
 
-    <UserSessionDialog v-else>
-      <UiButton variant="secondary" class="mr-4 whitespace-nowrap border py-4 text-sm">
-        点击登录
-      </UiButton>
-    </UserSessionDialog>
+    <UiButton v-else variant="secondary" class="mr-4 whitespace-nowrap border py-4 text-sm" @click="sessionDialogOpen = true">
+      点击登录
+      <UserSessionModal v-model="sessionDialogOpen" />
+    </UiButton>
+
   </nav>
 </template>

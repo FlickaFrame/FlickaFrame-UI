@@ -2,7 +2,6 @@
 import { toTypedSchema } from '@vee-validate/zod'
 import { Field as FormField, useForm } from 'vee-validate'
 import * as z from 'zod'
-import { DialogClose, DialogRoot } from 'radix-vue'
 import { getUserInfo, login, register } from '~/apis'
 
 enum SessionMode {
@@ -11,7 +10,7 @@ enum SessionMode {
 
 const currentMode = ref<SessionMode>(SessionMode.Login)
 
-const isOpen = ref(false)
+const open = defineModel({ default: true })
 
 const sessionText = {
   [SessionMode.Login]: {
@@ -70,7 +69,7 @@ const handleSubmit = form.handleSubmit(async (values) => {
       const { success: infoSucess, data } = await getUserInfo()
       if (infoSucess) {
         toast.publish({ title: '登录成功', desc: `欢迎回来${data.nickName}` })
-        isOpen.value = false
+        open.value = false
       }
     } else {
       toast.publish({
@@ -95,10 +94,7 @@ function changeState() {
 </script>
 
 <template>
-  <DialogRoot v-model:open="isOpen">
-    <UiDialogTrigger as-child>
-      <slot />
-    </UiDialogTrigger>
+  <UiDialog v-model:open="open">
     <UiDialogContent>
       <UiDialogHeader>
         <UiDialogTitle class="text-lg">{{ currentText.title }}</UiDialogTitle>
@@ -146,11 +142,9 @@ function changeState() {
             {{ currentText.submit }}
           </UiButton>
 
-          <DialogClose>
-            <UiButton variant="outline" class="w-20">
-              取消
-            </UiButton>
-          </DialogClose>
+          <UiButton variant="outline" class="w-20" @click="open = false">
+            取消
+          </UiButton>
 
           <div class="flex-1">
             <UiButton
@@ -165,5 +159,5 @@ function changeState() {
       </Form>
     </UiDialogContent>
 
-  </DialogRoot>
+  </UiDialog>
 </template>
