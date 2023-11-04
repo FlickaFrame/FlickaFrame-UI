@@ -1,7 +1,8 @@
 <script setup lang='ts'>
-import SidebarButtons from './_SidebarButtons.vue'
 
-const menu = [
+const store = useSessionStore()
+
+const menu = computed(() => [
   {
     text: '探索',
     sumMenus: [
@@ -15,13 +16,13 @@ const menu = [
     text: '我的',
     sumMenus: [
       { icon: 'i-mdi-post', text: '创作', path: '/post' },
-      { icon: 'i-mdi-laptop-account', text: '我的频道', path: '/my' },
+      { icon: 'i-mdi-laptop-account', text: '我的频道', path: `/profile/${store.info.userId}`, show: store.isLogin },
       { icon: 'i-mdi-history', text: '历史记录', path: '/history' },
       { icon: 'i-mdi-account-heart-outline', text: '赞过', path: '/favorate' },
       { icon: 'i-mdi-message-alert-outline', text: '通知', path: '/notify' },
     ],
   },
-]
+])
 
 const fixedMenus = [
   { icon: 'i-mdi-settings', text: '设置', path: '/setting' },
@@ -41,13 +42,13 @@ const fixedMenus = [
       <h2 class="mb-2 select-none px-4 text-xl font-semibold tracking-tight text-primary">
         {{ menuItem.text }}
       </h2>
-      <SidebarButtons :menus="menuItem.sumMenus" />
+      <LayoutNavigateButtons :menus="menuItem.sumMenus" />
 
     </div>
     <div class="flex-1" />
 
     <UiSeparator class="bg-foreground/20" />
 
-    <SidebarButtons :menus="fixedMenus" />
+    <LayoutNavigateButtons :menus="fixedMenus" />
   </nav>
 </template>
