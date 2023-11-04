@@ -17,13 +17,13 @@ function handleToProfile() {
   })
 }
 
-async function changeFollowStatus(isFollowing: boolean) {
-  const res = isFollowing ? (await unfollowUser(props.info.author.userId)) : (await followUser(props.info.author.userId))
+async function changeFollowStatus(isFollow: boolean) {
+  const res = isFollow ? (await unfollowUser(props.info.author.userId)) : (await followUser(props.info.author.userId))
 
   if (!res.success) {
-    message.error(`${isFollowing ? '取消' : ''}关注失败`)
+    message.error(`${isFollow ? '取消' : ''}关注失败`)
   } else {
-    message.info(`${isFollowing ? '取消' : ''}关注成功`)
+    message.info(`${isFollow ? '取消' : ''}关注成功`)
   }
 
   emit('refresh')

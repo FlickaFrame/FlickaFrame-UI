@@ -40,14 +40,22 @@ const columnData = computed(() => {
 
 const changedSet = ref<Record<string, boolean>>({})
 
-async function changeFollowStatus(id: string, isFollowing: boolean) {
-  const res = isFollowing ? (await unfollowUser(id)) : (await followUser(id))
+async function changeFollowStatus(id: string, isFollow: boolean) {
+  const res = isFollow ? (await unfollowUser(id)) : (await followUser(id))
 
   if (!res.success) {
-    message.error(`${isFollowing ? '取消' : ''}关注失败`)
+    message.error(`${isFollow ? '取消' : ''}关注失败`)
   } else {
-    changedSet.value[id] = !isFollowing
-    message.info(`${isFollowing ? '取消' : ''}关注成功`)
+    changedSet.value[id] = !isFollow
+    message.info(`${isFollow ? '取消' : ''}关注成功`)
+  }
+}
+
+function checkFollowStatus(id: string, rawStatus: boolean) {
+  if (id in changedSet.value) {
+    return changedSet.value[id]
+  } else {
+    return rawStatus
   }
 }
 
@@ -78,7 +86,7 @@ async function changeFollowStatus(id: string, isFollowing: boolean) {
                     </div>
                   </div>
                   <UiButton
-                    v-if="changedSet[followItem.userId] || followItem.isFollowing"
+                    v-if="checkFollowStatus(followItem.userId, followItem.isFollow) === true"
                     class="whitespace-nowrap"
                     variant="secondary"
                     @click="changeFollowStatus(followItem.userId, true)"
@@ -86,7 +94,7 @@ async function changeFollowStatus(id: string, isFollowing: boolean) {
                     已关注
                   </UiButton>
                   <UiButton
-                    v-else
+                    v-else-if="checkFollowStatus(followItem.userId, followItem.isFollow) === false"
                     class="whitespace-nowrap"
                     variant="outline"
                     @click="changeFollowStatus(followItem.userId, false)"

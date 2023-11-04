@@ -8,7 +8,7 @@ export interface Follow {
   avatarUrl: string
   slogan: string
   gender: number
-  isFollowing: boolean
+  isFollow: boolean
 }
 
 export interface FollowPageOption {
