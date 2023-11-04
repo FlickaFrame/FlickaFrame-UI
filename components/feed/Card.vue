@@ -39,7 +39,6 @@ function useVideoCard() {
         playPromise.then(() => videoElement.value?.pause())
       }
     } else if (videoElement.value) {
-      videoElement.value.volume = 0
       playPromise = videoElement.value.play()
     }
   })
@@ -69,9 +68,7 @@ const { cardElement, videoElement, isCardHovered } = useVideoCard()
         ref="videoElement"
         class="card-overlay card-height"
         :class="{ '-z-1 opacity-0': !isCardHovered }"
-        autoplay
-        loop
-        playsinline
+        autoplay loop playsinline muted
         preload="none"
         wdith="100%"
         :src="props.info.playUrl"
