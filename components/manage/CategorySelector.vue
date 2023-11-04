@@ -2,9 +2,9 @@
 import { getCagegory } from '~/apis'
 const selectedValue = defineModel<number>({ default: 1 })
 
-const { data } = useAsyncData(async () => {
-  const res = await getCagegory()
-  return res.data.categoryList
+const { data, pending } = useAsyncData(async () => {
+  const { data, success } = await getCagegory()
+  return success ? data.categoryList : []
 })
 
 </script>
@@ -13,7 +13,7 @@ const { data } = useAsyncData(async () => {
   <UiSelect v-model="selectedValue">
 
     <UiSelectTrigger>
-      <UiSelectValue :placeholder="pending ? '加载中' : '选择分类' " :default="1" />
+      <UiSelectValue :placeholder="pending ? '加载中' : '选择分类' " />
     </UiSelectTrigger>
 
     <UiSelectContent>

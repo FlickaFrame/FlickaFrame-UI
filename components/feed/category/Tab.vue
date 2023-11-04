@@ -3,10 +3,15 @@ import { getCagegory } from '~/apis'
 
 const selectedId = defineModel({ default: 0 })
 
+const fixedCategory = [
+  { id: 0, name: '全部' },
+]
+
 const { data } = useAsyncData(async () => {
   const res = await getCagegory()
   if (!res.success) message.error('获取分类失败')
-  return res.success ? res.data.categoryList : []
+  const apiCategory = res.success ? res.data.categoryList : []
+  return [...fixedCategory, ...apiCategory]
 })
 
 </script>
