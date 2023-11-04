@@ -15,7 +15,7 @@ function handleOpenFollowing() {
 
 function handleOpenFollower() {
   isModalOpen.value = true
-  selectedTab.value = FollowTab.Following
+  selectedTab.value = FollowTab.Follower
 }
 
 </script>
