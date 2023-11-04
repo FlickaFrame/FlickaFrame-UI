@@ -30,6 +30,9 @@ export default defineNuxtConfig({
       },
     },
   },
+  routeRules: {
+    '/': { redirect: '/explore' },
+  },
   css: [
     '@unocss/reset/tailwind.css',
     '~/assets/common.css',

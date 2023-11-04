@@ -6,7 +6,7 @@ const menu = computed(() => [
   {
     text: '探索',
     sumMenus: [
-      { icon: 'i-mdi-home', text: '发现', path: '/' },
+      { icon: 'i-mdi-home', text: '发现', path: '/explore' },
       { icon: 'i-mdi-movie-open-star-outline', text: '推荐', path: '/recommand' },
       { icon: 'i-mdi-account-star', text: '关注', path: '/subscribe' },
       { icon: 'i-mdi-weather-hurricane-outline', text: '最热', path: '/hot' },
