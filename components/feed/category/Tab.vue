@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { getCagegory } from '~/apis'
 
-const selectedId = defineModel({ default: 1 })
+const selectedId = defineModel({ default: 0 })
 
 const { data } = useAsyncData(async () => {
   const res = await getCagegory()
