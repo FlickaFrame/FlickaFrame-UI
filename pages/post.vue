@@ -58,7 +58,7 @@ const handleSubmit = form.handleSubmit(async (values) => {
 
       <FormField v-slot="{ componentField }" name="title">
         <UiFormItem>
-          <UiFormLabel>全部 {{ componentField }}</UiFormLabel>
+          <UiFormLabel>标题 {{ componentField }}</UiFormLabel>
           <UiFormControl>
             <UiInput v-bind="componentField" />
           </UiFormControl>
