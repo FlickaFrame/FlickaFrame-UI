@@ -12,6 +12,7 @@ const { feedList, isEnd, refresh } = useFeedData(categoryId)
 const loadingElement = ref<HTMLElement | null>(null)
 
 const activeIndex = ref(-1)
+const openedIndex = ref(-1)
 
 // useIntersectionObserver(loadingElement, (vals) => {
 //   for (const change of vals) {
@@ -22,6 +23,11 @@ const activeIndex = ref(-1)
 // })
 
 // const active
+
+function handleOpenModal(idx: number) {
+  isOpen.value = true
+  openedIndex.value = idx
+}
 
 </script>
 
@@ -35,8 +41,14 @@ const activeIndex = ref(-1)
         :info="item"
         :active="idx === activeIndex"
         @hover="activeIndex = idx"
+        @click="handleOpenModal(idx)"
       />
     </div>
+    <FeedModal
+      v-model="isOpen"
+      v-model:current="openedIndex"
+      :items="feedList || []"
+    />
     <div ref="loadingElement">loading</div>
   </div>
 

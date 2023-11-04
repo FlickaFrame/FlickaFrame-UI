@@ -4,6 +4,7 @@ import ui from '@oplayer/ui'
 
 const props = withDefaults(defineProps<{
   active?: boolean
+  url: string
 }>(), {
   active: true,
 })
@@ -16,7 +17,7 @@ function useVideo() {
     if (!videoElement.value) return
     player.value = Player.make(videoElement.value, {
       source: {
-        src: 'https://oplayer.vercel.app/君の名は.mp4',
+        src: props.url,
         poster: 'https://oplayer.vercel.app/poster.png',
       },
     })

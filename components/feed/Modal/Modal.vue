@@ -1,7 +1,15 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 
-const show = defineModel('show', { default: false })
+import type { VideoItem } from '~/models'
+
+const props = defineProps<{
+  items: VideoItem[]
+}>()
+
+const cardList = computed(() => props.items)
+
+const show = defineModel({ default: false })
+const cardIndex = defineModel('current', { default: -1 })
 
 const modalElement = ref<HTMLDivElement | null>(null)
 
@@ -14,11 +22,8 @@ onKeyStroke('esc', () => {
   show.value = false
 })
 
-function useCardScroll() {
+function useCardScroll(cardIndex: Ref<number>, cardList: Ref<VideoItem[]>) {
   const scrollWindow = 2
-  const cardList = ref([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-  const cardIndex = ref(0)
-
   const slideWindow = reactive({
     start: cardIndex.value - scrollWindow,
     end: cardIndex.value + scrollWindow + 1,
@@ -83,9 +88,9 @@ function useCardScroll() {
   return { activeCardList, activeCardOrder, pending, cardNeighbours, navgate }
 }
 
-const { activeCardList, activeCardOrder, pending, cardNeighbours, navgate } = useCardScroll()
+const { activeCardList, activeCardOrder, pending, cardNeighbours, navgate } = useCardScroll(cardIndex, cardList)
 
-function handleClickCard(cardItem: number) {
+function handleClickCard(cardItem: VideoItem) {
   if (cardItem === cardNeighbours.value.current) return
 
   if (cardItem === cardNeighbours.value.prev) navgate(-1)
@@ -117,6 +122,7 @@ function handleClickCard(cardItem: number) {
           <FeedContent
             m="y-5vh first:t-10vh last:b-10vh"
             class="h-[80vh]"
+            :info="cardItem"
             :active="cardNeighbours.current === cardItem"
             @click.stop="handleClickCard(cardItem)"
           />
@@ -126,7 +132,3 @@ function handleClickCard(cardItem: number) {
   </Teleport>
 
 </template>
-
-<style scoped>
-
-</style>
