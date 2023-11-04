@@ -21,8 +21,8 @@ const sessionDialogOpen = ref(false)
 
     <UiDropdownMenu v-if="store.info.userId">
       <UiDropdownMenuTrigger>
-        <UiButton variant="secondary" class="mr-4 flex-center gap-2 whitespace-nowrap py-6 text-base">
-          <UiAvatar>
+        <UiButton variant="secondary" class="mr-4 flex-center gap-2 whitespace-nowrap py-7 text-base">
+          <UiAvatar size="base">
             <UiAvatarImage :src="store.info.avatarUrl" :alt="store.info.nickName" />
             <UiAvatarFallback>{{ store.info.nickName }}</UiAvatarFallback>
           </UiAvatar>
