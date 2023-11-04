@@ -13,29 +13,26 @@ const cardIndex = defineModel('current', { default: -1 })
 
 const modalElement = ref<HTMLDivElement | null>(null)
 
-onMounted(() => {
-  if (!modalElement.value) return
-  modalElement.value.focus()
-})
-
 onKeyStroke('esc', () => {
   show.value = false
 })
 
 function useCardScroll(cardIndex: Ref<number>, cardList: Ref<VideoItem[]>) {
   const scrollWindow = 2
-  const slideWindow = reactive({
-    start: cardIndex.value - scrollWindow,
-    end: cardIndex.value + scrollWindow + 1,
+  const leftOffset = ref(0)
+
+  const slideWindow = computed(() => {
+    const start = cardIndex.value - scrollWindow + leftOffset.value
+    const end = cardIndex.value + scrollWindow + 1
+    const length = cardList.value.length - 1
+    return {
+      start: Math.max(start, 0),
+      end: Math.min(end, length),
+    }
   })
 
   const activeCardList = computed(() => {
-    const length = cardList.value.length - 1
-
-    return cardList.value.slice(
-      slideWindow.start < 0 ? 0 : slideWindow.start,
-      slideWindow.end > length ? length : slideWindow.end,
-    )
+    return cardList.value.slice(slideWindow.value.start, slideWindow.value.end)
   })
 
   const cardNeighbours = computed(() => {
@@ -61,12 +58,13 @@ function useCardScroll(cardIndex: Ref<number>, cardList: Ref<VideoItem[]>) {
     return new Promise<void>((resolve) => {
       stopping.value = true
       cardIndex.value += offset
-      slideWindow.end += offset
+      leftOffset.value = (-offset)
 
       setTimeout(() => {
         pending.value = true
+        leftOffset.value = 0
+
         nextTick(() => {
-          slideWindow.start += offset
           setTimeout(() => {
             pending.value = false
             stopping.value = false

@@ -15,6 +15,6 @@ const props = withDefaults(defineProps<{
     :class="props.active ? '' : 'filter-blur-1 brightness-80 hover:cursor-pointer'"
   >
     <UiPlayer :active="active" :url="info.playUrl" class="h-full flex-[2_2_0%]" />
-    <FeedInteraction class="h-full max-w-300 flex-[1_1_0%] bg-background" />
+    <FeedInteraction :info="info" class="h-full max-w-300 flex-[1_1_0%] bg-background" />
   </div>
 </template>
