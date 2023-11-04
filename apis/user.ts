@@ -33,7 +33,7 @@ export async function getUserInfo() {
   return response
 }
 
-export async function getUserInfoById(userid: number) {
+export async function getUserInfoById(userid: string) {
   const response = await $fetch<ApiResult<UserResponse>>(`/api/user/detail/${userid}`)
   return response
 }
@@ -52,14 +52,14 @@ export async function getMyFollowerList(pageOption: FollowPageOption) {
   return response
 }
 
-export async function followUser(userId: number) {
+export async function followUser(userId: string) {
   const response = await $fetch<ApiResult<boolean>>(`/api/user/follow_action/${userId}`, {
     method: 'PUT',
   })
   return response
 }
 
-export async function unfollowUser(userId: number) {
+export async function unfollowUser(userId: string) {
   const response = await $fetch<ApiResult<boolean>>(`/api/user/follow_action/${userId}`, {
     method: 'DELETE',
   })

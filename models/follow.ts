@@ -3,7 +3,7 @@ export interface FollowListResponse {
 }
 
 export interface Follow {
-  userId: number
+  userId: string
   nickName: string
   avatarUrl: string
   slogan: string

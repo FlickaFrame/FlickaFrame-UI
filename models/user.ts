@@ -22,7 +22,7 @@ export interface UserResponse extends User {
 
 export interface User {
   avatarUrl: string
-  userId: number
+  userId: string
   info: string
   nickName: string
   phone: string

@@ -1,4 +1,4 @@
-import type { VideoCategoryResponse, VideoFeedQuery, VideoFeedResponse, VideoUploadInfo } from '~/models'
+import type { VideoCategoryResponse, VideoFeedQuery, VideoFeedResponse, VideoInfoResponse, VideoUploadInfo } from '~/models'
 
 export function postVideo(payload: VideoUploadInfo) {
   return $fetch<ApiResult<null>>('/api/video/create', {
@@ -22,4 +22,8 @@ export function getVideoFeed(query?: VideoFeedQuery) {
   return $fetch<ApiResult<VideoFeedResponse>>('/api/video/feed', {
     query,
   })
+}
+
+export function getVideoInfo(videoId: string) {
+  return $fetch<ApiResult<VideoInfoResponse>>(`/api/video/detail/${videoId}`)
 }

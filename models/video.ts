@@ -53,7 +53,7 @@ export interface VideoUploadInfo {
 }
 
 export interface VideoCategory {
-  id: number
+  id: string
   name: string
 }
 
@@ -61,7 +61,11 @@ export interface VideoCategoryResponse {
   categoryList: VideoCategory[]
 }
 
+export interface VideoInfoResponse {
+  video: VideoItem
+}
+
 export interface VideoTag {
-  id: number
+  id: string
   name: string
 }

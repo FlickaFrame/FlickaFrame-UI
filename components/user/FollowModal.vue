@@ -38,9 +38,9 @@ const columnData = computed(() => {
   ]
 })
 
-const changedSet = ref<Record<number, boolean>>({})
+const changedSet = ref<Record<string, boolean>>({})
 
-async function changeFollowStatus(id: number, isFollowing: boolean) {
+async function changeFollowStatus(id: string, isFollowing: boolean) {
   const res = isFollowing ? (await unfollowUser(id)) : (await followUser(id))
 
   if (!res.success) {
@@ -77,8 +77,22 @@ async function changeFollowStatus(id: number, isFollowing: boolean) {
                       <div class="text-[#33333399]">{{ followItem.slogan }}</div>
                     </div>
                   </div>
-                  <UiButton v-if="changedSet[followItem.userId] || followItem.isFollowing" variant="secondary" @click="changeFollowStatus(followItem.userId, true)">已关注</UiButton>
-                  <UiButton v-else variant="outline" @click="changeFollowStatus(followItem.userId, false)">关注</UiButton>
+                  <UiButton
+                    v-if="changedSet[followItem.userId] || followItem.isFollowing"
+                    class="whitespace-nowrap"
+                    variant="secondary"
+                    @click="changeFollowStatus(followItem.userId, true)"
+                  >
+                    已关注
+                  </UiButton>
+                  <UiButton
+                    v-else
+                    class="whitespace-nowrap"
+                    variant="outline"
+                    @click="changeFollowStatus(followItem.userId, false)"
+                  >
+                    关注
+                  </UiButton>
                 </div>
                 <UiSeparator class="my-2" />
               </div>

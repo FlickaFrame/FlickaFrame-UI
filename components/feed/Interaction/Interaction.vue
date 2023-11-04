@@ -1,15 +1,32 @@
 <script setup lang="ts">
 import type { VideoItem } from '~/models'
+import { followUser, unfollowUser } from '~/apis'
 import dayjs from 'dayjs'
 
 const props = defineProps<{
   info: VideoItem
 }>()
 
+const emit = defineEmits<{
+  (e: 'refresh'): void
+}>()
+
 function handleToProfile() {
   navigateTo(`/profile/${props.info.author.userId}`, {
     open: { target: '_blank' },
   })
+}
+
+async function changeFollowStatus(isFollowing: boolean) {
+  const res = isFollowing ? (await unfollowUser(props.info.author.userId)) : (await followUser(props.info.author.userId))
+
+  if (!res.success) {
+    message.error(`${isFollowing ? '取消' : ''}关注失败`)
+  } else {
+    message.info(`${isFollowing ? '取消' : ''}关注成功`)
+  }
+
+  emit('refresh')
 }
 </script>
 
@@ -26,7 +43,22 @@ function handleToProfile() {
         {{ info.author.nickName }}
       </a>
       <div class="flex-1" />
-      <UiButton class="px-6">关注</UiButton>
+      <UiButton
+        v-if="info.author.isFollow"
+        variant="outline"
+        class="px-6"
+        @click="changeFollowStatus(true)"
+      >
+        已关注
+      </UiButton>
+      <UiButton
+        v-else
+        variant="outline"
+        class="px-6"
+        @click="changeFollowStatus(false)"
+      >
+        关注
+      </UiButton>
 
     </div>
     <!-- post简介 -->
