@@ -6,6 +6,10 @@ import type { FollowListResponse, FollowPageOption } from '~/models'
 const open = defineModel({ default: false })
 const selectedTab = defineModel('tab', { default: FollowTab.Following })
 
+const route = useRoute()
+
+const userId = computed(() => route.params.id as string)
+
 const pageOption: FollowPageOption = {
   page: 1,
   pageSize: 10,
@@ -15,9 +19,9 @@ const pageOption: FollowPageOption = {
 const { data: followingList } = useFollowList(getMyFollowingList)
 const { data: followerList } = useFollowList(getMyFollowerList)
 
-function useFollowList(requestFn: (pageOption: FollowPageOption) => Promise<ApiResult<FollowListResponse>>) {
+function useFollowList(requestFn: (pageOption: FollowPageOption, userId?: string) => Promise<ApiResult<FollowListResponse>>) {
   return useAsyncData(requestFn.name, async () => {
-    const res = await requestFn(pageOption)
+    const res = await requestFn(pageOption, userId.value)
     if (!res.success) message.error('获取关注/粉丝列表失败')
     return res.success ? res.data.users : []
   })

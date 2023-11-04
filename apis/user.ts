@@ -33,20 +33,20 @@ export async function getUserInfo() {
   return response
 }
 
-export async function getUserInfoById(userid: string) {
-  const response = await $fetch<ApiResult<UserResponse>>(`/api/user/detail/${userid}`)
+export async function getUserInfoById(userId: string) {
+  const response = await $fetch<ApiResult<UserResponse>>(`/api/user/detail/${userId}`)
   return response
 }
 
-export async function getMyFollowingList(pageOption: FollowPageOption) {
-  const response = await $fetch<ApiResult<FollowListResponse>>('/api/user/me/following', {
+export async function getMyFollowingList(pageOption: FollowPageOption, userId = 'me') {
+  const response = await $fetch<ApiResult<FollowListResponse>>(`/api/user/${userId}/following`, {
     query: pageOption,
   })
   return response
 }
 
-export async function getMyFollowerList(pageOption: FollowPageOption) {
-  const response = await $fetch<ApiResult<FollowListResponse>>('/api/user/me/followers', {
+export async function getMyFollowerList(pageOption: FollowPageOption, userId = 'me') {
+  const response = await $fetch<ApiResult<FollowListResponse>>(`/api/user/${userId}/followers`, {
     query: pageOption,
   })
   return response

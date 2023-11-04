@@ -3,7 +3,7 @@ import { FollowTab } from '~/models'
 import { getUserInfoById } from '~/apis'
 
 const route = useRoute()
-const { success, data } = await getUserInfoById(Number(route.params.id as string))
+const { success, data } = await getUserInfoById(route.params.id as string)
 const selectedTab = ref<FollowTab>(FollowTab.Following)
 
 const isModalOpen = ref(false)
