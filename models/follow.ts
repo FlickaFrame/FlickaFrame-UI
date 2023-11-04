@@ -16,3 +16,8 @@ export interface FollowPageOption {
   pageSize: number
   listAll: boolean
 }
+
+export enum FollowTab {
+  Following = 'following',
+  Follower = 'follower',
+}

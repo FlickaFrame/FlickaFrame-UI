@@ -3,7 +3,7 @@ import { getCagegory } from '~/apis'
 
 const selectedId = defineModel({ default: 1 })
 
-const { data, pending, refresh } = useAsyncData(async () => {
+const { data } = useAsyncData(async () => {
   const res = await getCagegory()
   if (!res.success) message.error('获取分类失败')
   return res.success ? res.data.categoryList : []
