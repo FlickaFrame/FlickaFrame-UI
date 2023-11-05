@@ -2,6 +2,10 @@
 import { createFileToken, uploadFile } from '~/apis'
 import { UpTokenType } from '~/models'
 
+const emit = defineEmits<{
+  (e: 'uploaded', val: string): void
+}>()
+
 const selectFileElement = ref<HTMLInputElement | null>(null)
 
 const playUrl = defineModel<string | undefined>()
@@ -26,6 +30,7 @@ async function onVideoSelect() {
       toast.publish({ desc: '上传成功' })
       uploadResult.value = result
       playUrl.value = result.key
+      emit('uploaded', result.key)
     }
   }
 }

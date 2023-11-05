@@ -20,6 +20,12 @@ function getInitFileList(): UploadProps['fileList'] {
 
 const fileList = ref<UploadProps['fileList']>(getInitFileList())
 
+watch(fileUrl, (prev, next) => {
+  if (!prev && next) {
+    fileList.value = getInitFileList()
+  }
+})
+
 watch(fileList, (newVal) => {
   const [firstImg] = newVal ?? []
 

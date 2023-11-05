@@ -45,8 +45,8 @@ export interface VideoUploadInfo {
   playUrl: string
   thumbUrl: string
   title: string
-  description: string
-  category: number
+  description?: string
+  category: string
   tags: string[] // ['tag1', 'tag2']
   publishTime?: number // timestamp
   visibility: number // 1 2

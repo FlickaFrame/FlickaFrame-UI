@@ -3,20 +3,26 @@
 import { Field as FormField, useForm } from 'vee-validate'
 import * as z from 'zod'
 import { toTypedSchema } from '@vee-validate/zod'
-import { getUrlOssKey, postVideo } from '~/apis'
+import { getFileUrl, getUrlOssKey, postVideo } from '~/apis'
 
 const form = useForm({
   validationSchema: toTypedSchema(z.object({
     playUrl: z.string().min(1),
     thumbUrl: z.string().min(1),
-    title: z.string().min(5),
-    description: z.string().min(5),
-    category: z.number().default(1),
+    title: z.string().min(1),
+    description: z.string().optional(),
+    category: z.string().default('1'),
     tags: z.array(z.string()).default([]),
     publishTime: z.number().optional(),
     visibility: z.number().default(1),
   })),
 })
+
+async function handleVideoUploaded(videoUrl: string) {
+  const thumbKey = `cover/${videoUrl.split('/')[1]}`
+  const thumbUrl = await getFileUrl(thumbKey)
+  form.setFieldValue('thumbUrl', thumbUrl)
+}
 
 const handleSubmit = form.handleSubmit(async (values) => {
   values.thumbUrl = getUrlOssKey(values.thumbUrl)
@@ -40,7 +46,7 @@ const handleSubmit = form.handleSubmit(async (values) => {
         <UiFormItem>
           <UiFormLabel>视频 {{ componentField }}</UiFormLabel>
           <UiFormControl>
-            <ManageVideoUploader v-bind="componentField" />
+            <ManageVideoUploader v-bind="componentField" @uploaded="handleVideoUploaded" />
           </UiFormControl>
           <UiFormMessage />
         </UiFormItem>
