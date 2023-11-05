@@ -21,8 +21,8 @@ dependencies:
     specifier: ^1.2.31
     version: 1.2.31
   '@oplayer/ui':
-    specifier: 1.2.34-beta.3
-    version: 1.2.34-beta.3(@oplayer/core@1.2.31)
+    specifier: 1.2.32
+    version: 1.2.32(@oplayer/core@1.2.31)
   '@pinia/nuxt':
     specifier: ^0.5.1
     version: 0.5.1(typescript@5.2.2)(vue@3.3.6)
@@ -62,6 +62,9 @@ dependencies:
   nuxt-swiper:
     specifier: ^1.2.2
     version: 1.2.2
+  oplayer-ui-plus:
+    specifier: ^1.2.34
+    version: 1.2.34(@oplayer/core@1.2.31)
   radix-vue:
     specifier: ^1.0.1
     version: 1.0.1(vue@3.3.6)
@@ -1478,8 +1481,8 @@ packages:
     resolution: {integrity: sha512-KBoTdwaqcCVxO3xi7C+Z/2fRtSKc5FT/6PzUb/x6+vVUfNzU6hlbMqNDUrOqyERZHC+GHkFKhl0LJ255hIAYHQ==}
     dev: false
 
-  /@oplayer/ui@1.2.34-beta.3(@oplayer/core@1.2.31):
-    resolution: {integrity: sha512-lxTRGlN+GjK01YpBdfK7BfK7mT+v2QeI+u9ubio3d0ZKqLFHzgA+sfhQWPFKA3ouj8skSTiAysRftGZ6RAfEng==}
+  /@oplayer/ui@1.2.32(@oplayer/core@1.2.31):
+    resolution: {integrity: sha512-Zmu7DlD5kYP5HHD01azWVrf33fOUe9Nob/77RSjFykdwx3JoBHyl2C2+esAm7PDdtSLbkzxLmmQzaOZgsBSmwg==}
     peerDependencies:
       '@oplayer/core': '>=1.0.0'
     dependencies:
@@ -6979,6 +6982,14 @@ packages:
       supports-color: 9.4.0
       undici: 5.26.5
       yargs-parser: 21.1.1
+
+  /oplayer-ui-plus@1.2.34(@oplayer/core@1.2.31):
+    resolution: {integrity: sha512-ByoU8391MFxwa9OJJdgB/cQjpmyMdy4OPRCMQrBips9v7sc/VK7PTS7syFQDzV+VQljp48jqS2SVJqylllFxxw==}
+    peerDependencies:
+      '@oplayer/core': '>=1.0.0'
+    dependencies:
+      '@oplayer/core': 1.2.31
+    dev: false
 
   /optionator@0.9.3:
     resolution: {integrity: sha512-JjCoypp+jKn1ttEFExxhetCKeJt9zhAgAve5FXHixTvFDW/5aEktX9bufBKLRRMdU7bNtpLfcGu94B3cdEJgjg==}
