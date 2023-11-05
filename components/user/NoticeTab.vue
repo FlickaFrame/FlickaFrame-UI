@@ -13,6 +13,7 @@ const commentNoticeList = ref(
       content: '你好啊',
       time: '2023-11-05',
       videoId: 1,
+      videoTitle: '《视频00001》',
     },
     {
       id: 2,
@@ -22,6 +23,7 @@ const commentNoticeList = ref(
       content: '你的视频很好看',
       time: '2023-11-05',
       videoId: 1,
+      videoTitle: '《视频00002》',
     },
   ],
 )
@@ -36,6 +38,7 @@ const likeNoticeList = ref(
       content: '赞了你的视频',
       time: '2023-11-05',
       videoId: 1,
+      videoTitle: '《视频00001》',
     },
   ],
 )
@@ -107,6 +110,7 @@ function handleToProfile(userId: number) {
                   <div class="text-[#33333399]">{{ noticeItem.content }} {{ noticeItem.time }}</div>
                 </div>
               </div>
+              <div v-if="item.key !== NoticeTabKey.Follow" class="text-[#33333399]">{{ noticeItem?.videoTitle }}</div>
             </div>
             <UiSeparator class="my-2 mr-2 mt-2" />
           </div>
