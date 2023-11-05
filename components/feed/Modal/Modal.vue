@@ -100,14 +100,14 @@ function handleClickCard(cardItem: VideoItem) {
 
 <template>
   <Teleport to="body">
+    <!--  -->
 
     <div
       v-if="show"
       class="fixed left-0 top-0 z-100 h-screen w-screen flex items-start justify-center bg-black bg-opacity-10"
-      @click="show = !show"
     >
       <div class="fixed left-10 top-10 h-10 w-10 flex items-center justify-center border-2 rounded-full bg-white shadow transition-all hover:border-slate-300 hover:shadow-lg">
-        <div class="i-mdi-close-thick text-6 text-slate-600" />
+        <div class="i-mdi-close-thick text-6 text-slate-600" @click="show = !show" />
       </div>
 
       <div
@@ -122,8 +122,9 @@ function handleClickCard(cardItem: VideoItem) {
             class="h-[80vh]"
             :info="cardItem"
             :active="cardNeighbours.current === cardItem"
-            @click.stop="handleClickCard(cardItem)"
+            @click="handleClickCard(cardItem)"
           />
+          <!-- @click.stop="handleClickCard(cardItem)" -->
         </template>
       </div>
     </div>

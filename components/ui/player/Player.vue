@@ -1,12 +1,31 @@
 <script setup lang="ts">
 import Player from '@oplayer/core'
-import ui from '@oplayer/ui'
+import ui from 'oplayer-ui-plus'
 
 const props = withDefaults(defineProps<{
   active?: boolean
   url: string
 }>(), {
   active: true,
+})
+
+const oui = ui({
+  keyboard: {
+    focused: false,
+    global: false,
+  },
+  rightController: {
+    items: [
+      {
+        name: '评论',
+        iconSvg: '<div class="i-mdi-comment" />',
+        defaultText: '1221',
+      },
+    ],
+    onClick: (name: string) => {
+      console.log(name)
+    },
+  },
 })
 
 function useVideo() {
@@ -21,12 +40,7 @@ function useVideo() {
         poster: 'https://oplayer.vercel.app/poster.png',
       },
     })
-      .use([ui({
-        keyboard: {
-          focused: false,
-          global: false,
-        },
-      })])
+      .use([oui])
       .create()
 
     watch(() => props.active, (newVal) => {

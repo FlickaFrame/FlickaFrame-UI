@@ -60,7 +60,7 @@ const { cardElement, videoElement, isCardHovered } = useVideoCard()
       class="card-main card-height relative rounded-5 transition-400 hover:brightness-94 hover:filter"
     >
       <img
-        class="card-overlay card-height"
+        class="card-height card-overlay"
         :class="{ 'opacity-0': isCardHovered }"
         :src="props.info.thumbUrl || 'https://oplayer.vercel.app/poster.png'"
       >
@@ -68,7 +68,7 @@ const { cardElement, videoElement, isCardHovered } = useVideoCard()
         ref="videoElement"
         class="card-overlay card-height"
         :class="{ '-z-1 opacity-0': !isCardHovered }"
-        autoplay loop playsinline muted
+        autoplay loop muted playsinline
         preload="none"
         wdith="100%"
         :src="props.info.playUrl"

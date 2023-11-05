@@ -8,21 +8,10 @@ const categoryId = ref(0)
 
 const { cardColumnNum, listElement } = useCardColumnNum()
 
-const { feedList, isEnd, refresh } = useFeedData(categoryId)
-const loadingElement = ref<HTMLElement | null>(null)
+const { feedList, isEnd, addMore, pending } = useFeedData(categoryId)
 
 const activeIndex = ref(-1)
 const openedIndex = ref(-1)
-
-// useIntersectionObserver(loadingElement, (vals) => {
-//   for (const change of vals) {
-//     if (change.isIntersecting) {
-//       feeds.value.push(...Array.from({ length: 20 }, (_, i) => i))
-//     }
-//   }
-// })
-
-// const active
 
 function handleOpenModal(idx: number) {
   isOpen.value = true
@@ -49,7 +38,7 @@ function handleOpenModal(idx: number) {
       v-model:current="openedIndex"
       :items="feedList || []"
     />
-    <div ref="loadingElement">loading</div>
+    <UiLoading :is-end="isEnd" :loading="pending" @load="addMore" />
   </div>
 
 </template>
