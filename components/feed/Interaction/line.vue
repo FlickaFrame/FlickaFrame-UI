@@ -2,12 +2,15 @@
 const props = defineProps<{
   liked: boolean
   likedCount: number
+
+  showShare: boolean
 }>()
 
 const emit = defineEmits<{
   (e: 'like'): void
   (e: 'unlike'): void
   (e: 'reply'): void
+  (e: 'share'): void
 }>()
 
 </script>
@@ -17,8 +20,8 @@ const emit = defineEmits<{
     <div class="wrapper">
       <div
         class="icon"
-        :class="liked ? 'i-iconamoon-like' : 'i-iconamoon-like-fill'"
-        @click="() => liked ? emit('unlike') : emit('like')"
+        :class="props.liked ? 'i-iconamoon-like' : 'i-iconamoon-like-fill'"
+        @click="() => props.liked ? emit('unlike') : emit('like')"
       />
       <div class="text">赞 {{ props.likedCount || '' }}</div>
     </div>
@@ -29,9 +32,8 @@ const emit = defineEmits<{
     </div>
     <div class="flex-1" />
 
-    <div class="wrapper">
+    <div v-if="props.showShare" class="wrapper" @click="() => emit('share')">
       <div class="icon i-mdi-share" />
-      <!-- <div class="text">3</div> -->
     </div>
 
   </div>

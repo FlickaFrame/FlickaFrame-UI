@@ -9,6 +9,8 @@ const props = withDefaults(defineProps<{
 })
 const info = ref(props.info)
 
+const expland = ref(true)
+
 async function refreshVideoInfo() {
   const { success, data } = await getVideoInfo(info.value.id)
 
@@ -26,10 +28,16 @@ async function refreshVideoInfo() {
     class="flex overflow-hidden border rounded-lg shadow-lg"
     :class="props.active ? '' : 'filter-blur-1 brightness-80 hover:cursor-pointer'"
   >
-    <UiPlayer :active="active" :url="info.playUrl" class="h-full flex-[2_2_0%]" />
+    <UiPlayer
+      v-model:expland="expland"
+      :active="active"
+      :url="info.playUrl"
+      class="h-full min-w-200"
+    />
     <FeedInteraction
+      v-show="expland"
       :info="info"
-      class="h-full max-w-300 flex-[1_1_0%] bg-background"
+      class="h-full bg-background md:hidden 2xl:w-120 lg:w-100 lg:flex"
       @refresh="refreshVideoInfo"
     />
   </div>

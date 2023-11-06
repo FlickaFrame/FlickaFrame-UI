@@ -9,6 +9,8 @@ const props = withDefaults(defineProps<{
   active: true,
 })
 
+const expland = defineModel('expland', { default: false })
+
 const oui = ui({
   keyboard: {
     focused: false,
@@ -23,7 +25,9 @@ const oui = ui({
       },
     ],
     onClick: (name: string) => {
-      console.log(name)
+      if (name === '评论') {
+        expland.value = !expland.value
+      }
     },
   },
 })
@@ -37,7 +41,7 @@ function useVideo() {
     player.value = Player.make(videoElement.value, {
       source: {
         src: props.url,
-        poster: 'https://oplayer.vercel.app/poster.png',
+        // poster: 'https://oplayer.vercel.app/poster.png',
       },
     })
       .use([oui])
@@ -64,8 +68,7 @@ const { videoElement } = useVideo()
 </script>
 
 <template>
-  <div class="h-full w-full bg-black">
-    <NuxtImg v-show="!props.active" class="h-full w-full object-contain" src="https://oplayer.vercel.app/poster.png" />
+  <div class="bg-black">
     <div v-show="props.active" ref="videoElement" class="h-full w-full" />
   </div>
 

@@ -20,4 +20,5 @@ export interface UpTokenResponse {
 export interface FileResponse {
   hash: string
   key: string
+  videoDuration?: string
 }

@@ -13,10 +13,6 @@ const cardIndex = defineModel('current', { default: -1 })
 
 const modalElement = ref<HTMLDivElement | null>(null)
 
-onKeyStroke('esc', () => {
-  show.value = false
-})
-
 function useCardScroll(cardIndex: Ref<number>, cardList: Ref<VideoItem[]>) {
   const scrollWindow = 2
   const leftOffset = ref(0)
@@ -88,6 +84,17 @@ function useCardScroll(cardIndex: Ref<number>, cardList: Ref<VideoItem[]>) {
 
 const { activeCardList, activeCardOrder, pending, cardNeighbours, navgate } = useCardScroll(cardIndex, cardList)
 
+watch(() => cardNeighbours.value.current, (newVal) => {
+  if (!newVal) return
+  history.replaceState(null, '', `/explore/${newVal.id}`)
+}, { immediate: true })
+
+watch(show, (newVal) => {
+  if (!newVal) {
+    history.replaceState(null, '', '/explore')
+  }
+})
+
 function handleClickCard(cardItem: VideoItem) {
   if (cardItem === cardNeighbours.value.current) return
 
@@ -100,7 +107,6 @@ function handleClickCard(cardItem: VideoItem) {
 
 <template>
   <Teleport to="body">
-    <!--  -->
 
     <div
       v-if="show"
@@ -112,22 +118,51 @@ function handleClickCard(cardItem: VideoItem) {
 
       <div
         ref="modalElement"
-        class="w-7/10 overflow-y-hidden"
+        class="feed-wrapper flex-col-center overflow-y-hidden"
         :class="{ 'transition-transform': !pending }"
-        :style="{ transform: `translateY(-${85 * activeCardOrder}vh)` }"
       >
         <template v-for="cardItem in activeCardList" :key="cardItem">
           <FeedContent
-            m="y-5vh first:t-10vh last:b-10vh"
-            class="h-[80vh]"
+            class="feed-content"
             :info="cardItem"
             :active="cardNeighbours.current === cardItem"
             @click="handleClickCard(cardItem)"
           />
-          <!-- @click.stop="handleClickCard(cardItem)" -->
         </template>
       </div>
     </div>
   </Teleport>
 
 </template>
+
+<style scoped>
+
+.feed-wrapper {
+  --container-height: 100vh;
+  --container-gap: 0vh;
+}
+
+@media (min-height: 875px) {
+  .feed-wrapper {
+    --container-height: 90vh;
+    --container-gap: 2.5vh;
+  }
+}
+
+@media (min-height: 1280px) {
+  .feed-wrapper {
+    --container-height: 80vh;
+    --container-gap: 5vh;
+  }
+}
+
+.feed-wrapper {
+  gap: var(--container-gap);
+  margin-top: calc(var(--container-gap) * 2);
+  transform: translateY(calc(calc(var(--container-height) + var(--container-gap)) * v-bind(activeCardOrder) * -1));
+  .feed-content {
+    height: var(--container-height);
+  }
+}
+
+</style>

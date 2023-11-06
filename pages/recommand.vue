@@ -1,3 +1,8 @@
+<script setup lang="ts">
+
+const { feedList, isEnd, addMore, pending } = useFeedData(ref('0'))
+</script>
+
 <template>
 
   <Swiper
@@ -10,8 +15,8 @@
     virtual
   >
     <!--  :virtual="true" -->
-    <SwiperSlide v-for="slide in 1000" :key="slide">
-      <UiPlayer />
+    <SwiperSlide v-for="feed in feedList" :key="feed.id">
+      <UiPlayer :url="feed.playUrl" class="h-full w-full" />
     </SwiperSlide>
   </Swiper>
 

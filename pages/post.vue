@@ -15,6 +15,7 @@ const form = useForm({
     tags: z.array(z.string()).default([]),
     publishTime: z.number().optional(),
     visibility: z.number().default(1),
+    videoDuration: z.number().optional(),
   })),
 })
 
@@ -40,7 +41,7 @@ const handleSubmit = form.handleSubmit(async (values) => {
 
 <template>
   <div class="flex flex-col items-center justify-center gap-8 p-8">
-    <h1 class="text-5xl">创作服务平台{{ form.errors }}</h1>
+    <h1 class="text-5xl">创作服务平台{{ form.values }}</h1>
 
     <form class="max-w-250 w-full space-y-8" @submit.prevent>
 
@@ -48,7 +49,11 @@ const handleSubmit = form.handleSubmit(async (values) => {
         <UiFormItem>
           <UiFormLabel>视频 {{ componentField }}</UiFormLabel>
           <UiFormControl>
-            <ManageVideoUploader v-bind="componentField" @uploaded="handleVideoUploaded" />
+            <ManageVideoUploader
+              v-bind="componentField"
+              @update:duration="form.setFieldValue('videoDuration', $event)"
+              @uploaded="handleVideoUploaded"
+            />
           </UiFormControl>
           <UiFormMessage />
         </UiFormItem>

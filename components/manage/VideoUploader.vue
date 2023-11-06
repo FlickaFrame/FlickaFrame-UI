@@ -9,6 +9,7 @@ const emit = defineEmits<{
 const selectFileElement = ref<HTMLInputElement | null>(null)
 
 const playUrl = defineModel<string | undefined>()
+const videoDuration = defineModel<number | undefined>('duration')
 
 const uploadResult = ref({})
 
@@ -29,6 +30,7 @@ async function onVideoSelect() {
     } else {
       toast.publish({ desc: '上传成功' })
       uploadResult.value = result
+      result.videoDuration && (videoDuration.value = Number(result.videoDuration))
       playUrl.value = result.key
       emit('uploaded', result.key)
     }

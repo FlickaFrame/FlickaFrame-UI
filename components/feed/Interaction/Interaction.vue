@@ -33,6 +33,16 @@ async function changeFollowStatus(isFollow: boolean) {
 async function handleReply(r: CommentTarget) {
   commentTarget.value = r
 }
+
+async function handleShare() {
+  try {
+    await navigator.clipboard.writeText(window.location.href)
+    message.success('分享成功， 分享链接已写入剪切板')
+  } catch (e) {
+    message.error(`分享失败～${e}`)
+  }
+}
+
 </script>
 
 <template>
@@ -98,7 +108,11 @@ async function handleReply(r: CommentTarget) {
     <UiSeparator />
     <!-- post 互动区域 -->
     <div>
-      <FeedInteractionLine class="my-4 px-8 text-xl" />
+      <FeedInteractionLine
+        class="my-4 px-8 text-xl"
+        show-share
+        @share="handleShare"
+      />
 
       <FeedInteractionInput
         v-model:target="commentTarget"
