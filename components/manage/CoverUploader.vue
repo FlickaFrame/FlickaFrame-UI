@@ -4,26 +4,27 @@ import { UpTokenType } from '~/models'
 import type { UploadFile, UploadProps } from 'ant-design-vue'
 import { Upload } from 'ant-design-vue'
 
+const props = defineProps<{
+  defalutFileUrl?: string
+}>()
+
 const fileUrl = defineModel<string | undefined>({ default: undefined })
 
-function getInitFileList(): UploadProps['fileList'] {
-  if (fileUrl.value) {
-    return [{
-      uid: fileUrl.value,
-      name: fileUrl.value,
-      url: fileUrl.value,
-      thumbUrl: fileUrl.value,
-    }]
-  }
-  return []
+function getFileList(url?: string) {
+  if (!url) return []
+  return [{
+    uid: url,
+    name: url,
+    url,
+    thumbUrl: url,
+  }]
 }
 
-const fileList = ref<UploadProps['fileList']>(getInitFileList())
+const fileList = ref<UploadProps['fileList']>(getFileList(props.defalutFileUrl))
 
-watch(fileUrl, (prev, next) => {
-  if (!prev && next) {
-    fileList.value = getInitFileList()
-  }
+watch(() => props.defalutFileUrl, (newVal) => {
+  if (!newVal) return
+  fileList.value = getFileList(newVal)
 })
 
 watch(fileList, (newVal) => {

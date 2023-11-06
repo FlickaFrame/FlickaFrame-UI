@@ -18,10 +18,12 @@ const form = useForm({
   })),
 })
 
+const defaultCoverUrl = ref('')
+
 async function handleVideoUploaded(videoUrl: string) {
   const thumbKey = `cover/${videoUrl.split('/')[1]}`
   const thumbUrl = await getFileUrl(thumbKey)
-  form.setFieldValue('thumbUrl', thumbUrl)
+  defaultCoverUrl.value = thumbUrl
 }
 
 const handleSubmit = form.handleSubmit(async (values) => {
@@ -56,7 +58,7 @@ const handleSubmit = form.handleSubmit(async (values) => {
         <UiFormItem>
           <UiFormLabel>封面 {{ componentField }}</UiFormLabel>
           <UiFormControl>
-            <ManageCoverUploader v-bind="componentField" />
+            <ManageCoverUploader v-bind="componentField" :defalut-file-url="defaultCoverUrl" />
           </UiFormControl>
           <UiFormMessage />
         </UiFormItem>

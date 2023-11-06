@@ -1,6 +1,6 @@
 <script setup lang='ts'>
 import { getCagegory } from '~/apis'
-const selectedValue = defineModel<number>({ default: 1 })
+const selectedValue = defineModel<string>({ default: '1' })
 
 const { data, pending } = useAsyncData(async () => {
   const { data, success } = await getCagegory()
