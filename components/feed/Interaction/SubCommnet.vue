@@ -80,8 +80,8 @@ function handleReply() {
         <div class="mb-2 whitespace-normal text-base">
           <span
             v-if="props.comment.targetComment"
-            class="whitespace-nowrap"
-          >回复 {{ props.comment.targetComment }}: </span>
+            class="whitespace-pre-wrap"
+          >回复 {{ props.comment.targetComment.userInfo.nickName }}: </span>
           {{ props.comment.content }}
         </div>
         <div class="mb-1 text-sm text-foreground/50"> {{ dayjs(props.comment.createTime).format('YYYY-MM-DD') }} </div>

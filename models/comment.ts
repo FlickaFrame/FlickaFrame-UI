@@ -42,7 +42,10 @@ export interface CommentItem {
   liked: boolean
   likedCount: number
   createTime: number
-  targetComment?: string
+  targetComment?: {
+    id: string
+    userInfo: UserInfo
+  }
 }
 
 export interface Comment extends CommentItem {
