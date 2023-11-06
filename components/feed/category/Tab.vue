@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { getCagegory } from '~/apis'
 
-const selectedId = defineModel({ default: 0 })
+const selectedId = defineModel({ default: '0' })
 
 const fixedCategory = [
-  { id: 0, name: '全部' },
+  { id: '0', name: '全部' },
 ]
 
 const { data } = useAsyncData(async () => {

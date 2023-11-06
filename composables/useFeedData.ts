@@ -1,14 +1,14 @@
 import type { VideoItem } from '~/models'
 import { getVideoFeed } from '~/apis'
 
-export function useFeedData(categoryId: Ref<number>, limit = 10) {
-  const feedListRecord = ref<Record<number, VideoItem[]>>([])
+export function useFeedData(categoryId: Ref<string>, limit = 10) {
+  const feedListRecord = ref<Record<string, VideoItem[]>>({})
   const feedList = computed(() => feedListRecord.value[categoryId.value])
 
-  const cursorRecord = ref<Record<number, string | undefined>>({})
+  const cursorRecord = ref<Record<string, string | undefined>>({})
   const cursor = computed(() => cursorRecord.value[categoryId.value])
 
-  const isEndRecord = ref<Record<number, boolean>>({})
+  const isEndRecord = ref<Record<string, boolean>>({})
   const isEnd = computed(() => Boolean(isEndRecord.value[categoryId.value]))
 
   const { refresh: addMore, pending } = useAsyncData(async () => {

@@ -6,7 +6,7 @@ export interface VideoFeedResponse {
 
 export interface VideoFeedQuery {
   authorID?: string
-  categoryId?: number
+  categoryId?: string
   cursor?: string
   limit?: number
   tag?: string

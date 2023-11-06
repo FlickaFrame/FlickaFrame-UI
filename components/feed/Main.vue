@@ -4,7 +4,7 @@ import { useCardColumnNum } from '~/composables/useFeedLayout'
 
 const isOpen = ref(false)
 
-const categoryId = ref(0)
+const categoryId = ref('0')
 
 const { cardColumnNum, listElement } = useCardColumnNum()
 
