@@ -104,7 +104,7 @@ function handleClickCard(cardItem: VideoItem) {
 
     <div
       v-if="show"
-      class="fixed left-0 top-0 z-100 h-screen w-screen flex items-start justify-center bg-black bg-opacity-10"
+      class="fixed left-0 top-0 z-40 h-screen w-screen flex items-start justify-center bg-black bg-opacity-10"
     >
       <div class="fixed left-10 top-10 h-10 w-10 flex items-center justify-center border-2 rounded-full bg-white shadow transition-all hover:border-slate-300 hover:shadow-lg">
         <div class="i-mdi-close-thick text-6 text-slate-600" @click="show = !show" />

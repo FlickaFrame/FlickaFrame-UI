@@ -1,14 +1,25 @@
 <script setup lang="ts">
-
-import type { Comment } from '~/models'
-
-import dayjs from 'dayjs'
+import type { Comment, CommentTarget } from '~/models'
+import { CommentLevel } from '~/models'
 
 const props = defineProps<{
   authorId: string
   type?: 'top' | 'sub'
   comments: Comment[]
 }>()
+
+const emit = defineEmits<{
+  (e: 'delete'): void
+  (e: 'reply', payload: CommentTarget): void
+}>()
+
+function handleReply(pid: string, tname: string, tid?: string) {
+  emit('reply', {
+    parentCommentId: pid,
+    targetCommentId: tid,
+    targetUserName: tname,
+  })
+}
 
 </script>
 
@@ -18,26 +29,28 @@ const props = defineProps<{
     <div
       v-for="item in comments"
       :key="item.id"
-      class="flex gap-4 py-2"
-      :class="{ 'ml-14': props.type === 'sub' }"
     >
-      <UiAvatar size="base">
-        <UiAvatarImage :src="item.userInfo.avatarUrl" :alt="item.userInfo.nickName" />
-        <UiAvatarFallback>{{ item.userInfo.nickName }}</UiAvatarFallback>
-      </UiAvatar>
-      <div class="flex-1">
-        <div class="flex-1">
-          <div class="mb-2 flex items-center gap-2 text-lg text-foreground/50"> {{ item.userInfo.nickName }}
-            <UiBadge v-if="props.authorId === item.userInfo.userId" variant="outline">作者</UiBadge>
-          </div>
-          <div class="mb-2 whitespace-pre-wrap text-base"> {{ item.content }}</div>
-          <div class="mb-1 text-foreground/50"> {{ dayjs(item.createTime).format('YYYY-MM-DD') }} </div>
+      <FeedInteractionSubCommnet
+        class="w-full"
+        :author-id="props.authorId"
+        :comment="item"
+        :level="CommentLevel.Parent"
+        @delete="emit('delete')"
+        @reply="handleReply(item.id, item.userInfo.nickName)"
+      />
 
-          <FeedInteractionLine :liked="item.liked" :liked-count="item.likedCount" class="text-lg" />
-
-        </div>
-
-      </div>
+      <template v-if="item.childComments.length">
+        <FeedInteractionSubCommnet
+          v-for="subItem in item.childComments"
+          :key="subItem.id"
+          class="ml-10"
+          :level="CommentLevel.Child"
+          :author-id="props.authorId"
+          :comment="subItem"
+          @delete="emit('delete')"
+          @reply="handleReply(item.id, subItem.userInfo.nickName, subItem.id)"
+        />
+      </template>
 
     </div>
 

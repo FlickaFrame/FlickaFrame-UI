@@ -1,4 +1,4 @@
-import type { CommentListResponse, CommentRequest, CommnetResponse } from '~/models'
+import type { CommentLevel, CommentListResponse, CommentRequest, CommnetResponse, SubCommentRequest, SubCommentResponse } from '~/models'
 
 export function createCommnet(payload: CommentRequest) {
   return $fetch<ApiResult<CommnetResponse>>('/api/comment/video', {
@@ -7,9 +7,17 @@ export function createCommnet(payload: CommentRequest) {
   })
 }
 
-export function deleteComment(commnetId: string) {
-  return $fetch<ApiResult<null>>(`/api/comments/${commnetId}`, {
+export function createSubComment(payload: SubCommentRequest) {
+  return $fetch<ApiResult<SubCommentResponse>>('/api/comment/parent', {
+    method: 'POST',
+    body: payload,
+  })
+}
+
+export function deleteComment(commnetId: string, level: CommentLevel) {
+  return $fetch<ApiResult<null>>(`/api/comment/${commnetId}`, {
     method: 'DELETE',
+    query: { type: level },
   })
 }
 

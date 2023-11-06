@@ -7,12 +7,13 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'like'): void
   (e: 'unlike'): void
+  (e: 'reply'): void
 }>()
 
 </script>
 
 <template>
-  <div class="flex items-center">
+  <div class="flex items-center text-base">
     <div class="wrapper">
       <div
         class="icon"
@@ -22,7 +23,7 @@ const emit = defineEmits<{
       <div class="text">赞 {{ props.likedCount || '' }}</div>
     </div>
 
-    <div class="wrapper">
+    <div class="wrapper" @click="() => emit('reply')">
       <div class="icon i-iconamoon-comment" />
       <div class="text">3</div>
     </div>
