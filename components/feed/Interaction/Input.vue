@@ -1,11 +1,36 @@
 <script setup lang='ts'>
+import { createCommnet } from '~/apis'
+
+const props = defineProps<{
+  videoId: string
+}>()
+
+const emit = defineEmits<{
+  (e: 'send'): void
+}>()
+
 const text = ref('')
 const atElement = ref<HTMLElement | null>(null)
 const { width: atElementWidth } = useElementSize(atElement)
 
 const inputFoucsed = ref(false)
 
-const showAtBadge = ref(true)
+const showAtBadge = ref(false)
+
+async function send() {
+  const { success } = await createCommnet({
+    content: text.value,
+    videoId: Number(props.videoId),
+  })
+
+  if (success) {
+    text.value = ''
+    emit('send')
+    message.success('评论成功')
+  } else {
+    message.error('评论失败')
+  }
+}
 
 onKeyStroke('Backspace', () => {
   if (text.value) return
@@ -29,6 +54,7 @@ onKeyStroke('Backspace', () => {
         class="input h-12 text-base"
         required
         aria-placeholder="说点什么吧..."
+        @keyup.enter="send"
       />
       <div class="input-hint pointer-events-none absolute top-0 h-full w-full flex items-center pl-4 text-foreground/40">
 
@@ -47,7 +73,8 @@ onKeyStroke('Backspace', () => {
 
     <UiButton
       v-if="text"
-      type="submit" class="h-12 rounded-sm text-base transition-all"
+      type="submit"
+      class="h-12 rounded-sm text-base transition-all" @click="send"
     >
       发送
     </UiButton>

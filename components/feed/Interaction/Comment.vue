@@ -1,18 +1,14 @@
 <script setup lang="ts">
-import { getCommnets } from '~/apis'
+
+import type { Comment } from '~/models'
 
 import dayjs from 'dayjs'
 
 const props = defineProps<{
-  videoId: string
   authorId: string
   type?: 'top' | 'sub'
+  comments: Comment[]
 }>()
-
-const { data } = useAsyncData(props.videoId, async () => {
-  const { success, data } = await getCommnets(props.videoId)
-  return success ? data.comments : []
-})
 
 </script>
 
@@ -20,7 +16,7 @@ const { data } = useAsyncData(props.videoId, async () => {
   <div>
 
     <div
-      v-for="item in data"
+      v-for="item in comments"
       :key="item.id"
       class="flex gap-4 py-2"
       :class="{ 'ml-14': props.type === 'sub' }"

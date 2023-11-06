@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { VideoItem } from '~/models'
-import { followUser, unfollowUser } from '~/apis'
+import { followUser, getCommnets, unfollowUser } from '~/apis'
 import dayjs from 'dayjs'
 
 const props = defineProps<{
@@ -10,6 +10,11 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'refresh'): void
 }>()
+
+const { data: comments, refresh: refreshComments } = useAsyncData(props.info.id, async () => {
+  const { success, data } = await getCommnets(props.info.id)
+  return success ? data.comments : []
+})
 
 function handleToProfile() {
   navigateTo(`/profile/${props.info.author.userId}`, {
@@ -78,7 +83,11 @@ async function changeFollowStatus(isFollow: boolean) {
       <div class="mb-4 text-gray/90">
         共 {{ info.commentNum }} 条评论
       </div>
-      <FeedInteractionComment :video-id="info.id" :author-id="info.author.userId" />
+      <FeedInteractionComment
+        :video-id="info.id"
+        :author-id="info.author.userId"
+        :comments="comments"
+      />
 
       <!-- <FeedInteractionComment class="ml-14" /> -->
       <!-- <FeedInteractionComment class="ml-14" /> -->
@@ -89,7 +98,11 @@ async function changeFollowStatus(isFollow: boolean) {
     <div>
       <FeedInteractionLine class="my-4 px-8 text-xl" />
 
-      <FeedInteractionInput class="my-6 px-8" />
+      <FeedInteractionInput
+        :video-id="info.id"
+        class="my-6 px-8"
+        @send="refreshComments"
+      />
 
     </div>
 
