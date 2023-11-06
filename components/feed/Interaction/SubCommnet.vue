@@ -9,9 +9,7 @@ const comment = '家人们，我去店里问，线只有一年的保修，所以
 <template>
   <div
     class="flex gap-4 py-2"
-    :class="{
-      'ml-14': props.type === 'sub',
-    }"
+    :class="{ 'ml-14': props.type === 'sub' }"
   >
     <UiAvatar>
       <UiAvatarImage src="https://github.com/radix-vue.png" alt="@radix-vue" />

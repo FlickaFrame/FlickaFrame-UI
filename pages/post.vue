@@ -21,7 +21,7 @@ const form = useForm({
 const defaultCoverUrl = ref('')
 
 async function handleVideoUploaded(videoUrl: string) {
-  const thumbKey = `cover/${videoUrl.split('/')[1]}`
+  const thumbKey = `cover/${videoUrl.split('/')[1]}.jpg`
   const thumbUrl = await getFileUrl(thumbKey)
   defaultCoverUrl.value = thumbUrl
 }

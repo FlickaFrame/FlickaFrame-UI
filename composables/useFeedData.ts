@@ -1,7 +1,7 @@
 import type { VideoItem } from '~/models'
 import { getVideoFeed } from '~/apis'
 
-export function useFeedData(categoryId: Ref<number>, limit = 20) {
+export function useFeedData(categoryId: Ref<number>, limit = 10) {
   const feedListRecord = ref<Record<number, VideoItem[]>>([])
   const feedList = computed(() => feedListRecord.value[categoryId.value])
 
@@ -25,13 +25,13 @@ export function useFeedData(categoryId: Ref<number>, limit = 20) {
     }
 
     cursorRecord.value[currentId] = data.next
-    isEndRecord.value[currentId] = data.isEnd
+    isEndRecord.value[currentId] = data.isEnd || data.list.length === 0
 
     if (!feedListRecord.value[currentId]) {
       feedListRecord.value[currentId] = []
     }
     feedListRecord.value[currentId].push(...data.list)
-  }, { watch: [categoryId], immediate: true })
+  }, { watch: [categoryId] })
 
   return { feedList, isEnd, addMore, pending }
 }

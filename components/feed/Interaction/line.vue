@@ -1,8 +1,25 @@
+<script setup lang="ts">
+const props = defineProps<{
+  liked: boolean
+  likedCount: number
+}>()
+
+const emit = defineEmits<{
+  (e: 'like'): void
+  (e: 'unlike'): void
+}>()
+
+</script>
+
 <template>
   <div class="flex items-center">
     <div class="wrapper">
-      <div class="icon i-iconamoon-like" />
-      <div class="text">赞</div>
+      <div
+        class="icon"
+        :class="liked ? 'i-iconamoon-like' : 'i-iconamoon-like-fill'"
+        @click="() => liked ? emit('unlike') : emit('like')"
+      />
+      <div class="text">赞 {{ props.likedCount || '' }}</div>
     </div>
 
     <div class="wrapper">
@@ -13,7 +30,7 @@
 
     <div class="wrapper">
       <div class="icon i-mdi-share" />
-      <div class="text">3</div>
+      <!-- <div class="text">3</div> -->
     </div>
 
   </div>

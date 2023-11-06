@@ -78,10 +78,10 @@ async function changeFollowStatus(isFollow: boolean) {
       <div class="mb-4 text-gray/90">
         共 {{ info.commentNum }} 条评论
       </div>
-      <FeedInteractionCommentItem />
+      <FeedInteractionComment :video-id="info.id" :author-id="info.author.userId" />
 
-      <FeedInteractionCommentItem class="ml-14" />
-      <FeedInteractionCommentItem class="ml-14" />
+      <!-- <FeedInteractionComment class="ml-14" /> -->
+      <!-- <FeedInteractionComment class="ml-14" /> -->
 
     </div>
     <UiSeparator />
