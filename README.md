@@ -17,10 +17,7 @@
 
 # Quick Start
 
-安装pnpm
-
-[安装 | pnpm中文文档 | pnpm中文网](https://www.pnpm.cn/installation)
-
+[安装 pnpm](https://www.pnpm.cn/installation)
 
 安装依赖
 
