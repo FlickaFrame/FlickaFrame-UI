@@ -1,5 +1,6 @@
 <script setup lang='ts'>
 import type { VideoItem } from '~/models'
+import { deleteVideo } from '~/apis'
 import dayjs from 'dayjs'
 
 const props = defineProps<{
@@ -31,6 +32,15 @@ const statistics = computed(() => {
   ]
 })
 
+async function handleDeleteVideo(id: string) {
+  const { success } = await deleteVideo(id)
+  if (success) {
+    message.success('删除视频成功')
+  } else {
+    message.error('删除视频失败')
+  }
+}
+
 </script>
 
 <template>
@@ -39,7 +49,7 @@ const statistics = computed(() => {
     <div class="relative h-60 w-60 cursor-pointer overflow-hidden p-2" @click="navigateTo(`/explore/${info.id}`)">
       <img :src="info.thumbUrl" class="h-full w-full rounded-md object-cover">
       <div class="absolute bottom-3 right-3 rounded-md bg-black p-1 text-sm text-white opacity-70">
-        {{ info.videoDuration || '00:00' }}
+        <UiDuration :value="info.videoDuration" />
       </div>
     </div>
 
@@ -48,7 +58,9 @@ const statistics = computed(() => {
         {{ info.title }}
 
       </h3>
-      <UiBadge class="w-20">分区: {{ info.category.name }}</UiBadge>
+      <span class="text-sm text-foreground/60">
+        分区: {{ info.category.name }}
+      </span>
 
       <div class="pb-6"> {{ dayjs(info.createdAt).format('YYYY-MM-DD hh:mm:ss') }}</div>
 
@@ -81,7 +93,7 @@ const statistics = computed(() => {
         编辑
       </UiButton>
 
-      <UiButton variant="destructive">
+      <UiButton variant="destructive" @click="handleDeleteVideo(info.id)">
         <div class="i-mdi-delete mr-1" />
         删除
       </UiButton>

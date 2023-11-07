@@ -18,6 +18,15 @@ export interface VideoSearchRequest {
   limit: number
 }
 
+export interface VideoSearchResponse {
+  list: VideoItem[]
+  query: string
+  processingTimeMs: number
+  offset: number
+  limit: number
+  estimatedTotalHits: number
+}
+
 export interface VideoItem {
   id: string
   title: string

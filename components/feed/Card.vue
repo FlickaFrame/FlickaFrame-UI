@@ -46,12 +46,6 @@ function useVideoCard() {
   return { cardElement, videoElement, isCardHovered }
 }
 
-function formatDuration(duration: number) {
-  const min = String(Math.floor(duration / 60)).padStart(2, '0')
-  const sec = String(Math.floor(duration % 60)).padStart(2, '0')
-  return `${min}:${sec}`
-}
-
 const { cardElement, videoElement, isCardHovered } = useVideoCard()
 </script>
 
@@ -76,7 +70,8 @@ const { cardElement, videoElement, isCardHovered } = useVideoCard()
         <div
           class="absolute bottom-2 right-2 rounded-md bg-black/30 p-1 text-sm text-white/80"
         >
-          {{ formatDuration(props.info.videoDuration) || '00:00' }}
+          <UiDuration :value="props.info.videoDuration" />
+
         </div>
 
       </div>

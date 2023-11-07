@@ -1,4 +1,4 @@
-import type { VideoCategoryResponse, VideoFeedQuery, VideoFeedResponse, VideoInfoResponse, VideoSearchRequest, VideoUploadInfo } from '~/models'
+import type { VideoCategoryResponse, VideoFeedQuery, VideoFeedResponse, VideoInfoResponse, VideoSearchRequest, VideoSearchResponse, VideoUploadInfo } from '~/models'
 
 export function postVideo(payload: VideoUploadInfo) {
   return $fetch<ApiResult<null>>('/api/video/create', {
@@ -31,9 +31,15 @@ export function getFollowingVideo(query?: VideoFeedQuery) {
 }
 
 export function searchVideo(payload: VideoSearchRequest) {
-  return $fetch<ApiResult<any>>('/api/video/search', {
+  return $fetch<ApiResult<VideoSearchResponse>>('/api/video/search', {
     method: 'POST',
     body: payload,
+  })
+}
+
+export function deleteVideo(videoId: string) {
+  return $fetch<ApiResult<null>>(`/api/video/${videoId}`, {
+    method: 'DELETE',
   })
 }
 

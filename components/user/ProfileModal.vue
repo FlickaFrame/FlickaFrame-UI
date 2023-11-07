@@ -52,7 +52,7 @@ const handleSubmit = form.handleSubmit(async (values) => {
   <UiDialog v-model:open="open">
     <UiDialogContent>
       <UiDialogHeader>
-        <UiDialogTitle class="text-lg"> 修改个人资料 {{ initialValues }}</UiDialogTitle>
+        <UiDialogTitle class="text-lg"> 修改个人资料 </UiDialogTitle>
         <UiDialogDescription>
           修改个人资料修改个人资料修改个人资料
         </UiDialogDescription>
@@ -61,7 +61,7 @@ const handleSubmit = form.handleSubmit(async (values) => {
         <FormField v-slot="{ componentField }" name="nickName">
 
           <UiFormItem>
-            <UiFormLabel>昵称 {{ componentField }}</UiFormLabel>
+            <UiFormLabel>昵称 </UiFormLabel>
             <UiFormControl>
               <UiInput type="text" v-bind="componentField" />
             </UiFormControl>

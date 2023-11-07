@@ -4,28 +4,45 @@ import type { VideoItem } from '~/models'
 
 const props = defineProps<{
   info: VideoItem
+  raw?: boolean
 }>()
 
 const video = ref<HTMLVideoElement | null>(null)
+
+function handleToProfile() {
+  navigateTo(`/profile/${props.info.author.userId}`, {
+    open: { target: '_blank' },
+  })
+}
+
+function handleToMain() {
+  navigateTo(`/explore/${props.info.id}`, {
+    open: { target: '_blank' },
+  })
+}
 
 </script>
 
 <template>
   <div>
     <div class="flex border-b py-6">
-      <UiAvatar size="base">
+      <UiAvatar size="base" @click="handleToProfile">
         <UiAvatarImage :src="info.author.avatarUrl" :alt="info.author.nickName" />
         <UiAvatarFallback>{{ info.author.nickName }}</UiAvatarFallback>
       </UiAvatar>
-      <div class="w-full px-4 pl-3">
+      <div class="w-full px-4 pl-3" @click="handleToMain">
         <div class="flex items-center justify-between pb-0.5">
 
-          <span class="cursor-pointer font-bold hover:underline">
+          <span class="cursor-pointer font-bold hover:underline" @click="handleToProfile">
             {{ info.author.nickName }}
           </span>
 
         </div>
-        <div class="max-w-[300px] break-words pb-0.5 text-[15px] md:max-w-[400px]">{{ info.description }}</div>
+        <div class="max-w-[300px] break-words pb-0.5 text-[15px] md:max-w-[400px]">
+          <div v-if="props.raw" v-html="info.description" />
+          <template v-else>  {{ info.description }}</template>
+
+        </div>
         <div class="pb-0.5 text-[14px] text-gray-500">
 
           <span v-for="t in info.tags" :key="t.name">
@@ -36,7 +53,10 @@ const video = ref<HTMLVideoElement | null>(null)
         <div class="flex items-center pb-0.5 text-[14px] font-semibold">
 
           <div class="i-mdi-music" />
-          <div class="px-1">{{ info.title }}</div>
+          <div class="px-1">
+            <div v-if="props.raw" v-html="info.description" />
+            <template v-else>  {{ info.title }}</template>
+          </div>
           <div class="i-mdi-heart" />
 
         </div>
@@ -67,13 +87,13 @@ const video = ref<HTMLVideoElement | null>(null)
                 <div class="cursor-pointer rounded-full bg-gray-200 p-2">
                   <div class="i-mdi-comment" />
                 </div>
-                <span class="text-xs font-semibold text-gray-800">43</span>
+                <span class="text-xs font-semibold text-gray-800">{{ info.commentNum }}</span>
               </div>
               <div class="text-center">
                 <div class="cursor-pointer rounded-full bg-gray-200 p-2">
                   <div class="i-mdi-share" />
                 </div>
-                <span class="text-xs font-semibold text-gray-800">55</span>
+
               </div>
             </div>
           </div>
@@ -85,3 +105,9 @@ const video = ref<HTMLVideoElement | null>(null)
   </div>
 
 </template>
+
+<style>
+.highlight {
+  @apply bg-#fffe46 color-black;
+}
+</style>
