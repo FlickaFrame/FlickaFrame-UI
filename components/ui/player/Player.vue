@@ -21,7 +21,7 @@ const oui = ui({
       {
         name: '评论',
         iconSvg: '<div class="i-mdi-comment" />',
-        defaultText: '1221',
+        defaultText: '',
       },
     ],
     onClick: (name: string) => {
