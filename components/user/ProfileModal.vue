@@ -5,6 +5,10 @@ import * as z from 'zod'
 import { UserGender } from '~/models'
 import { editUserInfo } from '~/apis'
 
+const emit = defineEmits<{
+  (e: 'success'): void
+}>()
+
 const open = defineModel({ default: true })
 
 const store = useSessionStore()
@@ -35,6 +39,7 @@ const handleSubmit = form.handleSubmit(async (values) => {
 
   if (success) {
     message.success('修改成功')
+    emit('success')
     open.value = false
   } else {
     message.error('修改失败')

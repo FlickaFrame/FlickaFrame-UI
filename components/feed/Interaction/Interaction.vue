@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { CommentTarget, VideoItem } from '~/models'
-import { followUser, getCommnets, unfollowUser } from '~/apis'
+import { getCommnets } from '~/apis'
 import dayjs from 'dayjs'
 
 const props = defineProps<{
@@ -11,24 +11,14 @@ const emit = defineEmits<{
   (e: 'refresh'): void
 }>()
 
+const store = useSessionStore()
+
 const { data: comments, refresh: refreshComments } = useAsyncData(props.info.id, async () => {
   const { success, data } = await getCommnets(props.info.id)
   return success ? data.comments : []
 })
 
 const commentTarget = ref<CommentTarget>()
-
-async function changeFollowStatus(isFollow: boolean) {
-  const res = isFollow ? (await unfollowUser(props.info.author.userId)) : (await followUser(props.info.author.userId))
-
-  if (!res.success) {
-    message.error(`${isFollow ? '取消' : ''}关注失败`)
-  } else {
-    message.info(`${isFollow ? '取消' : ''}关注成功`)
-  }
-
-  emit('refresh')
-}
 
 async function handleReply(r: CommentTarget) {
   commentTarget.value = r
@@ -62,22 +52,10 @@ async function handleShare() {
         {{ info.author.nickName }}
       </NuxtLink>
       <div class="flex-1" />
-      <UiButton
-        v-if="info.author.isFollow"
-        variant="outline"
-        class="px-6"
-        @click="changeFollowStatus(true)"
-      >
-        已关注
-      </UiButton>
-      <UiButton
-        v-else
-        variant="outline"
-        class="px-6"
-        @click="changeFollowStatus(false)"
-      >
-        关注
-      </UiButton>
+      <UserFollowButton
+        v-if="info.author.userId !== store.info.userId"
+        :is-follow="info.author.isFollow" :user-id="info.author.userId"
+      />
 
     </div>
     <!-- post简介 -->

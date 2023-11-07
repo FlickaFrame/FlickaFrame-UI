@@ -1,5 +1,6 @@
 import type { SessionResponse, UserEditRequest, UserLoginRequest, UserResponse } from '~/models/user'
 import type { FollowListResponse, FollowPageOption } from '~/models/follow'
+import { UserGender } from '~/models'
 
 export async function login(data: UserLoginRequest) {
   const store = useSessionStore()
@@ -32,42 +33,48 @@ export async function getUserInfo() {
   return response
 }
 
-export async function editUserInfo(payload: UserEditRequest) {
+export async function editUserInfo(payload: Partial<UserEditRequest>) {
+  const info = useSessionStore().info
+
+  const defaultPayload: UserEditRequest = {
+    slogan: info.slogan || '',
+    age: info.age || -1,
+    gender: info.gender || UserGender.Unknown,
+    nickName: '',
+    backgroundUrl: '',
+    avatarUrl: '',
+  }
+
   return $fetch<ApiResult<null>>('/api/user/info', {
     method: 'PUT',
-    body: payload,
+    body: { ...defaultPayload, ...payload },
   })
 }
 
-export async function getUserInfoById(userId: string) {
-  const response = await $fetch<ApiResult<UserResponse>>(`/api/user/detail/${userId}`)
-  return response
+export function getUserInfoById(userId: string) {
+  return $fetch<ApiResult<UserResponse>>(`/api/user/detail/${userId}`)
 }
 
-export async function getMyFollowingList(pageOption: FollowPageOption, userId = 'me') {
-  const response = await $fetch<ApiResult<FollowListResponse>>(`/api/user/${userId}/following`, {
+export function getMyFollowingList(pageOption: FollowPageOption, userId = 'me') {
+  return $fetch<ApiResult<FollowListResponse>>(`/api/user/${userId}/following`, {
     query: pageOption,
   })
-  return response
 }
 
-export async function getMyFollowerList(pageOption: FollowPageOption, userId = 'me') {
-  const response = await $fetch<ApiResult<FollowListResponse>>(`/api/user/${userId}/followers`, {
+export function getMyFollowerList(pageOption: FollowPageOption, userId = 'me') {
+  return $fetch<ApiResult<FollowListResponse>>(`/api/user/${userId}/followers`, {
     query: pageOption,
   })
-  return response
 }
 
-export async function followUser(userId: string) {
-  const response = await $fetch<ApiResult<boolean>>(`/api/user/follow_action/${userId}`, {
+export function followUser(userId: string) {
+  return $fetch<ApiResult<boolean>>(`/api/user/follow_action/${userId}`, {
     method: 'PUT',
   })
-  return response
 }
 
-export async function unfollowUser(userId: string) {
-  const response = await $fetch<ApiResult<boolean>>(`/api/user/follow_action/${userId}`, {
+export function unfollowUser(userId: string) {
+  return $fetch<ApiResult<boolean>>(`/api/user/follow_action/${userId}`, {
     method: 'DELETE',
   })
-  return response
 }

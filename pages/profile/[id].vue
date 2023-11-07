@@ -1,11 +1,26 @@
 <script setup lang="ts">
 import { FollowTab, UserGender } from '~/models'
-import { getUserInfoById } from '~/apis'
+import { getUserInfo, getUserInfoById } from '~/apis'
 
 const route = useRoute()
 
 const store = useSessionStore()
-const { success, data } = await getUserInfoById(route.params.id as string)
+const userId = computed<string>(() => (route.params.id as string) || store.info.userId || '')
+
+const { data, refresh } = useAsyncData(userId.value, async () => {
+  let requestFn = () => getUserInfoById(userId.value)
+
+  if (store.info.userId === userId.value) {
+    requestFn = getUserInfo
+  }
+
+  const { success, data } = await requestFn()
+
+  if (!success) return null
+
+  return data
+})
+
 const selectedTab = ref<FollowTab>(FollowTab.Following)
 
 const isFollowModalOpen = ref(false)
@@ -24,14 +39,21 @@ function handleOpenFollower() {
 </script>
 
 <template>
-  <div v-if="success" class="relative flex-center p-4">
-    <div class="backdrop-brightness flex border rounded-lg px-20 py-6 backdrop-blur brightness-90">
+  <div v-if="data" class="relative flex-center p-4">
+    <div class="flex border rounded-lg px-20 py-6 backdrop-blur brightness-90">
       <UiAvatar size="xl" class="relative">
 
-        <div class="absolute inset-0 cursor-pointer bg-black opacity-0 transition-all hover:opacity-65">
-          <div class="h-full w-full flex-center">
+        <div
+          v-if="store.info.userId === data.userId"
+          class="absolute inset-0 bg-black opacity-0 transition-all hover:opacity-65"
+        >
+          <div class="relative h-full w-full flex-center">
             <div class="i-mdi-image-edit text-4xl color-white" />
           </div>
+          <ManageAvatarUploader
+            class="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+            @change="refresh"
+          />
         </div>
         <UiAvatarImage :src="data.avatarUrl" :alt="data.nickName" />
         <UiAvatarFallback>{{ data.nickName }}</UiAvatarFallback>
@@ -76,10 +98,20 @@ function handleOpenFollower() {
 
     </div>
     <div class="absolute inset-0 overflow-hidden bg-sky/10 -z-1">
-      <img src="https://www.notion.so/images/page-cover/woodcuts_1.jpg" class="h-full w-full object-cover">
+      <img :src="data.backgroundUrl" class="h-full w-full object-cover">
+    </div>
+    <div class="absolute bottom-4 right-4 z-1 cursor-pointer">
+      <UiButton variant="outline" size="sm" class="relative">
+        更换封面
+        <ManageAvatarUploader
+          class="absolute inset-0 h-full w-full opacity-0"
+          field="backgroundUrl"
+          @change="refresh"
+        />
+      </UiButton>
     </div>
     <UserFollowModal v-model="isFollowModalOpen" v-model:tab="selectedTab" />
-    <UserProfileModal v-model="isEditModalOpen" />
+    <UserProfileModal v-model="isEditModalOpen" @success="refresh" />
   </div>
   <div v-else>
     404
