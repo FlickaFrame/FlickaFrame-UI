@@ -59,11 +59,22 @@ const { cardElement, videoElement, isCardHovered } = useVideoCard()
       ref="cardElement"
       class="card-main card-height relative rounded-5 transition-400 hover:brightness-94 hover:filter"
     >
-      <img
-        class="card-height card-overlay"
+      <div
+        class="card-height card-overlay relative"
         :class="{ 'opacity-0': isCardHovered }"
-        :src="props.info.thumbUrl"
       >
+        <img
+          class="h-full w-full object-cover"
+          :src="props.info.thumbUrl"
+        >
+        <div
+          class="absolute bottom-2 right-2 rounded-md bg-black/30 p-1 text-sm text-white/80"
+        >
+          {{ props.info.videoDuration || '00:00' }}
+        </div>
+
+      </div>
+
       <video
         ref="videoElement"
         class="card-overlay card-height"
@@ -76,8 +87,8 @@ const { cardElement, videoElement, isCardHovered } = useVideoCard()
       />
     </div>
 
-    <div class="cursor-pointer p-3 text-14px">
-      {{ props.info.title }}
+    <div class="cursor-pointer p-3 align-middle text-14px">
+      <UiBadge variant="secondary" class="mr-1">{{ props.info.category.name }} </UiBadge>    {{ props.info.title }}
     </div>
     <div class="mb-4 flex cursor-pointer justify-between px-3 text-sm">
       <div class="flex items-center gap-1">
@@ -89,6 +100,7 @@ const { cardElement, videoElement, isCardHovered } = useVideoCard()
           {{ props.info.author.nickName }}
         </span>
       </div>
+
       <div class="flex items-center gap-1">
         <div class="i-mdi-like" />
         {{ props.info.favoriteCount }}

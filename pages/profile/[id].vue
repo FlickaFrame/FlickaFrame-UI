@@ -21,6 +21,8 @@ const { data, refresh } = useAsyncData(userId.value, async () => {
   return data
 })
 
+const isOwn = computed(() => store.info.userId === data.value?.userId)
+
 const selectedTab = ref<FollowTab>(FollowTab.Following)
 
 const isFollowModalOpen = ref(false)
@@ -45,7 +47,7 @@ function handleOpenFollower() {
         <UiAvatar size="xl" class="relative">
 
           <div
-            v-if="store.info.userId === data.userId"
+            v-if="isOwn"
             class="absolute inset-0 bg-black opacity-0 transition-all hover:opacity-65"
           >
             <div class="relative h-full w-full flex-center">
@@ -71,7 +73,7 @@ function handleOpenFollower() {
               :is-follow="data.isFollow"
               :user-id="data.userId"
             />
-            <UiTooltipProvider v-if="store.info.userId === data.userId">
+            <UiTooltipProvider v-if="isOwn">
               <UiTooltip>
                 <UiTooltipTrigger>
                   <div
@@ -102,7 +104,7 @@ function handleOpenFollower() {
         <img :src="data.backgroundUrl" class="h-full w-full object-cover">
       </div>
       <div
-        v-if="store.info.userId === data.userId"
+        v-if="isOwn"
         class="absolute bottom-4 right-4 z-1 cursor-pointer"
       >
         <UiButton variant="outline" size="sm" class="relative">
@@ -117,10 +119,17 @@ function handleOpenFollower() {
       <UserFollowModal v-model="isFollowModalOpen" v-model:tab="selectedTab" />
       <UserProfileModal v-model="isEditModalOpen" @success="refresh" />
     </div>
-
-    <ManageTable />
+    <div class="my-4">
+      <ManageTable
+        v-if="isOwn"
+      />
+      <FeedMain
+        v-else
+        :show-cagegory="false"
+        :author-id="data.userId"
+      />
+    </div>
   </div>
-
   <div v-else>
     404
   </div>

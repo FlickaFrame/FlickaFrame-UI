@@ -1,6 +1,12 @@
 <script setup lang="ts">
-
 import { useCardColumnNum } from '~/composables/useFeedLayout'
+
+const props = withDefaults(defineProps<{
+  authorId?: string
+  showCagegory?: boolean
+}>(), {
+  showCagegory: true,
+})
 
 const isOpen = ref(false)
 
@@ -8,7 +14,9 @@ const categoryId = ref('0')
 
 const { cardColumnNum, listElement } = useCardColumnNum()
 
-const { feedList, isEnd, addMore, pending } = useFeedData(categoryId)
+const { feedList, isEnd, addMore, pending } = useFeedData(categoryId, {
+  authorID: props.authorId,
+})
 
 const activeIndex = ref(-1)
 const openedIndex = ref(-1)
@@ -22,7 +30,11 @@ function handleOpenModal(idx: number) {
 
 <template>
   <div>
-    <FeedCategoryTab v-model="categoryId" class="sticky top-0 backdrop-blur" />
+    <FeedCategoryTab
+      v-if="props.showCagegory"
+      v-model="categoryId"
+      class="sticky top-0 backdrop-blur"
+    />
     <div ref="listElement" class="feed-list px-6">
       <FeedCard
         v-for="item, idx in feedList"
