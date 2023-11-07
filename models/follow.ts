@@ -1,8 +1,8 @@
 export interface FollowListResponse {
-  users: Follow[]
+  users: FollowItem[]
 }
 
-export interface Follow {
+export interface FollowItem {
   userId: string
   nickName: string
   avatarUrl: string

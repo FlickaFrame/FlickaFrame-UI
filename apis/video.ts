@@ -24,6 +24,12 @@ export function getVideoFeed(query?: VideoFeedQuery) {
   })
 }
 
+export function getFollowingVideo(query?: VideoFeedQuery) {
+  return $fetch<ApiResult<VideoFeedResponse>>('/api/video/following', {
+    query,
+  })
+}
+
 export function getVideoInfo(videoId: string) {
   return $fetch<ApiResult<VideoInfoResponse>>(`/api/video/detail/${videoId}`)
 }

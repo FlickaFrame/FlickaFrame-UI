@@ -62,7 +62,7 @@ const { cardElement, videoElement, isCardHovered } = useVideoCard()
       <img
         class="card-height card-overlay"
         :class="{ 'opacity-0': isCardHovered }"
-        :src="props.info.thumbUrl || 'https://oplayer.vercel.app/poster.png'"
+        :src="props.info.thumbUrl"
       >
       <video
         ref="videoElement"

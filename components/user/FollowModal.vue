@@ -58,25 +58,7 @@ const columnData = computed(() => {
         </UiTabsList>
         <UiTabsContent v-for="item in columnData" :key="item.key" :value="item.key">
           <UiScrollArea class="min-h-100 border rounded-md">
-            <div class="p-4">
-              <div v-for="followItem in item.list" :key="followItem.userId">
-                <div class="flex-center justify-between">
-                  <div class="flex-center flex-row justify-start">
-                    <img :src="followItem.avatarUrl" class="w-60px rounded-full">
-                    <div class="ml-2 flex flex-col">
-                      <div class="mt-1 text-lg">{{ followItem.nickName }}</div>
-                      <div class="text-[#33333399]">{{ followItem.slogan }}</div>
-                    </div>
-                  </div>
-
-                  <UserFollowButton
-                    :is-follow="followItem.isFollow"
-                    :user-id="followItem.userId"
-                  />
-                </div>
-                <UiSeparator class="my-2" />
-              </div>
-            </div>
+            <UserFollowList :list="item.list" />
           </UiScrollArea>
         </UiTabsContent>
 

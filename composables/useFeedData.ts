@@ -1,7 +1,7 @@
-import type { VideoItem } from '~/models'
+import type { VideoFeedQuery, VideoItem } from '~/models'
 import { getVideoFeed } from '~/apis'
 
-export function useFeedData(categoryId: Ref<string>, limit = 10) {
+export function useFeedData(categoryId: Ref<string>, query: VideoFeedQuery = {}, fetchFn = getVideoFeed) {
   const feedListRecord = ref<Record<string, VideoItem[]>>({})
   const feedList = computed(() => feedListRecord.value[categoryId.value])
 
@@ -11,12 +11,13 @@ export function useFeedData(categoryId: Ref<string>, limit = 10) {
   const isEndRecord = ref<Record<string, boolean>>({})
   const isEnd = computed(() => Boolean(isEndRecord.value[categoryId.value]))
 
-  const { refresh: addMore, pending } = useAsyncData(async () => {
+  const { refresh: addMore, pending } = useAsyncData(fetchFn.name, async () => {
     const currentId = categoryId.value
-    const { success, data, msg } = await getVideoFeed({
+    const { success, data, msg } = await fetchFn({
       cursor: cursor.value,
-      limit,
+      limit: 20,
       categoryId: currentId,
+      ...query,
     })
 
     if (!success) {

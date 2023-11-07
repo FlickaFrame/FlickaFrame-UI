@@ -18,6 +18,7 @@
     "@oplayer/core": "^1.2.31",
     "@oplayer/ui": "1.2.32",
     "@pinia/nuxt": "^0.5.1",
+    "@tanstack/vue-table": "^8.10.7",
     "@unocss/nuxt": "^0.57.1",
     "@unocss/preset-icons": "^0.57.1",
     "@unocss/reset": "^0.57.1",
