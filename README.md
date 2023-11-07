@@ -1,10 +1,28 @@
-# Nuxt 3 Minimal Starter
+# Introduction
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+七牛云1024
 
-## Setup
+# Features
 
-Make sure to install the dependencies:
+演示视频 https://www.bilibili.com/video/BV1va4y1Q7uy
+
+## Environment
+
+* Vue3
+* Nuxt
+* Unocss
+* TypeScript
+* Shadcn-Vue
+* Ant-Design
+
+# Quick Start
+
+安装pnpm
+
+[安装 | pnpm中文文档 | pnpm中文网](https://www.pnpm.cn/installation)
+
+
+安装依赖
 
 ```bash
 
@@ -12,48 +30,10 @@ Make sure to install the dependencies:
 pnpm install
 ```
 
-## Development Server
-
-Start the development server on `http://localhost:3000`:
+启动项目 `http://localhost:3000`:
 
 ```bash
 # pnpm
 pnpm run dev
 
 ```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
