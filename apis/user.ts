@@ -1,6 +1,8 @@
 import type { SessionResponse, UserEditRequest, UserLoginRequest, UserResponse } from '~/models/user'
 import type { FollowListResponse, FollowPageOption } from '~/models/follow'
 import { UserGender } from '~/models'
+import { getUrlOssKey } from './file'
+import { deburr } from 'lodash-es'
 
 export async function login(data: UserLoginRequest) {
   const store = useSessionStore()
@@ -36,18 +38,22 @@ export async function getUserInfo() {
 export async function editUserInfo(payload: Partial<UserEditRequest>) {
   const info = useSessionStore().info
 
-  const defaultPayload: UserEditRequest = {
+  const _payload: UserEditRequest = {
     slogan: info.slogan || '',
     age: info.age || -1,
     gender: info.gender || UserGender.Unknown,
-    nickName: '',
-    backgroundUrl: '',
-    avatarUrl: '',
+    nickName: info.nickName || '',
+    backgroundUrl: info.backgroundUrl || '',
+    avatarUrl: info.avatarUrl || '',
+    ...payload,
   }
+
+  _payload.backgroundUrl = getUrlOssKey(_payload.backgroundUrl)
+  _payload.avatarUrl = getUrlOssKey(_payload.avatarUrl)
 
   return $fetch<ApiResult<null>>('/api/user/info', {
     method: 'PUT',
-    body: { ...defaultPayload, ...payload },
+    body: _payload,
   })
 }
 

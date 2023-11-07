@@ -4,7 +4,7 @@ import { createFileToken, editUserInfo, uploadFile } from '~/apis'
 import { UpTokenType } from '~/models'
 
 const props = withDefaults(defineProps<{
-  field: 'avatarUrl' | 'backgroundUrl'
+  field?: 'avatarUrl' | 'backgroundUrl'
 }>(), {
   field: 'avatarUrl',
 })
@@ -36,6 +36,7 @@ async function onPicSelect() {
       message.error('上传失败')
     } else {
       message.success('上传成功')
+      emit('change')
     }
   }
 }

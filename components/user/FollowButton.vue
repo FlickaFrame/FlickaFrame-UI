@@ -1,14 +1,23 @@
 <script setup lang="ts">
 
 import { followUser, unfollowUser } from '~/apis'
+import { debounce } from 'lodash-es'
 
 const props = defineProps<{
   isFollow: boolean
   userId: string
 }>()
 
+const emit = defineEmits<{
+  (e: 'changed'): void
+}>()
+
 const loading = ref(false)
 const isFollow = ref(props.isFollow)
+
+const emitChanged = debounce(() => {
+  emit('changed')
+}, 1000)
 
 async function changeFollowStatus() {
   loading.value = true
@@ -19,6 +28,7 @@ async function changeFollowStatus() {
   } else {
     message.info(`${isFollow.value ? '取消' : ''}关注成功`)
     isFollow.value = !isFollow.value
+    emitChanged()
   }
   loading.value = false
 }

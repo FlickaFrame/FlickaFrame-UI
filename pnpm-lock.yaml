@@ -26,9 +26,6 @@ dependencies:
   '@pinia/nuxt':
     specifier: ^0.5.1
     version: 0.5.1(typescript@5.2.2)(vue@3.3.6)
-  '@types/spark-md5':
-    specifier: ^3.0.3
-    version: 3.0.3
   '@unocss/nuxt':
     specifier: ^0.57.1
     version: 0.57.1(postcss@8.4.31)(vite@4.5.0)(webpack@5.89.0)
@@ -53,6 +50,9 @@ dependencies:
   clsx:
     specifier: ^2.0.0
     version: 2.0.0
+  lodash-es:
+    specifier: ^4.17.21
+    version: 4.17.21
   lucide-vue-next:
     specifier: ^0.289.0
     version: 0.289.0(vue@3.3.6)
@@ -109,6 +109,12 @@ devDependencies:
   '@shadowsight9/eslint-config':
     specifier: ^0.0.9
     version: 0.0.9(eslint@8.52.0)(typescript@5.2.2)
+  '@types/lodash-es':
+    specifier: ^4.17.10
+    version: 4.17.10
+  '@types/spark-md5':
+    specifier: ^3.0.3
+    version: 3.0.3
   '@unocss/transformer-directives':
     specifier: ^0.57.1
     version: 0.57.1
@@ -2006,6 +2012,16 @@ packages:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
     dev: true
 
+  /@types/lodash-es@4.17.10:
+    resolution: {integrity: sha512-YJP+w/2khSBwbUSFdGsSqmDvmnN3cCKoPOL7Zjle6s30ZtemkkqhjVfFqGwPN7ASil5VyjE2GtyU/yqYY6mC0A==}
+    dependencies:
+      '@types/lodash': 4.14.200
+    dev: true
+
+  /@types/lodash@4.14.200:
+    resolution: {integrity: sha512-YI/M/4HRImtNf3pJgbF+W6FrXovqj+T+/HpENLTooK9PnkacBsDpeP3IpHab40CClUfhNmdM2WTNP2sa2dni5Q==}
+    dev: true
+
   /@types/mdast@3.0.14:
     resolution: {integrity: sha512-gVZ04PGgw1qLZKsnWnyFv4ORnaJ+DXLdHTVSFbU8yX6xZ34Bjg4Q32yPkmveUP1yItXReKfB0Aknlh/3zxTKAw==}
     dependencies:
@@ -2030,7 +2046,7 @@ packages:
 
   /@types/spark-md5@3.0.3:
     resolution: {integrity: sha512-Uocq0wrVjF//W7IQGDvGm7K14MvzWNl95xjiQHZkmX+BX0deJyN7UKTaBUGUIINqzKwhi41ysk5aD4Q5d+ZDvw==}
-    dev: false
+    dev: true
 
   /@types/unist@2.0.9:
     resolution: {integrity: sha512-zC0iXxAv1C1ERURduJueYzkzZ2zaGyc+P2c95hgkikHPr3z8EdUZOlgEQ5X0DRmwDZn+hekycQnoeiiRVrmilQ==}
@@ -6001,7 +6017,6 @@ packages:
 
   /lodash-es@4.17.21:
     resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
-    dev: true
 
   /lodash._reinterpolate@3.0.0:
     resolution: {integrity: sha512-xYHt68QRoYGjeeM/XOE1uJtvXQAgvszfBhjV4yvsQH0u2i9I6cI6c6/eG4Hh3UAOVn0y/xAXwmTzEay49Q//HA==}

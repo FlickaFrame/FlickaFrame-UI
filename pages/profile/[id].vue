@@ -52,7 +52,10 @@ function handleOpenFollower() {
           </div>
           <ManageAvatarUploader
             class="absolute inset-0 h-full w-full cursor-pointer opacity-0"
-            @change="refresh"
+            @change="() => {
+              console.log('changed')
+              refresh()
+            }"
           />
         </div>
         <UiAvatarImage :src="data.avatarUrl" :alt="data.nickName" />

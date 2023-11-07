@@ -41,5 +41,10 @@ export async function getFileUrl(key: string) {
 }
 
 export function getUrlOssKey(url: string) {
-  return parseURL(url).pathname.substring(1)
+  const formatted = parseURL(url)
+  if (formatted.host) {
+    return parseURL(url).pathname.substring(1)
+  } else {
+    return url
+  }
 }

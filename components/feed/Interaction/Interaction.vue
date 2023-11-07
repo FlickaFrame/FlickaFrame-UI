@@ -54,7 +54,9 @@ async function handleShare() {
       <div class="flex-1" />
       <UserFollowButton
         v-if="info.author.userId !== store.info.userId"
-        :is-follow="info.author.isFollow" :user-id="info.author.userId"
+        :is-follow="info.author.isFollow"
+        :user-id="info.author.userId"
+        @changed="emit('refresh')"
       />
 
     </div>
