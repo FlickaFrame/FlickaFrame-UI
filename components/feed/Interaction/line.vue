@@ -1,27 +1,69 @@
 <script setup lang="ts">
+import { useLikeChange } from '~/composables/useStore'
+import { favoriteComment, favoriteVideo, unfavoriteComment, unfavoriteVideo } from '~/apis'
+
 const props = defineProps<{
   liked: boolean
   likedCount: number
+  id: string
+  type: 'video' | 'comment'
 
   showShare: boolean
 }>()
 
 const emit = defineEmits<{
-  (e: 'like'): void
-  (e: 'unlike'): void
   (e: 'reply'): void
   (e: 'share'): void
 }>()
 
+const store = useLikeChange()
+
+const favoriteMap = {
+  video: {
+    fav: () => favoriteVideo(props.id),
+    unfav: () => unfavoriteVideo(props.id),
+  },
+  comment: {
+    fav: () => favoriteComment(props.id),
+    unfav: () => unfavoriteComment(props.id),
+  },
+}
+
+const action = favoriteMap[props.type]
+
+const isFavorite = computed({
+  get: () => store.get(props.id, props.liked),
+  set: value => store.set(props.id, value),
+})
+
+const loading = ref(false)
+
+async function changeLikeStatus() {
+  loading.value = true
+
+  const res = isFavorite.value ? (await action.unfav()) : (await action.fav())
+
+  if (!res.success) {
+    message.error(`${isFavorite.value ? '取消' : ''}点赞失败`)
+  } else {
+    message.info(`${isFavorite.value ? '取消' : ''}点赞成功`)
+    isFavorite.value = !isFavorite.value
+  }
+  loading.value = false
+}
+
+const likeCls = computed(() => {
+  if (loading.value) return 'i-mdi-loading'
+  return isFavorite.value ? 'i-iconamoon-like-fill' : 'i-iconamoon-like'
+})
 </script>
 
 <template>
   <div class="flex items-center text-base">
-    <div class="wrapper">
+    <div class="wrapper" @click="changeLikeStatus">
       <div
         class="icon"
-        :class="props.liked ? 'i-iconamoon-like' : 'i-iconamoon-like-fill'"
-        @click="() => props.liked ? emit('unlike') : emit('like')"
+        :class="likeCls"
       />
       <div class="text">赞 {{ props.likedCount || '' }}</div>
     </div>

@@ -89,10 +89,13 @@ function handleReply() {
         <div class="mb-1 text-sm text-foreground/50"> {{ dayjs(props.comment.createTime).format('YYYY-MM-DD') }} </div>
 
         <FeedInteractionLine
+          :id="props.comment.id"
           :liked="props.comment.liked"
           :liked-count="props.comment.likedCount"
+          type="comment"
           class="text-lg"
-          @reply="handleReply()"
+          :show-share="false"
+          @reply="handleReply"
         />
       </div>
     </div>

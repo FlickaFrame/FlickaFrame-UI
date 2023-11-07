@@ -89,6 +89,10 @@ async function handleShare() {
     <!-- post 互动区域 -->
     <div>
       <FeedInteractionLine
+        :id="info.id"
+        :liked="info.isFavorite"
+        :liked-count="info.favoriteCount"
+        type="video"
         class="my-4 px-8 text-xl"
         show-share
         @share="handleShare"
