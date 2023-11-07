@@ -53,9 +53,6 @@ const handleSubmit = form.handleSubmit(async (values) => {
     <UiDialogContent>
       <UiDialogHeader>
         <UiDialogTitle class="text-lg"> 修改个人资料 </UiDialogTitle>
-        <UiDialogDescription>
-          修改个人资料修改个人资料修改个人资料
-        </UiDialogDescription>
       </UiDialogHeader>
       <form class="space-y-4" @submit.prevent>
         <FormField v-slot="{ componentField }" name="nickName">
