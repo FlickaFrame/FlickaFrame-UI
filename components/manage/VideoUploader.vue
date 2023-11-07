@@ -1,6 +1,6 @@
 <script setup lang='ts'>
 import { createFileToken, uploadFile } from '~/apis'
-import { UpTokenType } from '~/models'
+import { type FileResponse, UpTokenType } from '~/models'
 
 const emit = defineEmits<{
   (e: 'uploaded', val: string): void
@@ -10,10 +10,18 @@ const selectFileElement = ref<HTMLInputElement | null>(null)
 
 const playUrl = defineModel<string | undefined>()
 const videoDuration = defineModel<number | undefined>('duration')
+const videoWidth = defineModel<number | undefined>('width')
+const videoHeight = defineModel<number | undefined>('height')
 
 const uploadResult = ref({})
 
 const isUploading = ref(false)
+
+function setVideoMetadata(fileInfo: FileResponse) {
+  videoDuration.value = Number(fileInfo.videoDuration)
+  videoWidth.value = Number(fileInfo.videoWidth)
+  videoHeight.value = Number(fileInfo.videoHeight)
+}
 
 async function onVideoSelect() {
   if (isUploading.value) return
@@ -30,7 +38,7 @@ async function onVideoSelect() {
     } else {
       toast.publish({ desc: '上传成功' })
       uploadResult.value = result
-      result.videoDuration && (videoDuration.value = Number(result.videoDuration))
+      setVideoMetadata(result)
       playUrl.value = result.key
       emit('uploaded', result.key)
     }

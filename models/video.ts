@@ -19,8 +19,7 @@ export interface VideoItem {
   createdAt: number // 毫秒时间戳
   category: VideoCategory
   tags: VideoTag[]
-  height: number
-  width: number
+
   thumbUrl: string
   playUrl: string
   author: VideoUserInfo
@@ -29,6 +28,10 @@ export interface VideoItem {
   commentNum: number
   shareNum: number
   isFavorite: boolean
+
+  videoDuration: number
+  videoHeight: number
+  videoWidth: number
 }
 
 export interface VideoUserInfo {
@@ -47,9 +50,13 @@ export interface VideoUploadInfo {
   title: string
   description?: string
   category: string
-  tags: string[] // ['tag1', 'tag2']
-  publishTime?: number // timestamp
-  visibility: number // 1 2
+  tags: string[]
+  publishTime?: number
+  visibility: number // 1 | 2
+
+  videoDuration?: number
+  videoHeight?: number
+  videoWidth?: number
 }
 
 export interface VideoCategory {

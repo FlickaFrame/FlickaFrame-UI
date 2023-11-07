@@ -21,4 +21,6 @@ export interface FileResponse {
   hash: string
   key: string
   videoDuration?: string
+  videoHeight?: string
+  videoWidth?: string
 }

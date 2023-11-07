@@ -16,6 +16,8 @@ const form = useForm({
     publishTime: z.number().optional(),
     visibility: z.number().default(1),
     videoDuration: z.number().optional(),
+    videoHeight: z.number().optional(),
+    videoWidth: z.number().optional(),
   })),
 })
 
@@ -52,6 +54,8 @@ const handleSubmit = form.handleSubmit(async (values) => {
             <ManageVideoUploader
               v-bind="componentField"
               @update:duration="form.setFieldValue('videoDuration', $event)"
+              @update:width="form.setFieldValue('videoWidth', $event)"
+              @update:height="form.setFieldValue('videoHeight', $event)"
               @uploaded="handleVideoUploaded"
             />
           </UiFormControl>
