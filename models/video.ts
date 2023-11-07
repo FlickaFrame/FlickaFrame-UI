@@ -12,6 +12,12 @@ export interface VideoFeedQuery {
   tag?: string
 }
 
+export interface VideoSearchRequest {
+  keyword: string
+  offset: number
+  limit: number
+}
+
 export interface VideoItem {
   id: string
   title: string

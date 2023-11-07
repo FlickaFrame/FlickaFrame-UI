@@ -10,6 +10,16 @@ function handleLogout() {
 
 const sessionDialogOpen = ref(false)
 
+const text = ref('')
+
+function handleSearch() {
+  if (!text.value) return
+  navigateTo({
+    name: 'search',
+    query: { q: text.value },
+  })
+}
+
 </script>
 
 <template>
@@ -17,7 +27,12 @@ const sessionDialogOpen = ref(false)
   <nav class="flex items-center justify-between gap-2 border-b border-slate px-4">
     <img :src="Logo" alt="logo" class="w-80">
 
-    <UiInput class="h-12 max-w-240 text-base" placeholder="这是搜索框" />
+    <UiInput
+      v-model="text"
+      class="h-12 max-w-240 text-base"
+      placeholder="搜索框，搜你想搜"
+      @keyup.enter="handleSearch"
+    />
 
     <UiDropdownMenu v-if="store.info.userId">
       <UiDropdownMenuTrigger>

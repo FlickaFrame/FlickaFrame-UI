@@ -53,7 +53,7 @@ async function changeLikeStatus() {
 }
 
 const likeCls = computed(() => {
-  if (loading.value) return 'i-mdi-loading'
+  if (loading.value) return 'i-mdi-loading animate-spin'
   return isFavorite.value ? 'i-iconamoon-like-fill' : 'i-iconamoon-like'
 })
 </script>
@@ -70,7 +70,7 @@ const likeCls = computed(() => {
 
     <div class="wrapper" @click="() => emit('reply')">
       <div class="icon i-iconamoon-comment" />
-      <div class="text">3</div>
+      <div class="text">{{ '' }}</div>
     </div>
     <div class="flex-1" />
 

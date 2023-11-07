@@ -5,6 +5,10 @@ import * as z from 'zod'
 import { toTypedSchema } from '@vee-validate/zod'
 import { getFileUrl, getUrlOssKey, postVideo } from '~/apis'
 
+definePageMeta({
+  keepalive: false,
+})
+
 const form = useForm({
   validationSchema: toTypedSchema(z.object({
     playUrl: z.string().min(1),
@@ -23,6 +27,8 @@ const form = useForm({
 
 const defaultCoverUrl = ref('')
 
+const formEnd = ref(false)
+
 async function handleVideoUploaded(videoUrl: string) {
   const thumbKey = `cover/${videoUrl.split('/')[1]}.jpg`
   const thumbUrl = await getFileUrl(thumbKey)
@@ -36,109 +42,136 @@ const handleSubmit = form.handleSubmit(async (values) => {
     message.error('投稿失败')
   } else {
     message.success('投稿成功')
+    formEnd.value = true
   }
 })
+
+function handleRetry() {
+  formEnd.value = false
+  form.resetForm()
+}
 
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center gap-8 p-8">
-    <h1 class="text-5xl">创作服务平台</h1>
+  <div>
+    <div v-if="!formEnd" class="flex-center">
 
-    <form class="max-w-250 w-full space-y-8" @submit.prevent>
+      <form class="max-w-250 w-full space-y-8" @submit.prevent>
 
-      <FormField v-slot="{ componentField }" name="playUrl">
-        <UiFormItem>
-          <UiFormLabel>视频</UiFormLabel>
-          <UiFormControl>
-            <ManageVideoUploader
-              v-bind="componentField"
-              @update:duration="form.setFieldValue('videoDuration', $event)"
-              @update:width="form.setFieldValue('videoWidth', $event)"
-              @update:height="form.setFieldValue('videoHeight', $event)"
-              @uploaded="handleVideoUploaded"
-            />
-          </UiFormControl>
-          <UiFormMessage />
-        </UiFormItem>
-      </FormField>
+        <div class="w-full text-center text-5xl">创作服务平台</div>
 
-      <FormField v-slot="{ componentField }" name="thumbUrl">
-        <UiFormItem>
-          <UiFormLabel>封面</UiFormLabel>
-          <UiFormControl>
-            <ManageCoverUploader v-bind="componentField" :defalut-file-url="defaultCoverUrl" />
-          </UiFormControl>
-          <UiFormMessage />
-        </UiFormItem>
-      </FormField>
+        <FormField v-slot="{ componentField }" name="playUrl">
+          <UiFormItem>
+            <UiFormLabel>视频</UiFormLabel>
+            <UiFormControl>
+              <ManageVideoUploader
+                v-bind="componentField"
+                @update:duration="form.setFieldValue('videoDuration', $event)"
+                @update:width="form.setFieldValue('videoWidth', $event)"
+                @update:height="form.setFieldValue('videoHeight', $event)"
+                @uploaded="handleVideoUploaded"
+              />
+            </UiFormControl>
+            <UiFormMessage />
+          </UiFormItem>
+        </FormField>
 
-      <FormField v-slot="{ componentField }" name="title">
-        <UiFormItem>
-          <UiFormLabel>标题</UiFormLabel>
-          <UiFormControl>
-            <UiInput v-bind="componentField" />
-          </UiFormControl>
-          <UiFormMessage />
-        </UiFormItem>
-      </FormField>
+        <FormField v-slot="{ componentField }" name="thumbUrl">
+          <UiFormItem>
+            <UiFormLabel>封面</UiFormLabel>
+            <UiFormControl>
+              <ManageCoverUploader v-bind="componentField" :defalut-file-url="defaultCoverUrl" />
+            </UiFormControl>
+            <UiFormMessage />
+          </UiFormItem>
+        </FormField>
 
-      <FormField v-slot="{ componentField }" name="category">
-        <UiFormItem>
-          <UiFormLabel>分类</UiFormLabel>
-          <UiFormControl>
-            <ManageCategorySelector v-bind="componentField" />
-          </UiFormControl>
-          <UiFormMessage />
-        </UiFormItem>
+        <FormField v-slot="{ componentField }" name="title">
+          <UiFormItem>
+            <UiFormLabel>标题</UiFormLabel>
+            <UiFormControl>
+              <UiInput v-bind="componentField" />
+            </UiFormControl>
+            <UiFormMessage />
+          </UiFormItem>
+        </FormField>
 
-      </FormField>
+        <FormField v-slot="{ componentField }" name="category">
+          <UiFormItem>
+            <UiFormLabel>分类</UiFormLabel>
+            <UiFormControl>
+              <ManageCategorySelector v-bind="componentField" />
+            </UiFormControl>
+            <UiFormMessage />
+          </UiFormItem>
 
-      <FormField v-slot="{ componentField }" name="tags">
-        <UiFormItem>
-          <UiFormLabel>标签</UiFormLabel>
-          <UiFormControl>
-            <ManageTagManager v-bind="componentField" />
-          </UiFormControl>
-          <UiFormMessage />
-        </UiFormItem>
-      </FormField>
+        </FormField>
 
-      <FormField v-slot="{ componentField }" name="description">
-        <UiFormItem>
-          <UiFormLabel>视频描述</UiFormLabel>
-          <UiFormControl>
-            <UiTextarea placeholder="详细描述一下视频吧～" v-bind="componentField" />
-          </UiFormControl>
-          <UiFormMessage />
-        </UiFormItem>
-      </FormField>
+        <FormField v-slot="{ componentField }" name="tags">
+          <UiFormItem>
+            <UiFormLabel>标签</UiFormLabel>
+            <UiFormControl>
+              <ManageTagManager v-bind="componentField" />
+            </UiFormControl>
+            <UiFormMessage />
+          </UiFormItem>
+        </FormField>
 
-      <FormField v-slot="{ componentField }" name="publishTime">
-        <UiFormItem>
-          <UiFormLabel>上传时间</UiFormLabel>
-          <UiFormControl>
-            <ManageUploadTimeSelector v-bind="componentField" />
-          </UiFormControl>
-          <UiFormMessage />
-        </UiFormItem>
-      </FormField>
+        <FormField v-slot="{ componentField }" name="description">
+          <UiFormItem>
+            <UiFormLabel>视频描述</UiFormLabel>
+            <UiFormControl>
+              <UiTextarea placeholder="详细描述一下视频吧～" v-bind="componentField" />
+            </UiFormControl>
+            <UiFormMessage />
+          </UiFormItem>
+        </FormField>
 
-      <FormField v-slot="{ componentField }" name="visibility">
-        <UiFormItem>
-          <UiFormLabel>可见性</UiFormLabel>
-          <UiFormControl>
-            <ManageVisibilitySelector v-bind="componentField" />
-          </UiFormControl>
-          <UiFormMessage />
-        </UiFormItem>
-      </FormField>
-      <div class="w-full flex flex-row-reverse">
-        <UiButton @click="handleSubmit">
-          立即投稿
-        </UiButton>
-      </div>
+        <FormField v-slot="{ componentField }" name="publishTime">
+          <UiFormItem>
+            <UiFormLabel>上传时间</UiFormLabel>
+            <UiFormControl>
+              <ManageUploadTimeSelector v-bind="componentField" />
+            </UiFormControl>
+            <UiFormMessage />
+          </UiFormItem>
+        </FormField>
 
-    </Form>
+        <FormField v-slot="{ componentField }" name="visibility">
+          <UiFormItem>
+            <UiFormLabel>可见性</UiFormLabel>
+            <UiFormControl>
+              <ManageVisibilitySelector v-bind="componentField" />
+            </UiFormControl>
+            <UiFormMessage />
+          </UiFormItem>
+        </FormField>
+        <div class="w-full flex flex-row-reverse pb-10">
+          <UiButton @click="handleSubmit">
+            立即投稿
+          </UiButton>
+        </div>
+
+      </Form>
+    </div>
+    <div v-else class="mt-100">
+
+      <a-result
+        status="success"
+        title="上传视频成功～"
+      >
+        <template #extra>
+          <UiButton @click="navigateTo('/explore')">
+            返回发现页
+          </UiButton>
+          <UiButton @click="handleRetry">
+            上传更多视频
+          </UiButton>
+        </template>
+      </a-result>
+
+    </div>
   </div>
+
 </template>
