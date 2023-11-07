@@ -9,25 +9,44 @@ export interface UserRegisterRequest {
   phone: string
 }
 
+export interface UserEditRequest {
+  slogan: string
+  age: number
+  gender: UserGender
+  nickName: string
+  backgroundUrl: string
+  avatarUrl: string
+}
+
 export interface SessionResponse {
   accessExpire: number
   accessToken: string
   refreshAfter: number
-
 }
 
 export interface UserResponse extends User {
 
 }
 
-export interface User {
-  avatarUrl: string
+export enum UserGender {
+  Male = 1,
+  Female = 2,
+  Unknown = 3,
+}
+
+interface UserBasic {
   userId: string
-  info: string
+  age: number
   nickName: string
-  phone: string
-  gender: number
+  gender: UserGender
   slogan: string
+
+  avatarUrl: string
+  backgroundUrl: string
+}
+
+export interface User extends UserBasic {
+
   collectionsVideoCount: number
   followerCount: number
   followingCount: number

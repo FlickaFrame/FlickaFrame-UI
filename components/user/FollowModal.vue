@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { FollowTab } from '~/models'
-import { followUser, getMyFollowerList, getMyFollowingList, unfollowUser } from '~/apis'
+import { getMyFollowerList, getMyFollowingList } from '~/apis'
 import type { FollowListResponse, FollowPageOption } from '~/models'
 
 const open = defineModel({ default: false })
@@ -42,19 +42,6 @@ const columnData = computed(() => {
   ]
 })
 
-const { get, set } = useChangeSet<string, boolean>()
-
-async function changeFollowStatus(id: string, isFollow: boolean) {
-  const res = isFollow ? (await unfollowUser(id)) : (await followUser(id))
-
-  if (!res.success) {
-    message.error(`${isFollow ? '取消' : ''}关注失败`)
-  } else {
-    set(id, !isFollow)
-    message.info(`${isFollow ? '取消' : ''}关注成功`)
-  }
-}
-
 </script>
 
 <template>
@@ -81,22 +68,11 @@ async function changeFollowStatus(id: string, isFollow: boolean) {
                       <div class="text-[#33333399]">{{ followItem.slogan }}</div>
                     </div>
                   </div>
-                  <UiButton
-                    v-if="get(followItem.userId, followItem.isFollow) === true"
-                    class="whitespace-nowrap"
-                    variant="secondary"
-                    @click="changeFollowStatus(followItem.userId, true)"
-                  >
-                    已关注
-                  </UiButton>
-                  <UiButton
-                    v-else-if="get(followItem.userId, followItem.isFollow) === false"
-                    class="whitespace-nowrap"
-                    variant="outline"
-                    @click="changeFollowStatus(followItem.userId, false)"
-                  >
-                    关注
-                  </UiButton>
+
+                  <UserFollowButton
+                    :is-follow="followItem.isFollow"
+                    :user-id="followItem.userId"
+                  />
                 </div>
                 <UiSeparator class="my-2" />
               </div>

@@ -1,6 +1,5 @@
-import type { SessionResponse, UserLoginRequest, UserResponse } from '~/models/user'
+import type { SessionResponse, UserEditRequest, UserLoginRequest, UserResponse } from '~/models/user'
 import type { FollowListResponse, FollowPageOption } from '~/models/follow'
-import { useSessionStore } from '#imports'
 
 export async function login(data: UserLoginRequest) {
   const store = useSessionStore()
@@ -31,6 +30,13 @@ export async function getUserInfo() {
   }
 
   return response
+}
+
+export async function editUserInfo(payload: UserEditRequest) {
+  return $fetch<ApiResult<null>>('/api/user/info', {
+    method: 'PUT',
+    body: payload,
+  })
 }
 
 export async function getUserInfoById(userId: string) {

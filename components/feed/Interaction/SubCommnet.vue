@@ -14,12 +14,14 @@ const emit = defineEmits<{
   (e: 'reply'): void
 }>()
 
+const store = useSessionStore()
+
 const menus = computed(() => {
   const _menus = [
     {
       name: '删除评论',
       class: 'i-mdi-delete',
-      visible: true,
+      visible: store.info.userId === props.authorId,
       action: async (id: string) => {
         const { success } = await deleteComment(id, props.level)
 
