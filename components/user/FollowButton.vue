@@ -13,7 +13,13 @@ const emit = defineEmits<{
 }>()
 
 const loading = ref(false)
-const isFollow = ref(props.isFollow)
+
+const store = useFollowChange()
+
+const isFollow = computed({
+  get: () => store.get(props.userId, props.isFollow),
+  set: value => store.set(props.userId, value),
+})
 
 const emitChanged = debounce(() => {
   emit('changed')

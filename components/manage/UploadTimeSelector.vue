@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Dayjs } from 'dayjs'
+import dayjs from 'dayjs'
 
 const props = defineProps<{
   modelValue: number | undefined
@@ -8,7 +9,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'update:modelValue', val: number | undefined): void
 }>()
-const dayjs = useDayjs()
+
 const checked = ref(false)
 
 const date = computed<Dayjs | undefined>({
