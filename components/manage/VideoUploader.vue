@@ -70,7 +70,7 @@ async function upload(file: File) {
       <div
         class="pointer-events-none absolute left-1/2 top-1/2 flex-col-center -translate-x-1/2 -translate-y-1/2"
       >
-        <div>拖拽视频到此或点击上传 {{ uploadResult }}</div>
+        <div>拖拽视频到此或点击上传</div>
         <UiButton
           class="mt-2 w-30 rounded-sm"
           :disabled="isUploading"

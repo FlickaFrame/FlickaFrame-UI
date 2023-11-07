@@ -43,13 +43,13 @@ const handleSubmit = form.handleSubmit(async (values) => {
 
 <template>
   <div class="flex flex-col items-center justify-center gap-8 p-8">
-    <h1 class="text-5xl">创作服务平台{{ form.values }}</h1>
+    <h1 class="text-5xl">创作服务平台</h1>
 
     <form class="max-w-250 w-full space-y-8" @submit.prevent>
 
       <FormField v-slot="{ componentField }" name="playUrl">
         <UiFormItem>
-          <UiFormLabel>视频 {{ componentField }}</UiFormLabel>
+          <UiFormLabel>视频</UiFormLabel>
           <UiFormControl>
             <ManageVideoUploader
               v-bind="componentField"
@@ -65,7 +65,7 @@ const handleSubmit = form.handleSubmit(async (values) => {
 
       <FormField v-slot="{ componentField }" name="thumbUrl">
         <UiFormItem>
-          <UiFormLabel>封面 {{ componentField }}</UiFormLabel>
+          <UiFormLabel>封面</UiFormLabel>
           <UiFormControl>
             <ManageCoverUploader v-bind="componentField" :defalut-file-url="defaultCoverUrl" />
           </UiFormControl>
@@ -75,7 +75,7 @@ const handleSubmit = form.handleSubmit(async (values) => {
 
       <FormField v-slot="{ componentField }" name="title">
         <UiFormItem>
-          <UiFormLabel>标题 {{ componentField }}</UiFormLabel>
+          <UiFormLabel>标题</UiFormLabel>
           <UiFormControl>
             <UiInput v-bind="componentField" />
           </UiFormControl>
@@ -85,7 +85,7 @@ const handleSubmit = form.handleSubmit(async (values) => {
 
       <FormField v-slot="{ componentField }" name="category">
         <UiFormItem>
-          <UiFormLabel>分类 {{ componentField }}</UiFormLabel>
+          <UiFormLabel>分类</UiFormLabel>
           <UiFormControl>
             <ManageCategorySelector v-bind="componentField" />
           </UiFormControl>
@@ -96,7 +96,7 @@ const handleSubmit = form.handleSubmit(async (values) => {
 
       <FormField v-slot="{ componentField }" name="tags">
         <UiFormItem>
-          <UiFormLabel>标签{{ componentField }}</UiFormLabel>
+          <UiFormLabel>标签</UiFormLabel>
           <UiFormControl>
             <ManageTagManager v-bind="componentField" />
           </UiFormControl>
@@ -116,7 +116,7 @@ const handleSubmit = form.handleSubmit(async (values) => {
 
       <FormField v-slot="{ componentField }" name="publishTime">
         <UiFormItem>
-          <UiFormLabel>上传时间 {{ componentField }}</UiFormLabel>
+          <UiFormLabel>上传时间</UiFormLabel>
           <UiFormControl>
             <ManageUploadTimeSelector v-bind="componentField" />
           </UiFormControl>
@@ -126,7 +126,7 @@ const handleSubmit = form.handleSubmit(async (values) => {
 
       <FormField v-slot="{ componentField }" name="visibility">
         <UiFormItem>
-          <UiFormLabel>可见性 {{ componentField }}</UiFormLabel>
+          <UiFormLabel>可见性</UiFormLabel>
           <UiFormControl>
             <ManageVisibilitySelector v-bind="componentField" />
           </UiFormControl>

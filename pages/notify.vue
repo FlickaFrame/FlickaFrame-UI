@@ -1,8 +1,8 @@
 <script setup lang="ts">
 
-import { NoticeTabKey } from '~/models'
+import { NoticeType } from '~/models'
 
-const selectedTab = ref<NoticeTabKey>(NoticeTabKey.Comment)
+const selectedTab = ref<NoticeType>(NoticeType.Follow)
 
 </script>
 
